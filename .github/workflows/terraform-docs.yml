@@ -13,11 +13,15 @@ jobs:
   docs:
     name: Generate Documentation
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
 
       - name: Render terraform docs inside the README.md and push changes back to PR branch
         uses: terraform-docs/gh-actions@v1.0.0
@@ -25,7 +29,7 @@ jobs:
           working-dir: .
           output-file: README.md
           output-method: inject
-          git-push: "true"
+          git-push: "false"  # Disable automatic push, we'll handle it manually
           git-commit-message: "docs: update terraform documentation [skip ci]"
 
       - name: Generate documentation for modules
@@ -59,12 +63,21 @@ jobs:
 
       - name: Commit documentation updates
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
           git add .
           if git diff --staged --quiet; then
             echo "No documentation changes to commit"
           else
             git commit -m "docs: update module and environment documentation [skip ci]"
-            git push
+            echo "Documentation changes committed"
+          fi
+
+      - name: Push changes
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          if git log --oneline -1 | grep -q "docs: update"; then
+            git push origin main || echo "Push failed - this may be expected in forks or with insufficient permissions"
+          else
+            echo "No documentation changes to push"
           fi

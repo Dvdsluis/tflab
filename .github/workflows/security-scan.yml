@@ -18,6 +18,7 @@ jobs:
       security-events: write
       contents: read
       actions: read
+      id-token: write
     
     steps:
       - name: Checkout code
@@ -49,10 +50,14 @@ jobs:
           output_format: cli,sarif
           output_file_path: console,reports/results.sarif
           download_external_modules: true
+
+      - name: Create reports directory if it doesn't exist
+        run: mkdir -p reports
+        if: always()
           
       - name: Upload Checkov scan results
         uses: github/codeql-action/upload-sarif@v2
-        if: always()
+        if: always() && hashFiles('reports/results.sarif') != ''
         with:
           sarif_file: reports/results.sarif
 
@@ -63,7 +68,7 @@ jobs:
 
       - name: Upload TFSec scan results
         uses: github/codeql-action/upload-sarif@v2
-        if: always()
+        if: always() && hashFiles('tfsec-results.sarif') != ''
         with:
           sarif_file: tfsec-results.sarif
 
