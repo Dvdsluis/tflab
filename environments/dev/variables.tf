@@ -100,6 +100,12 @@ variable "enable_nat_gateway" {
   default     = true
 }
 
+variable "enable_bastion" {
+  description = "Enable Azure Bastion for secure access"
+  type        = bool
+  default     = false
+}
+
 variable "additional_tags" {
   description = "Additional tags to apply to all resources"
   type        = map(string)
