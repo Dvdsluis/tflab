@@ -18,11 +18,6 @@ fi
 echo "Using terraform-docs version: $(terraform-docs --version)"
 echo
 
-# Generate documentation for root directory
-echo "Generating root documentation..."
-terraform-docs markdown table --output-file README.md .
-echo "✓ Root documentation updated"
-
 # Generate documentation for each module
 echo
 echo "Generating module documentation..."
@@ -55,7 +50,6 @@ echo
 echo "Documentation generation completed successfully!"
 echo
 echo "Files updated:"
-echo "- README.md (root)"
 find modules -name "README.md" -exec echo "- {}" \;
 find environments -name "README.md" -exec echo "- {}" \;
 echo
