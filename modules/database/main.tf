@@ -133,5 +133,5 @@ resource "azurerm_postgresql_flexible_server" "main" {
     }
   }
 
-  tags            = var.tags
+  tags = var.tags
 }
