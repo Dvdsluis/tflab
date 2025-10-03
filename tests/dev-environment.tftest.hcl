@@ -4,7 +4,7 @@
 provider "azurerm" {
   features {}
   resource_provider_registrations = "none"
-  skip_provider_registration = true
+  skip_provider_registration      = true
 }
 
 run "dev_environment_plan_test" {
