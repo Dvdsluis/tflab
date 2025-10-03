@@ -160,6 +160,9 @@ jobs:
             terraform init
             terraform test
           fi
+        env:
+          ARM_USE_CLI: false
+          ARM_SKIP_PROVIDER_REGISTRATION: true
 
       - name: Upload test results
         uses: actions/upload-artifact@v4

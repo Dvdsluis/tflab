@@ -1,4 +1,13 @@
 # Integration test for the dev environment
+
+# Provider configuration for tests (lab: RG-only permissions)
+provider "azurerm" {
+  features {}
+  resource_provider_registrations = "none"
+  skip_provider_registration = true
+  use_cli = false
+}
+
 run "dev_environment_plan_test" {
   command = plan
 
