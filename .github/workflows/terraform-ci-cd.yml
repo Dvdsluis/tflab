@@ -149,6 +149,11 @@ jobs:
         with:
           terraform_version: ${{ env.TF_VERSION }}
 
+      - name: Configure Azure credentials
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
       - name: Run Terraform Tests
         run: |
           cd tests
@@ -161,7 +166,6 @@ jobs:
             terraform test
           fi
         env:
-          ARM_USE_CLI: false
           ARM_SKIP_PROVIDER_REGISTRATION: true
 
       - name: Upload test results
