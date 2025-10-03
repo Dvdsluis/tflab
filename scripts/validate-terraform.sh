@@ -156,11 +156,13 @@ check_sensitive_files() {
         print_status "OK" "No sensitive files in Git tracking"
     fi
     
-    # Check for .terraform directories
-    if find . -name ".terraform" -type d | grep -v ".git" >/dev/null 2>&1; then
-        print_status "WARN" ".terraform directories found (should be in .gitignore)"
+    # Check for .terraform directories being tracked by Git
+    if git ls-files | grep -E '\.terraform/' >/dev/null 2>&1; then
+        print_status "ERROR" ".terraform directories found in Git tracking"
+        echo "Found these .terraform entries:"
+        git ls-files | grep -E '\.terraform/' | sed 's/^/  /'
     else
-        print_status "OK" "No .terraform directories tracked"
+        print_status "OK" "No .terraform directories in Git tracking"
     fi
     echo ""
 }
