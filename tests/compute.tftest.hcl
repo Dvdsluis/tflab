@@ -8,7 +8,7 @@ run "compute_plan_test" {
 
   variables {
     name_prefix         = "test-compute"
-  resource_group_name = "kml_rg_main-b61755695aad4019"
+    resource_group_name = "kml_rg_main-b61755695aad4019"
     location            = "East US"
     vnet_cidr           = "10.0.0.0/16"
     web_subnet_id       = "/subscriptions/sub/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/public-1"
@@ -80,7 +80,7 @@ run "compute_validate_outputs" {
 
   variables {
     name_prefix         = "test-compute"
-  resource_group_name = "kml_rg_main-b61755695aad4019"
+    resource_group_name = "kml_rg_main-b61755695aad4019"
     location            = "East US"
     vnet_cidr           = "10.0.0.0/16"
     web_subnet_id       = "/subscriptions/sub/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/public-1"
