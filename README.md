@@ -1,280 +1,142 @@
-# Terraform Lab# terraform-docs
+# terraform-docs
 
+[![Build Status](https://github.com/terraform-docs/terraform-docs/workflows/ci/badge.svg)](https://github.com/terraform-docs/terraform-docs/actions) [![GoDoc](https://pkg.go.dev/badge/github.com/terraform-docs/terraform-docs)](https://pkg.go.dev/github.com/terraform-docs/terraform-docs) [![Go Report Card](https://goreportcard.com/badge/github.com/terraform-docs/terraform-docs)](https://goreportcard.com/report/github.com/terraform-docs/terraform-docs) [![Codecov Report](https://codecov.io/gh/terraform-docs/terraform-docs/branch/master/graph/badge.svg)](https://codecov.io/gh/terraform-docs/terraform-docs) [![License](https://img.shields.io/github/license/terraform-docs/terraform-docs)](https://github.com/terraform-docs/terraform-docs/blob/master/LICENSE) [![Latest release](https://img.shields.io/github/v/release/terraform-docs/terraform-docs)](https://github.com/terraform-docs/terraform-docs/releases)
 
+![terraform-docs-teaser](./images/terraform-docs-teaser.png)
 
-[![Terraform CI/CD](https://github.com/Dvdsluis/tflab/workflows/Terraform%20CI/CD%20Pipeline/badge.svg)](https://github.com/Dvdsluis/tflab/actions)[![Build Status](https://github.com/terraform-docs/terraform-docs/workflows/ci/badge.svg)](https://github.com/terraform-docs/terraform-docs/actions) [![GoDoc](https://pkg.go.dev/badge/github.com/terraform-docs/terraform-docs)](https://pkg.go.dev/github.com/terraform-docs/terraform-docs) [![Go Report Card](https://goreportcard.com/badge/github.com/terraform-docs/terraform-docs)](https://goreportcard.com/report/github.com/terraform-docs/terraform-docs) [![Codecov Report](https://codecov.io/gh/terraform-docs/terraform-docs/branch/master/graph/badge.svg)](https://codecov.io/gh/terraform-docs/terraform-docs) [![License](https://img.shields.io/github/license/terraform-docs/terraform-docs)](https://github.com/terraform-docs/terraform-docs/blob/master/LICENSE) [![Latest release](https://img.shields.io/github/v/release/terraform-docs/terraform-docs)](https://github.com/terraform-docs/terraform-docs/releases)
+## What is terraform-docs
 
+A utility to generate documentation from Terraform modules in various output formats.
 
+## Installation
 
-A comprehensive Terraform laboratory for learning Infrastructure as Code with Azure, featuring enterprise-grade CI/CD pipelines, security scanning, and automated documentation.![terraform-docs-teaser](./images/terraform-docs-teaser.png)
-
-
-
-## Features## What is terraform-docs
-
-
-
-- **Multi-environment setup**: Dev, Staging, and Production environmentsA utility to generate documentation from Terraform modules in various output formats.
-
-- **Modular architecture**: Reusable networking, compute, and database modules  
-
-- **Enterprise security**: Hardened modules with SSH-only access and security scanning## Installation
-
-- **Automated testing**: Native Terraform tests and Terratest integration
-
-- **CI/CD pipeline**: GitHub Actions with automated validation, security scans, and deploymentmacOS users can install using [Homebrew]:
-
-- **Documentation**: Auto-generated module documentation with terraform-docs
+macOS users can install using [Homebrew]:
 
 ```bash
-
-## Quick Startbrew install terraform-docs
-
+brew install terraform-docs
 ```
 
-1. **Clone the repository**:
+or
 
-   ```bashor
-
-   git clone https://github.com/Dvdsluis/tflab.git
-
-   cd tflab```bash
-
-   ```brew install terraform-docs/tap/terraform-docs
-
+```bash
+brew install terraform-docs/tap/terraform-docs
 ```
 
-2. **Initialize Terraform** (choose an environment):
+Windows users can install using [Scoop]:
 
-   ```bashWindows users can install using [Scoop]:
+```bash
+scoop bucket add terraform-docs https://github.com/terraform-docs/scoop-bucket
+scoop install terraform-docs
+```
 
-   cd environments/dev
+or [Chocolatey]:
 
-   terraform init```bash
+```bash
+choco install terraform-docs
+```
 
-   terraform planscoop bucket add terraform-docs https://github.com/terraform-docs/scoop-bucket
-
-   terraform applyscoop install terraform-docs
-
-   ``````
-
-
-
-3. **Run tests**:or [Chocolatey]:
-
-   ```bash
-
-   cd tests```bash
-
-   terraform testchoco install terraform-docs
-
-   ``````
-
-
-
-## Project StructureStable binaries are also available on the [releases] page. To install, download the
-
+Stable binaries are also available on the [releases] page. To install, download the
 binary for your platform from "Assets" and place this into your `$PATH`:
 
+```bash
+curl -Lo ./terraform-docs.tar.gz https://github.com/terraform-docs/terraform-docs/releases/download/v0.18.0/terraform-docs-v0.18.0-$(uname)-amd64.tar.gz
+tar -xzf terraform-docs.tar.gz
+chmod +x terraform-docs
+mv terraform-docs /usr/local/bin/terraform-docs
 ```
 
-├── environments/          # Environment-specific configurations```bash
+**NOTE:** Windows releases are in `ZIP` format.
 
-│   ├── dev/               # Development environmentcurl -Lo ./terraform-docs.tar.gz https://github.com/terraform-docs/terraform-docs/releases/download/v0.18.0/terraform-docs-v0.18.0-$(uname)-amd64.tar.gz
+The latest version can be installed using `go install` or `go get`:
 
-│   ├── staging/           # Staging environmenttar -xzf terraform-docs.tar.gz
-
-│   └── prod/              # Production environmentchmod +x terraform-docs
-
-├── modules/               # Reusable Terraform modulesmv terraform-docs /usr/local/bin/terraform-docs
-
-│   ├── networking/        # VNet, subnets, NSGs```
-
-│   ├── compute/           # VM Scale Sets, Load Balancers
-
-│   └── database/          # PostgreSQL/MySQL with Key Vault**NOTE:** Windows releases are in `ZIP` format.
-
-├── tests/                 # Terraform native tests
-
-├── .github/workflows/     # CI/CD pipelinesThe latest version can be installed using `go install` or `go get`:
-
-└── scripts/               # Utility scripts
-
-``````bash
-
+```bash
 # go1.17+
-
-## Modulesgo install github.com/terraform-docs/terraform-docs@v0.18.0
-
+go install github.com/terraform-docs/terraform-docs@v0.18.0
 ```
 
-### Networking Module
+```bash
+# go1.16
+GO111MODULE="on" go get github.com/terraform-docs/terraform-docs@v0.18.0
+```
 
-- Virtual Network (VNet) with configurable CIDR```bash
+**NOTE:** please use the latest Go to do this, minimum `go1.16` is required.
 
-- Public, private, and database subnets# go1.16
-
-- Network Security Groups (NSGs) with security rulesGO111MODULE="on" go get github.com/terraform-docs/terraform-docs@v0.18.0
-
-- Public IP addresses```
-
-
-
-### Compute Module**NOTE:** please use the latest Go to do this, minimum `go1.16` is required.
-
-- VM Scale Sets for web and application tiers
-
-- Load balancers with health probesThis will put `terraform-docs` in `$(go env GOPATH)/bin`. If you encounter the error
-
-- SSH key-based authentication (no password auth)`terraform-docs: command not found` after installation then you may need to either add
-
-- Auto-scaling capabilitiesthat directory to your `$PATH` as shown [here] or do a manual installation by cloning
-
+This will put `terraform-docs` in `$(go env GOPATH)/bin`. If you encounter the error
+`terraform-docs: command not found` after installation then you may need to either add
+that directory to your `$PATH` as shown [here] or do a manual installation by cloning
 the repo and run `make build` from the repository which will put `terraform-docs` in:
 
-### Database Module
-
-- PostgreSQL or MySQL Flexible Server```bash
-
-- Azure Key Vault for secrets management$(go env GOPATH)/src/github.com/terraform-docs/terraform-docs/bin/$(uname | tr '[:upper:]' '[:lower:]')-amd64/terraform-docs
-
-- Network integration with database subnets```
-
-- Backup and high availability options
+```bash
+$(go env GOPATH)/src/github.com/terraform-docs/terraform-docs/bin/$(uname | tr '[:upper:]' '[:lower:]')-amd64/terraform-docs
+```
 
 ## Usage
 
-## Environment Configuration
-
 ### Running the binary directly
 
-Each environment (dev/staging/prod) includes:
+To run and generate documentation into README within a directory:
 
-- Environment-specific variable valuesTo run and generate documentation into README within a directory:
-
-- Terraform state configuration
-
-- Resource naming conventions```bash
-
-- Scaling configurationsterraform-docs markdown table --output-file README.md --output-mode inject /path/to/module
-
+```bash
+terraform-docs markdown table --output-file README.md --output-mode inject /path/to/module
 ```
-
-## Security Features
 
 Check [`output`] configuration for more details and examples.
 
-- **SSH-only access**: Password authentication disabled
+### Using docker
 
-- **Security scanning**: Trivy, Checkov, and Semgrep integration### Using docker
+terraform-docs can be run as a container by mounting a directory with `.tf`
+files in it and run the following command:
 
-- **Secrets management**: Azure Key Vault for database credentials
-
-- **Network security**: NSGs with least-privilege rulesterraform-docs can be run as a container by mounting a directory with `.tf`
-
-- **Resource hardening**: Enterprise security best practicesfiles in it and run the following command:
-
-
-
-## CI/CD Pipeline```bash
-
+```bash
 docker run --rm --volume "$(pwd):/terraform-docs" -u $(id -u) quay.io/terraform-docs/terraform-docs:0.18.0 markdown /terraform-docs
-
-The GitHub Actions pipeline includes:```
-
-
-
-1. **Security Scan**: Vulnerability and compliance scanningIf `output.file` is not enabled for this module, generated output can be redirected
-
-2. **Lint and Format**: Code quality checksback to a file:
-
-3. **Validate**: Terraform validation across environments
-
-4. **Test**: Automated testing with Terraform native tests```bash
-
-5. **Plan**: Generate deployment plans for reviewdocker run --rm --volume "$(pwd):/terraform-docs" -u $(id -u) quay.io/terraform-docs/terraform-docs:0.18.0 markdown /terraform-docs > doc.md
-
-6. **Deploy**: Automated deployment with approval gates```
-
-7. **Documentation**: Auto-update module documentation
-
-**NOTE:** Docker tag `latest` refers to _latest_ stable released version and `edge`
-
-## Testingrefers to HEAD of `master` at any given point in time.
-
-
-
-The project includes comprehensive testing:### Using GitHub Actions
-
-
-
-- **Unit tests**: Individual module testingTo use terraform-docs GitHub Action, configure a YAML workflow file (e.g.
-
-- **Integration tests**: Full environment testing`.github/workflows/documentation.yml`) with the following:
-
-- **Security tests**: Configuration compliance
-
-- **Documentation tests**: README and module docs validation```yaml
-
-name: Generate terraform docs
-
-Run tests locally:on:
-
-```bash  - pull_request
-
-cd tests
-
-terraform initjobs:
-
-terraform test  docs:
-
-```    runs-on: ubuntu-latest
-
-    steps:
-
-## Contributing    - uses: actions/checkout@v3
-
-      with:
-
-1. Fork the repository        ref: ${{ github.event.pull_request.head.ref }}
-
-2. Create a feature branch
-
-3. Make your changes    - name: Render terraform docs and push changes back to PR
-
-4. Run tests and formatting      uses: terraform-docs/gh-actions@main
-
-5. Submit a pull request      with:
-
-        working-dir: .
-
-## License        output-file: README.md
-
-        output-method: inject
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.        git-push: "true"
-
 ```
 
-## Support
+If `output.file` is not enabled for this module, generated output can be redirected
+back to a file:
+
+```bash
+docker run --rm --volume "$(pwd):/terraform-docs" -u $(id -u) quay.io/terraform-docs/terraform-docs:0.18.0 markdown /terraform-docs > doc.md
+```
+
+**NOTE:** Docker tag `latest` refers to _latest_ stable released version and `edge`
+refers to HEAD of `master` at any given point in time.
+
+### Using GitHub Actions
+
+To use terraform-docs GitHub Action, configure a YAML workflow file (e.g.
+`.github/workflows/documentation.yml`) with the following:
+
+```yaml
+name: Generate terraform docs
+on:
+  - pull_request
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        ref: ${{ github.event.pull_request.head.ref }}
+
+    - name: Render terraform docs and push changes back to PR
+      uses: terraform-docs/gh-actions@main
+      with:
+        working-dir: .
+        output-file: README.md
+        output-method: inject
+        git-push: "true"
+```
 
 Read more about [terraform-docs GitHub Action] and its configuration and
+examples.
 
-For questions and support:examples.
-
-- Create an issue in this repository
-
-- Review the examples in the `examples/` directory### pre-commit hook
-
-- Check the module documentation in each module's README
+### pre-commit hook
 
 With pre-commit, you can ensure your Terraform module documentation is kept
+up-to-date each time you make a commit.
 
----up-to-date each time you make a commit.
-
-
-
-**Note**: This is a learning laboratory. Ensure you understand the costs associated with Azure resources before deploying to production environments.First [install pre-commit] and then create or update a `.pre-commit-config.yaml`
+First [install pre-commit] and then create or update a `.pre-commit-config.yaml`
 in the root of your Git repo with at least the following content:
 
 ```yaml
