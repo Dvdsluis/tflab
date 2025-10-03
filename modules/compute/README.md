@@ -1,8 +1,4 @@
 <!-- BEGIN_TF_DOCS -->
-
-
-## Requirements
-
 ## Requirements
 
 | Name | Version |
@@ -12,19 +8,13 @@
 
 ## Providers
 
-## Providers
-
 | Name | Version |
 |------|---------|
 | <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | ~> 3.0 |
 
 ## Modules
 
-## Modules
-
 No modules.
-
-## Resources
 
 ## Resources
 
@@ -45,8 +35,6 @@ No modules.
 
 ## Inputs
 
-## Inputs
-
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_admin_username"></a> [admin\_username](#input\_admin\_username) | Admin username for VMs | `string` | n/a | yes |
@@ -64,8 +52,6 @@ No modules.
 
 ## Outputs
 
-## Outputs
-
 | Name | Description |
 |------|-------------|
 | <a name="output_app_lb_id"></a> [app\_lb\_id](#output\_app\_lb\_id) | ID of the app load balancer |
@@ -75,6 +61,5 @@ No modules.
 | <a name="output_web_lb_public_ip"></a> [web\_lb\_public\_ip](#output\_web\_lb\_public\_ip) | Public IP of the web load balancer |
 | <a name="output_web_nsg_id"></a> [web\_nsg\_id](#output\_web\_nsg\_id) | ID of the web network security group |
 | <a name="output_web_vmss_id"></a> [web\_vmss\_id](#output\_web\_vmss\_id) | ID of the web VM scale set |
-
 
 <!-- END_TF_DOCS -->
