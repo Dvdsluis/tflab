@@ -423,15 +423,6 @@ jobs:
           rm terraform-docs.tar.gz
           terraform-docs --version
 
-      - name: Setup terraform-docs
-        uses: terraform-docs/gh-actions@main
-        with:
-          working-dir: .
-          output-file: README.md
-          output-method: inject
-          git-push: "false"
-          git-commit-message: "docs: update terraform documentation"
-
       - name: Generate module documentation
         run: |
           for module in modules/*/; do
