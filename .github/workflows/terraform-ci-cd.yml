@@ -404,6 +404,16 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Install terraform-docs
+        run: |
+          TERRAFORM_DOCS_VERSION="0.18.0"
+          curl -sSLo terraform-docs.tar.gz "https://terraform-docs.io/dl/v${TERRAFORM_DOCS_VERSION}/terraform-docs-v${TERRAFORM_DOCS_VERSION}-linux-amd64.tar.gz"
+          tar -xzf terraform-docs.tar.gz
+          chmod +x terraform-docs
+          sudo mv terraform-docs /usr/local/bin/
+          rm terraform-docs.tar.gz
+          terraform-docs --version
+
       - name: Setup terraform-docs
         uses: terraform-docs/gh-actions@main
         with:

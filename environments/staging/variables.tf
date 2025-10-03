@@ -1,3 +1,8 @@
+# SSH Public Key for VM access
+variable "ssh_public_key" {
+  description = "SSH public key for VM admin access (in OpenSSH format)"
+  type        = string
+}
 # Staging environment variables - inherits from dev but with production-like settings
 
 # Project Configuration
