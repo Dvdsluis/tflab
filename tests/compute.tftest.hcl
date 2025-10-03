@@ -25,8 +25,8 @@ run "compute_plan_test" {
       desired_size  = 1
     }
 
-    admin_username = "azureuser"
-    admin_password = "TestPassword123!"
+  admin_username = "azureuser"
+  ssh_public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDtestkey user@host"
 
     tags = {
       Environment = "test"
@@ -97,8 +97,8 @@ run "compute_validate_outputs" {
       desired_size  = 1
     }
 
-    admin_username = "azureuser"
-    admin_password = "TestPassword123!"
+  admin_username = "azureuser"
+  ssh_public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDtestkey user@host"
     tags           = {}
   }
 
