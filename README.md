@@ -1,4 +1,4 @@
-# Terraform Lab# Terraform Lab# terraform-docs
+# Terraform Lab# Terraform Lab# Terraform Lab# terraform-docs
 
 
 
@@ -6,7 +6,7 @@
 
 
 
-A comprehensive Terraform laboratory for learning Infrastructure as Code with Azure, featuring enterprise-grade CI/CD pipelines, security scanning, and automated documentation.[![Terraform CI/CD](https://github.com/Dvdsluis/tflab/workflows/Terraform%20CI/CD%20Pipeline/badge.svg)](https://github.com/Dvdsluis/tflab/actions)[![Build Status](https://github.com/terraform-docs/terraform-docs/workflows/ci/badge.svg)](https://github.com/terraform-docs/terraform-docs/actions) [![GoDoc](https://pkg.go.dev/badge/github.com/terraform-docs/terraform-docs)](https://pkg.go.dev/github.com/terraform-docs/terraform-docs) [![Go Report Card](https://goreportcard.com/badge/github.com/terraform-docs/terraform-docs)](https://goreportcard.com/report/github.com/terraform-docs/terraform-docs) [![Codecov Report](https://codecov.io/gh/terraform-docs/terraform-docs/branch/master/graph/badge.svg)](https://codecov.io/gh/terraform-docs/terraform-docs) [![License](https://img.shields.io/github/license/terraform-docs/terraform-docs)](https://github.com/terraform-docs/terraform-docs/blob/master/LICENSE) [![Latest release](https://img.shields.io/github/v/release/terraform-docs/terraform-docs)](https://github.com/terraform-docs/terraform-docs/releases)
+A comprehensive Terraform laboratory for learning Infrastructure as Code with Azure, featuring enterprise-grade CI/CD pipelines, security scanning, and automated documentation.[![Terraform CI/CD](https://github.com/Dvdsluis/tflab/workflows/Terraform%20CI/CD%20Pipeline/badge.svg)](https://github.com/Dvdsluis/tflab/actions)
 
 
 
@@ -14,7 +14,7 @@ A comprehensive Terraform laboratory for learning Infrastructure as Code with Az
 
 
 
-- **Multi-environment setup**: Dev, Staging, and Production environmentsA comprehensive Terraform laboratory for learning Infrastructure as Code with Azure, featuring enterprise-grade CI/CD pipelines, security scanning, and automated documentation.![terraform-docs-teaser](./images/terraform-docs-teaser.png)
+- **Multi-environment setup**: Dev, Staging, and Production environmentsA comprehensive Terraform laboratory for learning Infrastructure as Code with Azure, featuring enterprise-grade CI/CD pipelines, security scanning, and automated documentation.[![Terraform CI/CD](https://github.com/Dvdsluis/tflab/workflows/Terraform%20CI/CD%20Pipeline/badge.svg)](https://github.com/Dvdsluis/tflab/actions)[![Build Status](https://github.com/terraform-docs/terraform-docs/workflows/ci/badge.svg)](https://github.com/terraform-docs/terraform-docs/actions) [![GoDoc](https://pkg.go.dev/badge/github.com/terraform-docs/terraform-docs)](https://pkg.go.dev/github.com/terraform-docs/terraform-docs) [![Go Report Card](https://goreportcard.com/badge/github.com/terraform-docs/terraform-docs)](https://goreportcard.com/report/github.com/terraform-docs/terraform-docs) [![Codecov Report](https://codecov.io/gh/terraform-docs/terraform-docs/branch/master/graph/badge.svg)](https://codecov.io/gh/terraform-docs/terraform-docs) [![License](https://img.shields.io/github/license/terraform-docs/terraform-docs)](https://github.com/terraform-docs/terraform-docs/blob/master/LICENSE) [![Latest release](https://img.shields.io/github/v/release/terraform-docs/terraform-docs)](https://github.com/terraform-docs/terraform-docs/releases)
 
 - **Modular architecture**: Reusable networking, compute, and database modules  
 
@@ -22,7 +22,7 @@ A comprehensive Terraform laboratory for learning Infrastructure as Code with Az
 
 - **Automated testing**: Native Terraform tests and Terratest integration
 
-- **CI/CD pipeline**: GitHub Actions with automated validation, security scans, and deployment## Features## What is terraform-docs
+- **CI/CD pipeline**: GitHub Actions with automated validation, security scans, and deployment## Features
 
 - **Documentation**: Auto-generated module documentation with terraform-docs
 
@@ -30,7 +30,7 @@ A comprehensive Terraform laboratory for learning Infrastructure as Code with Az
 
 ## Quick Start
 
-- **Multi-environment setup**: Dev, Staging, and Production environmentsA utility to generate documentation from Terraform modules in various output formats.
+- **Multi-environment setup**: Dev, Staging, and Production environmentsA comprehensive Terraform laboratory for learning Infrastructure as Code with Azure, featuring enterprise-grade CI/CD pipelines, security scanning, and automated documentation.![terraform-docs-teaser](./images/terraform-docs-teaser.png)
 
 1. **Clone the repository**:
 
@@ -38,7 +38,7 @@ A comprehensive Terraform laboratory for learning Infrastructure as Code with Az
 
    git clone https://github.com/Dvdsluis/tflab.git
 
-   cd tflab- **Enterprise security**: Hardened modules with SSH-only access and security scanning## Installation
+   cd tflab- **Enterprise security**: Hardened modules with SSH-only access and security scanning
 
    ```
 
@@ -46,7 +46,7 @@ A comprehensive Terraform laboratory for learning Infrastructure as Code with Az
 
 2. **Initialize Terraform** (choose an environment):
 
-   ```bash- **CI/CD pipeline**: GitHub Actions with automated validation, security scans, and deploymentmacOS users can install using [Homebrew]:
+   ```bash- **CI/CD pipeline**: GitHub Actions with automated validation, security scans, and deployment## Features## What is terraform-docs
 
    cd environments/dev
 
@@ -54,15 +54,15 @@ A comprehensive Terraform laboratory for learning Infrastructure as Code with Az
 
    terraform plan
 
-   terraform apply```bash
+   terraform apply
 
    ```
 
-## Quick Startbrew install terraform-docs
+## Quick Start
 
 3. **Validate configurations**:
 
-   ```bash```
+   ```bash- **Multi-environment setup**: Dev, Staging, and Production environmentsA utility to generate documentation from Terraform modules in various output formats.
 
    # Run all validations
 
@@ -70,7 +70,7 @@ A comprehensive Terraform laboratory for learning Infrastructure as Code with Az
 
    
 
-   # Or use VS Code task (Ctrl+Shift+P -> "Tasks: Run Task")   ```bashor
+   # Or use VS Code task (Ctrl+Shift+P -> "Tasks: Run Task")   ```bash- **Modular architecture**: Reusable networking, compute, and database modules  
 
    ```
 
@@ -78,15 +78,15 @@ A comprehensive Terraform laboratory for learning Infrastructure as Code with Az
 
 ## Project Structure
 
-   cd tflab```bash
+   cd tflab- **Enterprise security**: Hardened modules with SSH-only access and security scanning## Installation
 
 ```
 
-tflab/   ```brew install terraform-docs/tap/terraform-docs
+tflab/   ```
 
 ├── environments/          # Environment-specific configurations
 
-│   ├── dev/              # Development environment```
+│   ├── dev/              # Development environment- **Automated testing**: Native Terraform tests and Terratest integration
 
 │   ├── staging/          # Staging environment
 
@@ -94,7 +94,7 @@ tflab/   ```brew install terraform-docs/tap/terraform-docs
 
 ├── modules/              # Reusable Terraform modules
 
-│   ├── networking/       # VNet, subnets, NSGs, NAT Gateway   ```bashWindows users can install using [Scoop]:
+│   ├── networking/       # VNet, subnets, NSGs, NAT Gateway   ```bash- **CI/CD pipeline**: GitHub Actions with automated validation, security scans, and deploymentmacOS users can install using [Homebrew]:
 
 │   ├── compute/          # VM Scale Sets, Load Balancers
 
@@ -102,55 +102,55 @@ tflab/   ```brew install terraform-docs/tap/terraform-docs
 
 ├── tests/                # Native Terraform tests
 
-├── scripts/              # Automation scripts   terraform init```bash
+├── scripts/              # Automation scripts   terraform init- **Documentation**: Auto-generated module documentation with terraform-docs
 
 ├── .github/workflows/    # CI/CD pipeline definitions
 
-└── docs/                 # Additional documentation   terraform planscoop bucket add terraform-docs https://github.com/terraform-docs/scoop-bucket
+└── docs/                 # Additional documentation   terraform plan
 
 ```
 
-   terraform applyscoop install terraform-docs
+   terraform apply```bash
 
 ## Environments
 
-   ``````
+   ```
 
 ### Development (dev)
 
-- **Purpose**: Development and testing
+- **Purpose**: Development and testing## Quick Startbrew install terraform-docs
 
 - **VM Sizes**: Standard_B1s (web), Standard_B1ms (app)
 
-- **Database**: Basic PostgreSQL Flexible Server3. **Validate configurations**:or [Chocolatey]:
+- **Database**: Basic PostgreSQL Flexible Server3. **Validate configurations**:
 
 - **Features**: NAT Gateway enabled, Bastion disabled
 
-   ```bash
+   ```bash```
 
 ### Staging (staging)  
 
-- **Purpose**: Pre-production testing   # Run all validations```bash
+- **Purpose**: Pre-production testing   # Run all validations
 
 - **VM Sizes**: Standard_B2s (web), Standard_B2ms (app)
 
-- **Database**: General Purpose PostgreSQL   ./scripts/validate-terraform.shchoco install terraform-docs
+- **Database**: General Purpose PostgreSQL   ./scripts/validate-terraform.sh1. **Clone the repository**:
 
 - **Features**: NAT Gateway enabled, Bastion enabled
 
-   ```
+   
 
 ### Production (prod)
 
-- **Purpose**: Production workloads   # Or use VS Code task (Ctrl+Shift+P -> "Tasks: Run Task")
+- **Purpose**: Production workloads   # Or use VS Code task (Ctrl+Shift+P -> "Tasks: Run Task")   ```bashor
 
 - **VM Sizes**: Standard_D2s_v3 (web), Standard_D4s_v3 (app)
 
-- **Database**: Business Critical PostgreSQL   ```Stable binaries are also available on the [releases] page. To install, download the
+- **Database**: Business Critical PostgreSQL   ```
 
 - **Features**: Full redundancy, enhanced monitoring
 
-binary for your platform from "Assets" and place this into your `$PATH`:
+   git clone https://github.com/Dvdsluis/tflab.git
 
 ## Modules
 
@@ -158,63 +158,63 @@ binary for your platform from "Assets" and place this into your `$PATH`:
 
 ### Networking Module
 
-Creates a secure network foundation with:```bash
+Creates a secure network foundation with:   cd tflab```bash
 
 - Virtual Network with multiple subnets (public, private, database)
 
-- Network Security Groups with least-privilege rules```curl -Lo ./terraform-docs.tar.gz https://github.com/terraform-docs/terraform-docs/releases/download/v0.18.0/terraform-docs-v0.18.0-$(uname)-amd64.tar.gz
+- Network Security Groups with least-privilege rules```
 
 - NAT Gateway for private subnet internet access
 
-- Route tables for traffic controltflab/tar -xzf terraform-docs.tar.gz
+- Route tables for traffic controltflab/   ```brew install terraform-docs/tap/terraform-docs
 
 
 
-### Compute Module├── environments/          # Environment-specific configurationschmod +x terraform-docs
+### Compute Module├── environments/          # Environment-specific configurations
 
 Deploys scalable compute infrastructure:
 
-- Virtual Machine Scale Sets for web and app tiers│   ├── dev/              # Development environmentmv terraform-docs /usr/local/bin/terraform-docs
+- Virtual Machine Scale Sets for web and app tiers│   ├── dev/              # Development environment```
 
 - Azure Load Balancers with health probes
 
-- SSH-only authentication (no passwords)│   ├── staging/          # Staging environment```
+- SSH-only authentication (no passwords)│   ├── staging/          # Staging environment
 
 - Auto-scaling configuration
 
-│   └── prod/             # Production environment
+│   └── prod/             # Production environment2. **Initialize Terraform** (choose an environment):
 
 ### Database Module
 
-Provides managed database services:├── modules/              # Reusable Terraform modules**NOTE:** Windows releases are in `ZIP` format.
+Provides managed database services:├── modules/              # Reusable Terraform modules
 
 - PostgreSQL Flexible Server with configurable performance tiers
 
-- Azure Key Vault for credential management│   ├── networking/       # VNet, subnets, NSGs, NAT Gateway
+- Azure Key Vault for credential management│   ├── networking/       # VNet, subnets, NSGs, NAT Gateway   ```bashWindows users can install using [Scoop]:
 
 - Automated backups and point-in-time recovery
 
-- Network isolation with delegated subnets│   ├── compute/          # VM Scale Sets, Load BalancersThe latest version can be installed using `go install` or `go get`:
+- Network isolation with delegated subnets│   ├── compute/          # VM Scale Sets, Load Balancers
 
 
 
-## Security Features│   └── database/         # PostgreSQL, Key Vault
+## Security Features│   └── database/         # PostgreSQL, Key Vault   cd environments/dev
 
 
 
-### Infrastructure Security├── tests/                # Native Terraform tests```bash
+### Infrastructure Security├── tests/                # Native Terraform tests
 
 - **SSH-only authentication**: No admin passwords configured
 
-- **Network isolation**: Proper subnet segmentation with NSGs├── scripts/              # Automation scripts# go1.17+
+- **Network isolation**: Proper subnet segmentation with NSGs├── scripts/              # Automation scripts   terraform init```bash
 
 - **Encryption**: Disk encryption enabled for all VMs
 
-- **Key management**: Azure Key Vault for sensitive data├── .github/workflows/    # CI/CD pipeline definitionsgo install github.com/terraform-docs/terraform-docs@v0.18.0
+- **Key management**: Azure Key Vault for sensitive data├── .github/workflows/    # CI/CD pipeline definitions
 
 
 
-### CI/CD Security└── docs/                 # Additional documentation```
+### CI/CD Security└── docs/                 # Additional documentation   terraform planscoop bucket add terraform-docs https://github.com/terraform-docs/scoop-bucket
 
 - **Vulnerability scanning**: Trivy for container and infrastructure scanning
 
@@ -222,19 +222,19 @@ Provides managed database services:├── modules/              # Reusable Te
 
 - **Static analysis**: Semgrep for code quality and security issues
 
-- **Secrets management**: GitHub secrets for sensitive variables```bash
+- **Secrets management**: GitHub secrets for sensitive variables   terraform applyscoop install terraform-docs
 
 
 
-## Testing## Environments# go1.16
+## Testing## Environments
 
 
 
-### Native Terraform TestsGO111MODULE="on" go get github.com/terraform-docs/terraform-docs@v0.18.0
+### Native Terraform Tests   ``````
 
 Located in the `tests/` directory, these use Terraform's built-in testing framework:
 
-### Development (dev)```
+### Development (dev)
 
 ```bash
 
@@ -242,22 +242,281 @@ Located in the `tests/` directory, these use Terraform's built-in testing framew
 
 terraform test
 
-- **VM Sizes**: Standard_B1s (web), Standard_B1ms (app)**NOTE:** please use the latest Go to do this, minimum `go1.16` is required.
+- **VM Sizes**: Standard_B1s (web), Standard_B1ms (app)
 
 # Run specific test
 
-terraform test tests/networking.tftest.hcl- **Database**: Basic PostgreSQL Flexible Server
+terraform test tests/networking.tftest.hcl- **Database**: Basic PostgreSQL Flexible Server3. **Validate configurations**:or [Chocolatey]:
 
 ```
 
-- **Features**: NAT Gateway enabled, Bastion disabledThis will put `terraform-docs` in `$(go env GOPATH)/bin`. If you encounter the error
+- **Features**: NAT Gateway enabled, Bastion disabled
 
 ### Validation Scripts
 
-Comprehensive validation using the included scripts:`terraform-docs: command not found` after installation then you may need to either add
+Comprehensive validation using the included scripts:   ```bash
 
 
 
+```bash### Staging (staging)  
+
+# Full validation suite
+
+./scripts/validate-terraform.sh- **Purpose**: Pre-production testing   # Run all validations```bash
+
+
+
+# Individual validation components- **VM Sizes**: Standard_B2s (web), Standard_B2ms (app)
+
+terraform fmt -check -recursive
+
+terraform validate- **Database**: General Purpose PostgreSQL   ./scripts/validate-terraform.shchoco install terraform-docs
+
+terraform plan -detailed-exitcode
+
+```- **Features**: NAT Gateway enabled, Bastion enabled
+
+
+
+## CI/CD Pipeline   ```
+
+
+
+The GitHub Actions pipeline provides:### Production (prod)
+
+
+
+1. **Pull Request Validation**- **Purpose**: Production workloads   # Or use VS Code task (Ctrl+Shift+P -> "Tasks: Run Task")
+
+   - Terraform formatting check
+
+   - Configuration validation- **VM Sizes**: Standard_D2s_v3 (web), Standard_D4s_v3 (app)
+
+   - Security scanning
+
+   - Test execution- **Database**: Business Critical PostgreSQL   ```Stable binaries are also available on the [releases] page. To install, download the
+
+
+
+2. **Security Scanning**- **Features**: Full redundancy, enhanced monitoring
+
+   - Trivy vulnerability scanning
+
+   - Checkov policy compliancebinary for your platform from "Assets" and place this into your `$PATH`:
+
+   - Semgrep static analysis
+
+## Modules
+
+3. **Deployment Pipeline**
+
+   - Automated planning for all environments## Project Structure
+
+   - Manual approval for production deployments
+
+   - Terraform state management### Networking Module
+
+   - Documentation updates
+
+Creates a secure network foundation with:```bash
+
+## Prerequisites
+
+- Virtual Network with multiple subnets (public, private, database)
+
+### Local Development
+
+- [Terraform](https://www.terraform.io/downloads.html) >= 1.0- Network Security Groups with least-privilege rules```curl -Lo ./terraform-docs.tar.gz https://github.com/terraform-docs/terraform-docs/releases/download/v0.18.0/terraform-docs-v0.18.0-$(uname)-amd64.tar.gz
+
+- [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
+
+- [terraform-docs](https://terraform-docs.io/user-guide/installation/) (optional)- NAT Gateway for private subnet internet access
+
+- [TFLint](https://github.com/terraform-linters/tflint) (optional)
+
+- Route tables for traffic controltflab/tar -xzf terraform-docs.tar.gz
+
+### Azure Requirements
+
+- Azure subscription with appropriate permissions
+
+- Resource group for deployment target
+
+- Service principal for CI/CD (if using automated deployment)### Compute Module├── environments/          # Environment-specific configurationschmod +x terraform-docs
+
+
+
+## ConfigurationDeploys scalable compute infrastructure:
+
+
+
+### Environment Variables- Virtual Machine Scale Sets for web and app tiers│   ├── dev/              # Development environmentmv terraform-docs /usr/local/bin/terraform-docs
+
+Set these for local development:
+
+- Azure Load Balancers with health probes
+
+```bash
+
+export ARM_SUBSCRIPTION_ID="your-subscription-id"- SSH-only authentication (no passwords)│   ├── staging/          # Staging environment```
+
+export ARM_TENANT_ID="your-tenant-id"
+
+export ARM_CLIENT_ID="your-client-id"- Auto-scaling configuration
+
+export ARM_CLIENT_SECRET="your-client-secret"
+
+```│   └── prod/             # Production environment
+
+
+
+### Terraform Variables### Database Module
+
+Each environment has its own `terraform.tfvars` file with environment-specific values:
+
+Provides managed database services:├── modules/              # Reusable Terraform modules**NOTE:** Windows releases are in `ZIP` format.
+
+- **Network configuration**: CIDR blocks, subnet definitions
+
+- **Compute configuration**: VM sizes, instance counts- PostgreSQL Flexible Server with configurable performance tiers
+
+- **Database configuration**: Performance tiers, backup settings
+
+- **Security configuration**: SSH keys, access rules- Azure Key Vault for credential management│   ├── networking/       # VNet, subnets, NSGs, NAT Gateway
+
+
+
+## Learning Path- Automated backups and point-in-time recovery
+
+
+
+This lab is designed as a progressive learning experience:- Network isolation with delegated subnets│   ├── compute/          # VM Scale Sets, Load BalancersThe latest version can be installed using `go install` or `go get`:
+
+
+
+1. **Start with Development**: Deploy the dev environment to understand basic concepts
+
+2. **Explore Modules**: Examine the modular architecture and reusable components
+
+3. **Security Hardening**: Review security features and best practices## Security Features│   └── database/         # PostgreSQL, Key Vault
+
+4. **CI/CD Integration**: Set up automated pipelines for consistent deployments
+
+5. **Testing Strategy**: Implement comprehensive testing with native Terraform tests
+
+6. **Production Readiness**: Graduate to staging and production environments
+
+### Infrastructure Security├── tests/                # Native Terraform tests```bash
+
+## Troubleshooting
+
+- **SSH-only authentication**: No admin passwords configured
+
+### Common Issues
+
+- **Network isolation**: Proper subnet segmentation with NSGs├── scripts/              # Automation scripts# go1.17+
+
+**Authentication Errors**
+
+```bash- **Encryption**: Disk encryption enabled for all VMs
+
+# Login to Azure CLI
+
+az login- **Key management**: Azure Key Vault for sensitive data├── .github/workflows/    # CI/CD pipeline definitionsgo install github.com/terraform-docs/terraform-docs@v0.18.0
+
+
+
+# Set subscription
+
+az account set --subscription "your-subscription-id"
+
+### CI/CD Security└── docs/                 # Additional documentation```
+
+# Verify authentication
+
+az account show- **Vulnerability scanning**: Trivy for container and infrastructure scanning
+
+```
+
+- **Policy compliance**: Checkov for security best practices```
+
+**State Lock Issues**
+
+```bash- **Static analysis**: Semgrep for code quality and security issues
+
+# Force unlock (use with caution)
+
+terraform force-unlock LOCK_ID- **Secrets management**: GitHub secrets for sensitive variables```bash
+
+```
+
+
+
+**Module Source Errors**
+
+```bash## Testing## Environments# go1.16
+
+# Reinitialize modules
+
+terraform init -upgrade
+
+```
+
+### Native Terraform TestsGO111MODULE="on" go get github.com/terraform-docs/terraform-docs@v0.18.0
+
+### Getting Help
+
+Located in the `tests/` directory, these use Terraform's built-in testing framework:
+
+- Check the [LEARNING_GUIDE.md](LEARNING_GUIDE.md) for detailed tutorials
+
+- Review module documentation in respective `README.md` files### Development (dev)```
+
+- Examine test files for usage examples
+
+- Check GitHub Issues for known problems and solutions```bash
+
+
+
+## Contributing# Run all tests- **Purpose**: Development and testing
+
+
+
+Contributions are welcome! Please:terraform test
+
+
+
+1. Fork the repository- **VM Sizes**: Standard_B1s (web), Standard_B1ms (app)**NOTE:** please use the latest Go to do this, minimum `go1.16` is required.
+
+2. Create a feature branch
+
+3. Make your changes with appropriate tests# Run specific test
+
+4. Ensure all validations pass
+
+5. Submit a pull requestterraform test tests/networking.tftest.hcl- **Database**: Basic PostgreSQL Flexible Server
+
+
+
+## License```
+
+
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.- **Features**: NAT Gateway enabled, Bastion disabledThis will put `terraform-docs` in `$(go env GOPATH)/bin`. If you encounter the error
+
+
+
+## Acknowledgments### Validation Scripts
+
+
+
+- Built with [Terraform](https://www.terraform.io/)Comprehensive validation using the included scripts:`terraform-docs: command not found` after installation then you may need to either add
+
+- Uses [Azure Resource Manager](https://azure.microsoft.com/en-us/features/resource-manager/)
+
+- Documentation generated with [terraform-docs](https://terraform-docs.io/)
+
+- Security scanning by [Trivy](https://trivy.dev/), [Checkov](https://www.checkov.io/), and [Semgrep](https://semgrep.dev/)
 ```bash### Staging (staging)  that directory to your `$PATH` as shown [here] or do a manual installation by cloning
 
 # Full validation suite
