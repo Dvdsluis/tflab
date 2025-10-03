@@ -157,6 +157,7 @@ jobs:
             go test -v -timeout 30m
           else
             echo "Running Terraform native tests..."
+            terraform init
             terraform test
           fi
 
