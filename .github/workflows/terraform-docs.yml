@@ -23,43 +23,25 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 0
 
-      - name: Render terraform docs inside the README.md and push changes back to PR branch
-        uses: terraform-docs/gh-actions@v1.0.0
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
         with:
-          working-dir: .
-          output-file: README.md
-          output-method: inject
-          git-push: "false"  # Disable automatic push, we'll handle it manually
-          git-commit-message: "docs: update terraform documentation [skip ci]"
+          terraform_version: 1.13.3
 
-      - name: Generate documentation for modules
+      - name: Install terraform-docs
         run: |
-          # Install terraform-docs
-          curl -sSLo ./terraform-docs.tar.gz https://terraform-docs.io/dl/v0.18.0/terraform-docs-v0.18.0-$(uname)-amd64.tar.gz
+          TERRAFORM_DOCS_VERSION="0.18.0"
+          curl -sSLo terraform-docs.tar.gz "https://terraform-docs.io/dl/v${TERRAFORM_DOCS_VERSION}/terraform-docs-v${TERRAFORM_DOCS_VERSION}-linux-amd64.tar.gz"
           tar -xzf terraform-docs.tar.gz
           chmod +x terraform-docs
           sudo mv terraform-docs /usr/local/bin/
           rm terraform-docs.tar.gz
-          
-          # Generate docs for each module
-          for module in modules/*/; do
-            if [ -d "$module" ]; then
-              echo "Generating documentation for $module"
-              cd "$module"
-              terraform-docs markdown table --output-file README.md .
-              cd - > /dev/null
-            fi
-          done
-          
-          # Generate docs for each environment
-          for env in environments/*/; do
-            if [ -d "$env" ]; then
-              echo "Generating documentation for $env"
-              cd "$env"
-              terraform-docs markdown table --output-file README.md .
-              cd - > /dev/null
-            fi
-          done
+          terraform-docs --version
+
+      - name: Generate documentation using script
+        run: |
+          chmod +x scripts/generate-docs.sh
+          ./scripts/generate-docs.sh
 
       - name: Commit documentation updates
         run: |
