@@ -108,7 +108,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "web" {
     username   = var.admin_username
     public_key = var.ssh_public_key
   }
-  encryption_at_host_enabled      = true
+  encryption_at_host_enabled = true
 
   source_image_reference {
     publisher = "Canonical"
@@ -154,7 +154,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "app" {
     username   = var.admin_username
     public_key = var.ssh_public_key
   }
-  encryption_at_host_enabled      = true
+  encryption_at_host_enabled = true
 
   source_image_reference {
     publisher = "Canonical"

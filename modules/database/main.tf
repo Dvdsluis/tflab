@@ -26,7 +26,7 @@ resource "azurerm_key_vault" "database" {
   tenant_id                  = data.azurerm_client_config.current.tenant_id
   sku_name                   = "standard" # Policy requirement: Standard tier
   soft_delete_retention_days = 7          # Policy requirement: 7 days retention
-  purge_protection_enabled   = false      # Policy requirement: Disable purge protection
+  purge_protection_enabled   = true       # Policy requirement: Enable purge protection
 
   # Access policy for Terraform service principal
   access_policy {
@@ -134,4 +134,5 @@ resource "azurerm_postgresql_flexible_server" "main" {
   }
 
   tags = var.tags
+  expiration_date = "2026-01-01T00:00:00Z"
 }
