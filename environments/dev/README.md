@@ -31,7 +31,6 @@
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_additional_tags"></a> [additional\_tags](#input\_additional\_tags) | Additional tags to apply to all resources | `map(string)` | `{}` | no |
-| <a name="input_admin_password"></a> [admin\_password](#input\_admin\_password) | Admin password for VMs | `string` | n/a | yes |
 | <a name="input_admin_username"></a> [admin\_username](#input\_admin\_username) | Admin username for VMs | `string` | `"azureuser"` | no |
 | <a name="input_app_instance_count"></a> [app\_instance\_count](#input\_app\_instance\_count) | Number of app server instances | `number` | `2` | no |
 | <a name="input_app_vm_size"></a> [app\_vm\_size](#input\_app\_vm\_size) | VM size for app servers | `string` | `"Standard_B1ms"` | no |

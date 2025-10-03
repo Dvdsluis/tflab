@@ -59,6 +59,5 @@ No modules.
 | <a name="output_key_vault_uri"></a> [key\_vault\_uri](#output\_key\_vault\_uri) | URI of the Key Vault created for database secrets |
 | <a name="output_mysql_server_id"></a> [mysql\_server\_id](#output\_mysql\_server\_id) | ID of the Azure MySQL Flexible Server (if MySQL) |
 | <a name="output_postgres_server_id"></a> [postgres\_server\_id](#output\_postgres\_server\_id) | ID of the Azure PostgreSQL Flexible Server (if Postgres) |
-
 <!-- END_TF_DOCS -->
 <!-- END_TF_DOCS -->
