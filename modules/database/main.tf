@@ -133,6 +133,6 @@ resource "azurerm_postgresql_flexible_server" "main" {
     }
   }
 
-  tags = var.tags
+  tags            = var.tags
   expiration_date = "2026-01-01T00:00:00Z"
 }
