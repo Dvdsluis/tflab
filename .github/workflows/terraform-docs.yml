@@ -5,8 +5,8 @@ on:
     branches: [ main ]
     paths:
       - 'modules/**/*.tf'
-      - 'environments/**/*.tf'
-      - '.terraform-docs.yml'
+      - 'modules/**/*.md'
+      - 'scripts/generate-docs.sh'
   workflow_dispatch:
 
 jobs:
@@ -42,6 +42,18 @@ jobs:
         run: |
           chmod +x scripts/generate-docs.sh
           ./scripts/generate-docs.sh
+
+      - name: Generate module docs with terraform-docs
+        run: |
+          # Only generate docs for modules, not root
+          for module in modules/*/; do
+            if [ -d "$module" ]; then
+              echo "Generating docs for $module"
+              cd "$module"
+              terraform-docs markdown table --output-file README.md .
+              cd - > /dev/null
+            fi
+          done
 
       - name: Commit documentation updates
         run: |
