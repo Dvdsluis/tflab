@@ -1,8 +1,9 @@
 # Test for the networking module
 
-# Provider configuration for tests
+# Provider configuration for tests (lab: RG-only permissions)
 provider "azurerm" {
   features {}
+  resource_provider_registrations = "none"
 }
 
 run "networking_plan_test" {
