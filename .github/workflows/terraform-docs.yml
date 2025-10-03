@@ -38,18 +38,24 @@ jobs:
           rm terraform-docs.tar.gz
           terraform-docs --version
 
-      - name: Generate documentation using script
-        run: |
-          chmod +x scripts/generate-docs.sh
-          ./scripts/generate-docs.sh
-
       - name: Generate module docs with terraform-docs
         run: |
-          # Only generate docs for modules, not root
+          # Only generate docs for modules, not root directory
+          # This prevents overwriting the project README.md
           for module in modules/*/; do
             if [ -d "$module" ]; then
               echo "Generating docs for $module"
               cd "$module"
+              terraform-docs markdown table --output-file README.md .
+              cd - > /dev/null
+            fi
+          done
+          
+          # Generate docs for environments
+          for env in environments/*/; do
+            if [ -d "$env" ]; then
+              echo "Generating docs for $env"
+              cd "$env"
               terraform-docs markdown table --output-file README.md .
               cd - > /dev/null
             fi
