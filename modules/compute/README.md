@@ -76,4 +76,5 @@ No modules.
 | <a name="output_web_nsg_id"></a> [web\_nsg\_id](#output\_web\_nsg\_id) | ID of the web network security group |
 | <a name="output_web_vmss_id"></a> [web\_vmss\_id](#output\_web\_vmss\_id) | ID of the web VM scale set |
 
+
 <!-- END_TF_DOCS -->

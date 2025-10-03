@@ -88,11 +88,6 @@ variable "admin_username" {
   default     = "azureuser"
 }
 
-variable "admin_password" {
-  description = "Admin password for VMs"
-  type        = string
-  sensitive   = true
-}
 
 variable "enable_nat_gateway" {
   description = "Enable NAT Gateway for private subnets"

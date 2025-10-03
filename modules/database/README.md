@@ -74,4 +74,5 @@ No modules.
 | <a name="output_mysql_server_id"></a> [mysql\_server\_id](#output\_mysql\_server\_id) | ID of the Azure MySQL Flexible Server (if MySQL) |
 | <a name="output_postgres_server_id"></a> [postgres\_server\_id](#output\_postgres\_server\_id) | ID of the Azure PostgreSQL Flexible Server (if Postgres) |
 
+
 <!-- END_TF_DOCS -->
