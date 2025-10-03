@@ -103,8 +103,12 @@ resource "azurerm_linux_virtual_machine_scale_set" "web" {
   sku                             = var.public_instance_config.instance_type
   instances                       = var.public_instance_config.desired_size
   admin_username                  = var.admin_username
-  admin_password                  = var.admin_password
-  disable_password_authentication = false
+  disable_password_authentication = true
+  admin_ssh_key {
+    username   = var.admin_username
+    public_key = var.ssh_public_key
+  }
+  encryption_at_host_enabled      = true
 
   source_image_reference {
     publisher = "Canonical"
@@ -145,8 +149,12 @@ resource "azurerm_linux_virtual_machine_scale_set" "app" {
   sku                             = var.private_instance_config.instance_type
   instances                       = var.private_instance_config.desired_size
   admin_username                  = var.admin_username
-  admin_password                  = var.admin_password
-  disable_password_authentication = false
+  disable_password_authentication = true
+  admin_ssh_key {
+    username   = var.admin_username
+    public_key = var.ssh_public_key
+  }
+  encryption_at_host_enabled      = true
 
   source_image_reference {
     publisher = "Canonical"

@@ -54,10 +54,10 @@ variable "admin_username" {
   type        = string
 }
 
-variable "admin_password" {
-  description = "Admin password for VMs"
+
+variable "ssh_public_key" {
+  description = "SSH public key for VM admin user (enterprise: use secure key management)"
   type        = string
-  sensitive   = true
 }
 
 variable "tags" {

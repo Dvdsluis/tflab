@@ -85,13 +85,13 @@ jobs:
       - name: Create security report summary
         if: always()
         run: |
-          echo "## Security Scan Results 🔒" >> $GITHUB_STEP_SUMMARY
+          echo "## Security Scan Results" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### Scanners Used:" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ Trivy (Vulnerability Scanner)" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ Checkov (Infrastructure Security)" >> $GITHUB_STEP_SUMMARY  
-          echo "- ✅ TFSec (Terraform Security)" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ Semgrep (Static Analysis)" >> $GITHUB_STEP_SUMMARY
+          echo "-  Trivy (Vulnerability Scanner)" >> $GITHUB_STEP_SUMMARY
+          echo "-  Checkov (Infrastructure Security)" >> $GITHUB_STEP_SUMMARY  
+          echo "-  TFSec (Terraform Security)" >> $GITHUB_STEP_SUMMARY
+          echo "-  Semgrep (Static Analysis)" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### Results:" >> $GITHUB_STEP_SUMMARY
           echo "All security scan results have been uploaded to the Security tab." >> $GITHUB_STEP_SUMMARY
