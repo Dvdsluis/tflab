@@ -1,0 +1,70 @@
+name: Generate Terraform Documentation
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'modules/**/*.tf'
+      - 'environments/**/*.tf'
+      - '.terraform-docs.yml'
+  workflow_dispatch:
+
+jobs:
+  docs:
+    name: Generate Documentation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Render terraform docs inside the README.md and push changes back to PR branch
+        uses: terraform-docs/gh-actions@v1.0.0
+        with:
+          working-dir: .
+          output-file: README.md
+          output-method: inject
+          git-push: "true"
+          git-commit-message: "docs: update terraform documentation [skip ci]"
+
+      - name: Generate documentation for modules
+        run: |
+          # Install terraform-docs
+          curl -sSLo ./terraform-docs.tar.gz https://terraform-docs.io/dl/v0.18.0/terraform-docs-v0.18.0-$(uname)-amd64.tar.gz
+          tar -xzf terraform-docs.tar.gz
+          chmod +x terraform-docs
+          sudo mv terraform-docs /usr/local/bin/
+          rm terraform-docs.tar.gz
+          
+          # Generate docs for each module
+          for module in modules/*/; do
+            if [ -d "$module" ]; then
+              echo "Generating documentation for $module"
+              cd "$module"
+              terraform-docs markdown table --output-file README.md .
+              cd - > /dev/null
+            fi
+          done
+          
+          # Generate docs for each environment
+          for env in environments/*/; do
+            if [ -d "$env" ]; then
+              echo "Generating documentation for $env"
+              cd "$env"
+              terraform-docs markdown table --output-file README.md .
+              cd - > /dev/null
+            fi
+          done
+
+      - name: Commit documentation updates
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          if git diff --staged --quiet; then
+            echo "No documentation changes to commit"
+          else
+            git commit -m "docs: update module and environment documentation [skip ci]"
+            git push
+          fi

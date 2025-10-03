@@ -1,0 +1,56 @@
+# Example Terraform variables file
+# Copy this to terraform.tfvars and customize for your environment
+
+# Azure region where resources will be deployed
+# Options: eastus, westus2, centralus, etc.
+location = "East US"
+
+# Environment identifier - used for resource naming and tagging
+# Values: dev, staging, prod
+environment = "dev"
+
+# Resource group name prefix - will be combined with environment
+# Example: myproject-dev-rg
+resource_group_prefix = "tflab"
+
+# Network configuration
+# CIDR block for the virtual network
+vnet_cidr = "10.0.0.0/16"
+
+# Subnet configurations
+# Web tier subnet for public-facing resources
+web_subnet_cidr = "10.0.1.0/24"
+
+# App tier subnet for application servers
+app_subnet_cidr = "10.0.2.0/24"
+
+# Database tier subnet for data storage
+db_subnet_cidr = "10.0.3.0/24"
+
+# Virtual machine configuration
+# SKU for virtual machines - adjust based on workload requirements
+vm_size = "Standard_B2s"
+
+# Number of instances for each tier
+web_vm_count = 2
+app_vm_count = 2
+
+# Database configuration
+# SKU for Azure SQL Database
+sql_sku = "S1"
+
+# Storage account configuration
+# Storage account tier - Standard or Premium
+storage_tier = "Standard"
+
+# Storage replication type - LRS, GRS, RAGRS, ZRS
+storage_replication = "LRS"
+
+# Tagging configuration
+# Common tags applied to all resources
+common_tags = {
+  project     = "terraform-lab"
+  owner       = "devops-team"
+  cost_center = "engineering"
+  managed_by  = "terraform"
+}

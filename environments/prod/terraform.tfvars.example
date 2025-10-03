@@ -1,0 +1,44 @@
+# Example Terraform variables file for production environment
+# Copy this to terraform.tfvars and customize for your production environment
+
+# Azure region - consider using multiple regions for production
+location = "East US"
+
+# Environment identifier
+environment = "prod"
+
+# Resource group prefix
+resource_group_prefix = "tflab"
+
+# Network configuration - separate CIDR range from dev/staging
+vnet_cidr = "10.2.0.0/16"
+
+# Subnet configurations
+web_subnet_cidr = "10.2.1.0/24"
+app_subnet_cidr = "10.2.2.0/24"
+db_subnet_cidr = "10.2.3.0/24"
+
+# Virtual machine configuration - production-grade instances
+vm_size = "Standard_D4s_v3"
+
+# Production instance counts for high availability
+web_vm_count = 4
+app_vm_count = 4
+
+# Database configuration - production tier with high availability
+sql_sku = "P1"
+
+# Storage configuration - premium for production workloads
+storage_tier = "Premium"
+storage_replication = "RAGRS"
+
+# Production-specific tags with compliance requirements
+common_tags = {
+  project     = "terraform-lab"
+  owner       = "devops-team"
+  cost_center = "engineering"
+  managed_by  = "terraform"
+  backup      = "continuous"
+  compliance  = "required"
+  monitoring  = "24x7"
+}

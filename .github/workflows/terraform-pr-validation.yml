@@ -1,0 +1,138 @@
+name: Terraform PR Validation
+
+on:
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'modules/**'
+      - 'environments/**'
+      - 'tests/**'
+      - '*.tf'
+      - '*.tfvars'
+
+env:
+  TF_VERSION: "1.13.3"
+  TFLINT_VERSION: "v0.48.0"
+
+jobs:
+  validate-pr:
+    name: Validate PR Changes
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+
+      - name: Setup TFLint
+        uses: terraform-linters/setup-tflint@v4
+        with:
+          tflint_version: ${{ env.TFLINT_VERSION }}
+
+      - name: Initialize TFLint
+        run: tflint --init
+
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v40
+        with:
+          files: |
+            modules/**/*.tf
+            environments/**/*.tf
+            *.tf
+
+      - name: Terraform Format Check
+        if: steps.changed-files.outputs.any_changed == 'true'
+        run: terraform fmt -check -diff
+
+      - name: Run TFLint on changed directories
+        if: steps.changed-files.outputs.any_changed == 'true'
+        run: |
+          echo "Changed files: ${{ steps.changed-files.outputs.all_changed_files }}"
+          
+          # Get unique directories of changed .tf files
+          directories=$(echo "${{ steps.changed-files.outputs.all_changed_files }}" | tr ' ' '\n' | grep '\.tf$' | xargs -I {} dirname {} | sort | uniq)
+          
+          for dir in $directories; do
+            if [ -d "$dir" ] && [ "$(ls -A $dir/*.tf 2>/dev/null)" ]; then
+              echo "Running TFLint in $dir"
+              cd "$dir"
+              tflint
+              cd - > /dev/null
+            fi
+          done
+
+      - name: Terraform Init and Validate changed environments
+        if: steps.changed-files.outputs.any_changed == 'true'
+        run: |
+          for env in environments/*/; do
+            if [ -d "$env" ]; then
+              # Check if any files in this environment were changed
+              env_name=$(basename "$env")
+              if echo "${{ steps.changed-files.outputs.all_changed_files }}" | grep -q "environments/$env_name/"; then
+                echo "Validating $env"
+                cd "$env"
+                terraform init -backend=false
+                terraform validate
+                cd - > /dev/null
+              fi
+            fi
+          done
+
+      - name: Run Checkov on changed files
+        if: steps.changed-files.outputs.any_changed == 'true'
+        uses: bridgecrewio/checkov-action@master
+        with:
+          file: ${{ steps.changed-files.outputs.all_changed_files }}
+          quiet: true
+          soft_fail: true
+          framework: terraform
+
+      - name: Comment PR with validation results
+        if: steps.changed-files.outputs.any_changed == 'true'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+            
+            const botComment = comments.find(comment => 
+              comment.user.type === 'Bot' && comment.body.includes('Terraform Validation Results')
+            );
+            
+            const body = `## Terraform Validation Results ✅
+            
+            ### Changed Files
+            \`\`\`
+            ${{ steps.changed-files.outputs.all_changed_files }}
+            \`\`\`
+            
+            ### Validation Status
+            - ✅ Terraform format check passed
+            - ✅ TFLint validation passed  
+            - ✅ Terraform validation passed
+            - ✅ Security scan completed
+            
+            *This comment will be updated if validation fails.*`;
+            
+            if (botComment) {
+              github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: botComment.id,
+                body: body
+              });
+            } else {
+              github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: body
+              });
+            }

@@ -1,0 +1,128 @@
+# Terraform state files - contain sensitive data and provider-specific state
+*.tfstate
+*.tfstate.*
+
+# Terraform crash log files - contain debugging information
+crash.log
+crash.*.log
+
+# Terraform variable files containing sensitive data
+# Keep terraform.tfvars.example for reference
+*.tfvars
+*.tfvars.json
+
+# Override files - used for local development customizations
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Terraform CLI configuration files - contain user-specific settings
+.terraformrc
+terraform.rc
+
+# Terraform directories
+.terraform/
+
+# Terraform plan output files - may contain sensitive information
+*.tfplan
+
+# Terraform lock files - should be committed for version consistency
+# .terraform.lock.hcl
+
+# IDE and editor files
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+*.log
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+
+# nyc test coverage
+.nyc_output
+
+# Grunt intermediate storage
+.grunt
+
+# Bower dependency directory
+bower_components
+
+# node_modules - if using any Node.js tools for automation
+node_modules/
+
+# Optional npm cache directory
+.npm
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# Environment variables - contain sensitive configuration
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Temporary files
+tmp/
+temp/
+
+# Archive files
+*.zip
+*.tar.gz
+*.rar
+
+# Build artifacts
+dist/
+build/
+
+# Test artifacts
+test-results/
+test-output/
+
+# Go test cache and coverage
+*.out
+go.sum
+vendor/
+
+# Backup files
+*.backup
+*.bak
+
+# Azure CLI configuration - contains authentication tokens
+.azure/
+
+# AWS CLI configuration - contains credentials
+.aws/
+
+# GCP CLI configuration - contains credentials
+.config/gcloud/
+
+# Kubernetes configuration - may contain cluster credentials
+.kube/config

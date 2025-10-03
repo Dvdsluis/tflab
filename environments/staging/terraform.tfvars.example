@@ -1,0 +1,42 @@
+# Example Terraform variables file for staging environment
+# Copy this to terraform.tfvars and customize for your staging environment
+
+# Azure region - typically same as dev for consistency
+location = "East US"
+
+# Environment identifier
+environment = "staging"
+
+# Resource group prefix
+resource_group_prefix = "tflab"
+
+# Network configuration - separate CIDR range from dev
+vnet_cidr = "10.1.0.0/16"
+
+# Subnet configurations
+web_subnet_cidr = "10.1.1.0/24"
+app_subnet_cidr = "10.1.2.0/24"
+db_subnet_cidr = "10.1.3.0/24"
+
+# Virtual machine configuration - larger instances for staging
+vm_size = "Standard_B4ms"
+
+# Higher instance counts for staging load testing
+web_vm_count = 3
+app_vm_count = 3
+
+# Database configuration - higher tier for staging
+sql_sku = "S2"
+
+# Storage configuration
+storage_tier = "Standard"
+storage_replication = "GRS"
+
+# Staging-specific tags
+common_tags = {
+  project     = "terraform-lab"
+  owner       = "devops-team"
+  cost_center = "engineering"
+  managed_by  = "terraform"
+  backup      = "daily"
+}

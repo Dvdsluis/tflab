@@ -1,0 +1,109 @@
+# =============================================================================
+# Terraform-docs Configuration File
+# =============================================================================
+# Purpose: Configure automated documentation generation for Terraform modules
+# Location: Project root directory (.terraform-docs.yml)  
+# Usage: terraform-docs reads this file to determine output format and content
+# Documentation: https://terraform-docs.io/user-guide/configuration/
+# =============================================================================
+
+# =============================================================================
+# OUTPUT FORMAT CONFIGURATION
+# =============================================================================
+# Formatter determines the structure and style of generated documentation
+# Available formats: markdown, markdown table, json, yaml, xml, asciidoc, tfvars
+formatter: "markdown table"
+
+# =============================================================================
+# TEMPLATE SOURCE CONFIGURATION
+# =============================================================================
+# Header and footer templates provide custom content for documentation
+
+# Header template source - points to file containing introduction content
+# Set to main.tf to extract header comments, or "" to disable
+header-from: "main.tf"
+
+# Footer template source - points to file containing conclusion content  
+# Currently disabled - set to filename if custom footers needed
+footer-from: ""
+
+# =============================================================================
+# RECURSIVE PROCESSING CONFIGURATION
+# =============================================================================
+# Controls whether terraform-docs processes subdirectories automatically
+recursive:
+  enabled: true        # Enable recursive processing of subdirectories
+  path: modules       # Root path for recursive processing (modules directory)
+
+# =============================================================================
+# SECTION VISIBILITY CONFIGURATION
+# =============================================================================
+# Control which sections are included or excluded from generated documentation
+sections:
+  hide: []            # List of sections to hide (empty = show all)
+  show: []            # List of sections to show (empty = show all by default)
+
+# =============================================================================
+# DOCUMENTATION CONTENT TEMPLATE  
+# =============================================================================
+# Defines the structure and order of content in generated documentation
+# Template uses Go template syntax with terraform-docs predefined variables
+content: |-
+  {{ .Header }}
+
+  ## Requirements
+
+  {{ .Requirements }}
+
+  ## Providers
+
+  {{ .Providers }}
+
+  ## Modules
+
+  {{ .Modules }}
+
+  ## Resources
+
+  {{ .Resources }}
+
+  ## Inputs
+
+  {{ .Inputs }}
+
+  ## Outputs
+
+  {{ .Outputs }}
+
+  {{ .Footer }}
+
+# =============================================================================
+# OUTPUT FILE CONFIGURATION
+# =============================================================================
+# Controls how and where documentation content is written to files
+output:
+  file: "README.md"           # Target filename for generated documentation
+  mode: inject               # Injection mode - insert content between markers
+  template: |-               # Template defining injection boundaries
+    <!-- BEGIN_TF_DOCS -->
+    {{ .Content }}
+    <!-- END_TF_DOCS -->
+
+# =============================================================================
+# CONTENT GENERATION SETTINGS
+# =============================================================================
+# Fine-tune what information is included and how it's formatted in output
+settings:
+  anchor: true              # Generate HTML anchor links for section navigation
+  color: true              # Use ANSI color coding in supported terminal outputs
+  default: true            # Display default values for input variables
+  description: false       # Include variable and output descriptions (disabled for brevity)
+  escape: true            # Escape special Markdown characters in descriptions  
+  hide-empty: false       # Display sections even when they contain no content
+  html: true              # Allow HTML tags in generated Markdown output
+  indent: 2               # Number of spaces for indentation in nested content
+  lockfile: true          # Include Terraform provider version lock information
+  read-comments: true     # Parse and include comments from Terraform files
+  required: true          # Mark which input variables are required vs optional
+  sensitive: true         # Identify and appropriately mark sensitive variables
+  type: true              # Display variable types (string, number, list, etc.)

@@ -1,0 +1,118 @@
+name: Security Scan
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    # Run security scan daily at 2 AM UTC
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+
+jobs:
+  security-scan:
+    name: Security Analysis
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      contents: read
+      actions: read
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+          severity: 'CRITICAL,HIGH,MEDIUM'
+
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v2
+        if: always()
+        with:
+          sarif_file: 'trivy-results.sarif'
+
+      - name: Run Checkov action
+        id: checkov
+        uses: bridgecrewio/checkov-action@master
+        with:
+          directory: .
+          quiet: true
+          soft_fail: false
+          framework: terraform
+          output_format: cli,sarif
+          output_file_path: console,reports/results.sarif
+          download_external_modules: true
+          
+      - name: Upload Checkov scan results
+        uses: github/codeql-action/upload-sarif@v2
+        if: always()
+        with:
+          sarif_file: reports/results.sarif
+
+      - name: Run TFSec security scanner
+        uses: aquasecurity/tfsec-action@v1.0.3
+        with:
+          additional_args: --format sarif --out tfsec-results.sarif
+
+      - name: Upload TFSec scan results
+        uses: github/codeql-action/upload-sarif@v2
+        if: always()
+        with:
+          sarif_file: tfsec-results.sarif
+
+      - name: Run Semgrep
+        uses: returntocorp/semgrep-action@v1
+        with:
+          config: >-
+            p/security-audit
+            p/secrets
+            p/terraform
+        env:
+          SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
+
+      - name: Create security report summary
+        if: always()
+        run: |
+          echo "## Security Scan Results 🔒" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Scanners Used:" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Trivy (Vulnerability Scanner)" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Checkov (Infrastructure Security)" >> $GITHUB_STEP_SUMMARY  
+          echo "- ✅ TFSec (Terraform Security)" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Semgrep (Static Analysis)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Results:" >> $GITHUB_STEP_SUMMARY
+          echo "All security scan results have been uploaded to the Security tab." >> $GITHUB_STEP_SUMMARY
+          echo "Please review any findings in the Security tab of this repository." >> $GITHUB_STEP_SUMMARY
+
+  dependency-check:
+    name: Dependency Security Check  
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Go for Terratest dependencies
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.21'
+
+      - name: Run Nancy for Go dependencies
+        if: hashFiles('tests/go.mod') != ''
+        run: |
+          cd tests
+          go list -json -deps ./... | docker run --rm -i sonatypecommunity/nancy:latest sleuth
+
+      - name: Run Govulncheck
+        if: hashFiles('tests/go.mod') != ''
+        run: |
+          go install golang.org/x/vuln/cmd/govulncheck@latest
+          cd tests
+          govulncheck ./...
