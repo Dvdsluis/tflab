@@ -37,7 +37,6 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_admin_password"></a> [admin\_password](#input\_admin\_password) | Admin password for VMs | `string` | n/a | yes |
 | <a name="input_admin_username"></a> [admin\_username](#input\_admin\_username) | Admin username for VMs | `string` | n/a | yes |
 | <a name="input_app_subnet_id"></a> [app\_subnet\_id](#input\_app\_subnet\_id) | ID of the app subnet | `string` | n/a | yes |
 | <a name="input_location"></a> [location](#input\_location) | Azure region for resources | `string` | n/a | yes |
@@ -45,6 +44,7 @@ No modules.
 | <a name="input_private_instance_config"></a> [private\_instance\_config](#input\_private\_instance\_config) | Configuration for private VMSS instances | <pre>object({<br>    instance_type = string<br>    desired_size  = number<br>  })</pre> | n/a | yes |
 | <a name="input_public_instance_config"></a> [public\_instance\_config](#input\_public\_instance\_config) | Configuration for public VMSS instances | <pre>object({<br>    instance_type = string<br>    desired_size  = number<br>  })</pre> | n/a | yes |
 | <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | Name of the resource group | `string` | n/a | yes |
+| <a name="input_ssh_public_key"></a> [ssh\_public\_key](#input\_ssh\_public\_key) | SSH public key for VM admin user (enterprise: use secure key management) | `string` | n/a | yes |
 | <a name="input_tags"></a> [tags](#input\_tags) | A map of tags to assign to the resource | `map(string)` | `{}` | no |
 | <a name="input_vnet_cidr"></a> [vnet\_cidr](#input\_vnet\_cidr) | CIDR block of the VNet | `string` | n/a | yes |
 | <a name="input_web_public_ip_id"></a> [web\_public\_ip\_id](#input\_web\_public\_ip\_id) | ID of the public IP for the web load balancer | `string` | n/a | yes |
