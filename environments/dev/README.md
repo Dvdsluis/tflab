@@ -46,6 +46,7 @@
 | <a name="input_private_subnets"></a> [private\_subnets](#input\_private\_subnets) | List of private subnet CIDR blocks | `list(string)` | <pre>[<br>  "10.0.11.0/24",<br>  "10.0.12.0/24",<br>  "10.0.13.0/24"<br>]</pre> | no |
 | <a name="input_project_name"></a> [project\_name](#input\_project\_name) | Name of the project | `string` | `"terraform-lab"` | no |
 | <a name="input_public_subnets"></a> [public\_subnets](#input\_public\_subnets) | List of public subnet CIDR blocks | `list(string)` | <pre>[<br>  "10.0.1.0/24",<br>  "10.0.2.0/24",<br>  "10.0.3.0/24"<br>]</pre> | no |
+| <a name="input_ssh_public_key"></a> [ssh\_public\_key](#input\_ssh\_public\_key) | SSH public key for VM admin access (in OpenSSH format) | `string` | n/a | yes |
 | <a name="input_vnet_cidr"></a> [vnet\_cidr](#input\_vnet\_cidr) | CIDR block for VNet | `string` | `"10.0.0.0/16"` | no |
 | <a name="input_web_instance_count"></a> [web\_instance\_count](#input\_web\_instance\_count) | Number of web server instances | `number` | `2` | no |
 | <a name="input_web_vm_size"></a> [web\_vm\_size](#input\_web\_vm\_size) | VM size for web servers | `string` | `"Standard_B1s"` | no |
