@@ -15,10 +15,10 @@ run "dev_environment_plan_test" {
     private_subnets  = ["10.0.11.0/24", "10.0.12.0/24"]
     database_subnets = ["10.0.21.0/24", "10.0.22.0/24"]
 
-  # VM configurations
-  web_vm_size = "Standard_B1s"
-  app_vm_size = "Standard_B1s"
-  ssh_public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDtestkey user@host"
+    # VM configurations
+    web_vm_size    = "Standard_B1s"
+    app_vm_size    = "Standard_B1s"
+    ssh_public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDtestkey user@host"
 
     # Database configurations
     db_admin_username        = "dbadmin"
@@ -76,9 +76,9 @@ run "dev_environment_validate_tags" {
     public_subnets           = ["10.0.1.0/24"]
     private_subnets          = ["10.0.11.0/24"]
     database_subnets         = ["10.0.21.0/24"]
-  web_vm_size              = "Standard_B1s"
-  app_vm_size              = "Standard_B1s"
-  ssh_public_key           = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDtestkey user@host"
+    web_vm_size              = "Standard_B1s"
+    app_vm_size              = "Standard_B1s"
+    ssh_public_key           = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDtestkey user@host"
     db_admin_username        = "dbadmin"
     db_server_version        = "13"
     db_sku_name              = "Standard_D2ds_v4"

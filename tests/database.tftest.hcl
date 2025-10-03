@@ -99,8 +99,8 @@ run "database_mysql_test" {
     username                = "dbadmin"
     backup_retention_period = 7
     high_availability       = "Disabled"
-  tags                    = {}
-  ssh_public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDtestkey user@host"
+    tags                    = {}
+    ssh_public_key          = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDtestkey user@host"
   }
 
   assert {
@@ -143,8 +143,8 @@ run "database_validate_outputs" {
     username                = "dbadmin"
     backup_retention_period = 7
     high_availability       = "Disabled"
-  tags                    = {}
-  ssh_public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDtestkey user@host"
+    tags                    = {}
+    ssh_public_key          = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDtestkey user@host"
   }
 
   assert {

@@ -73,8 +73,8 @@ run "networking_validate_outputs" {
     public_subnets      = ["10.0.1.0/24", "10.0.2.0/24"]
     private_subnets     = ["10.0.11.0/24", "10.0.12.0/24"]
     database_subnets    = ["10.0.21.0/24", "10.0.22.0/24"]
-  tags                = {}
-  ssh_public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDtestkey user@host"
+    tags                = {}
+    ssh_public_key      = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDtestkey user@host"
   }
 
   assert {
