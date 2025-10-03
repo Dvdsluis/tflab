@@ -1,4 +1,8 @@
 <!-- BEGIN_TF_DOCS -->
+
+
+## Requirements
+
 ## Requirements
 
 | Name | Version |
@@ -8,13 +12,19 @@
 
 ## Providers
 
+## Providers
+
 | Name | Version |
 |------|---------|
 | <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | ~> 3.0 |
 
 ## Modules
 
+## Modules
+
 No modules.
+
+## Resources
 
 ## Resources
 
@@ -38,6 +48,8 @@ No modules.
 
 ## Inputs
 
+## Inputs
+
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_database_subnets"></a> [database\_subnets](#input\_database\_subnets) | List of database subnet CIDR blocks | `list(string)` | n/a | yes |
@@ -49,6 +61,8 @@ No modules.
 | <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | Name of the resource group | `string` | n/a | yes |
 | <a name="input_tags"></a> [tags](#input\_tags) | A map of tags to assign to the resource | `map(string)` | `{}` | no |
 | <a name="input_vnet_cidr"></a> [vnet\_cidr](#input\_vnet\_cidr) | CIDR block for VNet | `string` | n/a | yes |
+
+## Outputs
 
 ## Outputs
 
@@ -69,4 +83,5 @@ No modules.
 | <a name="output_vnet_address_space"></a> [vnet\_address\_space](#output\_vnet\_address\_space) | Address space of the Virtual Network |
 | <a name="output_vnet_id"></a> [vnet\_id](#output\_vnet\_id) | ID of the Virtual Network |
 | <a name="output_vnet_name"></a> [vnet\_name](#output\_vnet\_name) | Name of the Virtual Network |
+
 <!-- END_TF_DOCS -->

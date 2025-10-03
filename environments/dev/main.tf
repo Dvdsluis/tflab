@@ -73,7 +73,7 @@ module "compute" {
     desired_size  = var.app_instance_count
   }
   admin_username = var.admin_username
-  admin_password = var.admin_password
+  ssh_public_key = var.ssh_public_key
   tags           = local.common_tags
 
   depends_on = [module.networking]

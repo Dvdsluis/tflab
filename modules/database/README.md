@@ -1,4 +1,8 @@
 <!-- BEGIN_TF_DOCS -->
+
+
+## Requirements
+
 ## Requirements
 
 | Name | Version |
@@ -9,6 +13,8 @@
 
 ## Providers
 
+## Providers
+
 | Name | Version |
 |------|---------|
 | <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | ~> 3.0 |
@@ -16,7 +22,11 @@
 
 ## Modules
 
+## Modules
+
 No modules.
+
+## Resources
 
 ## Resources
 
@@ -29,6 +39,8 @@ No modules.
 | [azurerm_postgresql_flexible_server.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/postgresql_flexible_server) | resource |
 | [random_password.db_password](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/password) | resource |
 | [azurerm_client_config.current](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/client_config) | data source |
+
+## Inputs
 
 ## Inputs
 
@@ -51,6 +63,8 @@ No modules.
 
 ## Outputs
 
+## Outputs
+
 | Name | Description |
 |------|-------------|
 | <a name="output_database_nsg_id"></a> [database\_nsg\_id](#output\_database\_nsg\_id) | ID of the database network security group |
@@ -59,4 +73,5 @@ No modules.
 | <a name="output_key_vault_uri"></a> [key\_vault\_uri](#output\_key\_vault\_uri) | URI of the Key Vault created for database secrets |
 | <a name="output_mysql_server_id"></a> [mysql\_server\_id](#output\_mysql\_server\_id) | ID of the Azure MySQL Flexible Server (if MySQL) |
 | <a name="output_postgres_server_id"></a> [postgres\_server\_id](#output\_postgres\_server\_id) | ID of the Azure PostgreSQL Flexible Server (if Postgres) |
+
 <!-- END_TF_DOCS -->

@@ -65,7 +65,7 @@ module "compute" {
     desired_size  = 3
   }
   admin_username = var.db_username
-  admin_password = "REPLACE_WITH_SECURE_PASSWORD"
+  ssh_public_key = var.ssh_public_key
   tags           = local.common_tags
   depends_on     = [module.networking]
 }
