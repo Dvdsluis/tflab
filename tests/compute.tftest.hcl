@@ -1,3 +1,8 @@
+# Provider configuration for tests (lab: RG-only permissions)
+provider "azurerm" {
+  features {}
+  resource_provider_registrations = "none"
+}
 # Test for the compute module
 run "compute_plan_test" {
   command = plan

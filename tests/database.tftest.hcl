@@ -20,7 +20,7 @@ run "database_plan_test" {
     engine                  = "postgres"
     engine_version          = "13"
     sku_name                = "Standard_D2ds_v4"
-    allocated_storage       = 20
+    allocated_storage       = 32
     zone                    = null
     db_subnet_id            = "/subscriptions/sub/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/database-1"
     username                = "dbadmin"
@@ -93,7 +93,7 @@ run "database_mysql_test" {
     engine                  = "mysql"
     engine_version          = "8.0"
     sku_name                = "Standard_D2ds_v4"
-    allocated_storage       = 20
+    allocated_storage       = 32
     zone                    = null
     db_subnet_id            = "/subscriptions/sub/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/database-1"
     username                = "dbadmin"
@@ -137,7 +137,7 @@ run "database_validate_outputs" {
     engine                  = "postgres"
     engine_version          = "13"
     sku_name                = "Standard_D2ds_v4"
-    allocated_storage       = 20
+    allocated_storage       = 32
     zone                    = null
     db_subnet_id            = "/subscriptions/sub/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/database-1"
     username                = "dbadmin"
