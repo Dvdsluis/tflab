@@ -3,7 +3,7 @@ variable "project_name" {
   description = "Name of the project"
   type        = string
   default     = "terraform-lab"
-  
+
   validation {
     condition     = length(var.project_name) > 0 && length(var.project_name) <= 20
     error_message = "Project name must be between 1 and 20 characters."
@@ -14,7 +14,7 @@ variable "environment" {
   description = "Environment name (dev, staging, prod)"
   type        = string
   default     = "dev"
-  
+
   validation {
     condition     = contains(["dev", "staging", "prod"], var.environment)
     error_message = "Environment must be one of: dev, staging, prod."
@@ -32,7 +32,7 @@ variable "vnet_cidr" {
   description = "CIDR block for VNet"
   type        = string
   default     = "10.0.0.0/16"
-  
+
   validation {
     condition     = can(cidrhost(var.vnet_cidr, 0))
     error_message = "VNet CIDR must be a valid IPv4 CIDR block."
@@ -100,12 +100,6 @@ variable "enable_nat_gateway" {
   default     = true
 }
 
-variable "enable_bastion" {
-  description = "Enable Azure Bastion"
-  type        = bool
-  default     = false
-}
-
 variable "additional_tags" {
   description = "Additional tags to apply to all resources"
   type        = map(string)
@@ -128,22 +122,11 @@ variable "db_sku_name" {
 variable "db_storage_mb" {
   description = "Database storage in MB"
   type        = number
-  default     = 32768  # 32GB minimum for PostgreSQL Flexible Server
-  
+  default     = 32768 # 32GB minimum for PostgreSQL Flexible Server
+
   validation {
     condition     = var.db_storage_mb >= 32768 && var.db_storage_mb <= 1048576
     error_message = "Database storage must be between 32768 MB (32 GB) and 1048576 MB (1 TB)."
-  }
-}
-
-variable "db_name" {
-  description = "Database name"
-  type        = string
-  default     = "labdb"
-  
-  validation {
-    condition     = can(regex("^[a-zA-Z][a-zA-Z0-9_]*$", var.db_name))
-    error_message = "Database name must start with a letter and contain only alphanumeric characters and underscores."
   }
 }
 
@@ -151,7 +134,7 @@ variable "db_admin_username" {
   description = "Database administrator username"
   type        = string
   default     = "sqladmin"
-  
+
   validation {
     condition     = length(var.db_admin_username) >= 4 && length(var.db_admin_username) <= 16
     error_message = "Database admin username must be between 4 and 16 characters."
@@ -162,7 +145,7 @@ variable "db_backup_retention_days" {
   description = "Database backup retention period in days"
   type        = number
   default     = 7
-  
+
   validation {
     condition     = var.db_backup_retention_days >= 7 && var.db_backup_retention_days <= 35
     error_message = "Backup retention period must be between 7 and 35 days."

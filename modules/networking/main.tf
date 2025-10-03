@@ -2,6 +2,16 @@
 # This module creates a VNet with public, private, and database subnets
 # with proper routing and security for Azure
 
+terraform {
+  required_version = ">= 1.0"
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "~> 3.0"
+    }
+  }
+}
+
 # Virtual Network
 resource "azurerm_virtual_network" "main" {
   name                = "${var.name_prefix}-vnet"
@@ -64,7 +74,7 @@ resource "azurerm_public_ip" "nat_gateway" {
   location            = var.location
   resource_group_name = var.resource_group_name
   allocation_method   = "Static"
-  sku                = "Standard"
+  sku                 = "Standard"
 
   tags = merge(var.tags, {
     Name = "${var.name_prefix}-nat-gw-ip"
@@ -79,7 +89,7 @@ resource "azurerm_nat_gateway" "main" {
   name                = "${var.name_prefix}-nat-gw"
   location            = var.location
   resource_group_name = var.resource_group_name
-  sku_name           = "Standard"
+  sku_name            = "Standard"
 
   tags = merge(var.tags, {
     Name = "${var.name_prefix}-nat-gw"

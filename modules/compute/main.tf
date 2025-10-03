@@ -2,6 +2,16 @@
 # Compute Module (Azure)
 # This module creates web and app server infrastructure using Azure VMSS, Load Balancers, and NSGs
 
+terraform {
+  required_version = ">= 1.0"
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "~> 3.0"
+    }
+  }
+}
+
 # Web NSG
 resource "azurerm_network_security_group" "web" {
   name                = "${var.name_prefix}-web-nsg"
@@ -87,86 +97,86 @@ resource "azurerm_network_security_group" "app" {
 
 # Web VMSS
 resource "azurerm_linux_virtual_machine_scale_set" "web" {
-  name                = "${var.name_prefix}-web-vmss"
-  location            = var.location
-  resource_group_name = var.resource_group_name
-  sku                 = var.public_instance_config.instance_type
-  instances           = var.public_instance_config.desired_size
-  admin_username      = var.admin_username
-  admin_password      = var.admin_password
+  name                            = "${var.name_prefix}-web-vmss"
+  location                        = var.location
+  resource_group_name             = var.resource_group_name
+  sku                             = var.public_instance_config.instance_type
+  instances                       = var.public_instance_config.desired_size
+  admin_username                  = var.admin_username
+  admin_password                  = var.admin_password
   disable_password_authentication = false
-  
+
   source_image_reference {
     publisher = "Canonical"
     offer     = "0001-com-ubuntu-server-focal"
     sku       = "20_04-lts"
     version   = "latest"
   }
-  
+
   os_disk {
     storage_account_type = "Standard_LRS"
     caching              = "ReadWrite"
   }
-  
+
   upgrade_mode = "Manual"
-  
+
   network_interface {
-    name    = "web-nic"
-    primary = true
+    name                      = "web-nic"
+    primary                   = true
     network_security_group_id = azurerm_network_security_group.web.id
-    
+
     ip_configuration {
-      name      = "internal"
-      primary   = true
-      subnet_id = var.web_subnet_id
+      name                                   = "internal"
+      primary                                = true
+      subnet_id                              = var.web_subnet_id
       load_balancer_backend_address_pool_ids = [azurerm_lb_backend_address_pool.web.id]
     }
   }
-  
+
   custom_data = filebase64("${path.module}/user_data/web_server.sh")
-  tags = var.tags
+  tags        = var.tags
 }
 
 # App VMSS
 resource "azurerm_linux_virtual_machine_scale_set" "app" {
-  name                = "${var.name_prefix}-app-vmss"
-  location            = var.location
-  resource_group_name = var.resource_group_name
-  sku                 = var.private_instance_config.instance_type
-  instances           = var.private_instance_config.desired_size
-  admin_username      = var.admin_username
-  admin_password      = var.admin_password
+  name                            = "${var.name_prefix}-app-vmss"
+  location                        = var.location
+  resource_group_name             = var.resource_group_name
+  sku                             = var.private_instance_config.instance_type
+  instances                       = var.private_instance_config.desired_size
+  admin_username                  = var.admin_username
+  admin_password                  = var.admin_password
   disable_password_authentication = false
-  
+
   source_image_reference {
     publisher = "Canonical"
     offer     = "0001-com-ubuntu-server-focal"
     sku       = "20_04-lts"
     version   = "latest"
   }
-  
+
   os_disk {
     storage_account_type = "Standard_LRS"
     caching              = "ReadWrite"
   }
-  
+
   upgrade_mode = "Manual"
-  
+
   network_interface {
-    name    = "app-nic"
-    primary = true
+    name                      = "app-nic"
+    primary                   = true
     network_security_group_id = azurerm_network_security_group.app.id
-    
+
     ip_configuration {
-      name      = "internal"
-      primary   = true
-      subnet_id = var.app_subnet_id
+      name                                   = "internal"
+      primary                                = true
+      subnet_id                              = var.app_subnet_id
       load_balancer_backend_address_pool_ids = [azurerm_lb_backend_address_pool.app.id]
     }
   }
-  
+
   custom_data = filebase64("${path.module}/user_data/app_server.sh")
-  tags = var.tags
+  tags        = var.tags
 }
 
 # Public Load Balancer (Web)

@@ -15,11 +15,11 @@ run "networking_plan_test" {
   variables {
     name_prefix         = "test-net"
     resource_group_name = "test-rg"
-    location           = "East US"
-    vnet_cidr          = "10.0.0.0/16"
-    public_subnets     = ["10.0.1.0/24", "10.0.2.0/24"]
-    private_subnets    = ["10.0.11.0/24", "10.0.12.0/24"]
-    database_subnets   = ["10.0.21.0/24", "10.0.22.0/24"]
+    location            = "East US"
+    vnet_cidr           = "10.0.0.0/16"
+    public_subnets      = ["10.0.1.0/24", "10.0.2.0/24"]
+    private_subnets     = ["10.0.11.0/24", "10.0.12.0/24"]
+    database_subnets    = ["10.0.21.0/24", "10.0.22.0/24"]
     tags = {
       Environment = "test"
       Project     = "terraform-lab"
@@ -67,12 +67,12 @@ run "networking_validate_outputs" {
   variables {
     name_prefix         = "test-net"
     resource_group_name = "test-rg"
-    location           = "East US"
-    vnet_cidr          = "10.0.0.0/16"
-    public_subnets     = ["10.0.1.0/24", "10.0.2.0/24"]
-    private_subnets    = ["10.0.11.0/24", "10.0.12.0/24"]
-    database_subnets   = ["10.0.21.0/24", "10.0.22.0/24"]
-    tags = {}
+    location            = "East US"
+    vnet_cidr           = "10.0.0.0/16"
+    public_subnets      = ["10.0.1.0/24", "10.0.2.0/24"]
+    private_subnets     = ["10.0.11.0/24", "10.0.12.0/24"]
+    database_subnets    = ["10.0.21.0/24", "10.0.22.0/24"]
+    tags                = {}
   }
 
   assert {

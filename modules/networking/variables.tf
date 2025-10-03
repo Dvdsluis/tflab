@@ -16,7 +16,7 @@ variable "location" {
 variable "vnet_cidr" {
   description = "CIDR block for VNet"
   type        = string
-  
+
   validation {
     condition     = can(cidrhost(var.vnet_cidr, 0))
     error_message = "VNet CIDR must be a valid IPv4 CIDR block."
@@ -26,7 +26,7 @@ variable "vnet_cidr" {
 variable "public_subnets" {
   description = "List of public subnet CIDR blocks"
   type        = list(string)
-  
+
   validation {
     condition = alltrue([
       for cidr in var.public_subnets : can(cidrhost(cidr, 0))
@@ -38,7 +38,7 @@ variable "public_subnets" {
 variable "private_subnets" {
   description = "List of private subnet CIDR blocks"
   type        = list(string)
-  
+
   validation {
     condition = alltrue([
       for cidr in var.private_subnets : can(cidrhost(cidr, 0))
@@ -50,7 +50,7 @@ variable "private_subnets" {
 variable "database_subnets" {
   description = "List of database subnet CIDR blocks"
   type        = list(string)
-  
+
   validation {
     condition = alltrue([
       for cidr in var.database_subnets : can(cidrhost(cidr, 0))

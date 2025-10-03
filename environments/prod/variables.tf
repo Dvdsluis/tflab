@@ -30,14 +30,9 @@ variable "vnet_cidr" {
 variable "vpc_cidr" {
   description = "CIDR block for VPC"
   type        = string
-  default     = "10.2.0.0/16"  # Isolated from dev and staging
+  default     = "10.2.0.0/16" # Isolated from dev and staging
 }
 
-variable "availability_zones" {
-  description = "List of availability zones"
-  type        = list(string)
-  default     = ["us-west-2a", "us-west-2b", "us-west-2c"]
-}
 
 variable "public_subnets" {
   description = "List of public subnet CIDR blocks"
@@ -60,26 +55,21 @@ variable "database_subnets" {
 variable "enable_nat_gateway" {
   description = "Enable NAT Gateway for private subnets"
   type        = bool
-  default     = true  # Always enabled for production
+  default     = true # Always enabled for production
 }
 
-variable "enable_vpn_gateway" {
-  description = "Enable VPN Gateway"
-  type        = bool
-  default     = true  # Enabled for production secure access
-}
 
 # Compute Variables - Production uses performant instances
 variable "web_instance_type" {
   description = "Instance type for web servers"
   type        = string
-  default     = "t3.medium"  # Production-grade
+  default     = "t3.medium" # Production-grade
 }
 
 variable "app_instance_type" {
   description = "Instance type for app servers"
   type        = string
-  default     = "t3.large"   # Production-grade
+  default     = "t3.large" # Production-grade
 }
 
 # Database Variables - Production uses high-performance configuration
@@ -98,26 +88,16 @@ variable "db_engine_version" {
 variable "db_instance_class" {
   description = "Database instance class"
   type        = string
-  default     = "db.t3.medium"  # Production-grade
+  default     = "db.t3.medium" # Production-grade
 }
 
 variable "db_allocated_storage" {
   description = "Database allocated storage in GB"
   type        = number
-  default     = 100  # Production storage
+  default     = 100 # Production storage
 }
 
-variable "db_max_allocated_storage" {
-  description = "Maximum allocated storage for autoscaling in GB"
-  type        = number
-  default     = 500  # Allow autoscaling in production
-}
 
-variable "db_name" {
-  description = "Database name"
-  type        = string
-  default     = "proddb"
-}
 
 variable "db_username" {
   description = "Database master username"
@@ -128,17 +108,7 @@ variable "db_username" {
 variable "db_backup_retention_period" {
   description = "Database backup retention period in days"
   type        = number
-  default     = 30  # Long retention for production
+  default     = 30 # Long retention for production
 }
 
-variable "db_backup_window" {
-  description = "Database backup window"
-  type        = string
-  default     = "01:00-02:00"  # Off-peak hours
-}
 
-variable "db_maintenance_window" {
-  description = "Database maintenance window"
-  type        = string
-  default     = "sun:02:00-sun:03:00"  # Off-peak maintenance
-}

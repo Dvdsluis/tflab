@@ -17,17 +17,24 @@ provider "azurerm" {
 locals {
   name_prefix = "${var.project_name}-${var.environment}"
   common_tags = {
-    Environment = var.environment
-    Project     = var.project_name
-    ManagedBy   = "terraform"
-    Compliance  = "required"
+    Environment  = var.environment
+    Project      = var.project_name
+    ManagedBy    = "terraform"
+    Compliance   = "required"
     BackupPolicy = "daily"
   }
 }
 
+# Resource Group for Production Environment
+resource "azurerm_resource_group" "main" {
+  name     = "${local.name_prefix}-rg"
+  location = var.azure_region
+  tags     = local.common_tags
+}
+
 # Networking Module
 module "networking" {
-  source = "../../modules/networking"
+  source              = "../../modules/networking"
   name_prefix         = local.name_prefix
   resource_group_name = azurerm_resource_group.main.name
   location            = var.azure_region
@@ -35,12 +42,13 @@ module "networking" {
   public_subnets      = var.public_subnets
   private_subnets     = var.private_subnets
   database_subnets    = var.database_subnets
+  enable_nat_gateway  = var.enable_nat_gateway
   tags                = local.common_tags
 }
 
 # Compute Module
 module "compute" {
-  source = "../../modules/compute"
+  source              = "../../modules/compute"
   name_prefix         = local.name_prefix
   resource_group_name = azurerm_resource_group.main.name
   location            = var.azure_region
@@ -58,26 +66,26 @@ module "compute" {
   }
   admin_username = var.db_username
   admin_password = "REPLACE_WITH_SECURE_PASSWORD"
-  tags = local.common_tags
-  depends_on = [module.networking]
+  tags           = local.common_tags
+  depends_on     = [module.networking]
 }
 
 # Database Module
 module "database" {
-  source = "../../modules/database"
-  name_prefix         = local.name_prefix
-  resource_group_name = azurerm_resource_group.main.name
-  location            = var.azure_region
-  allowed_cidr        = var.vnet_cidr
-  engine              = var.db_engine
-  engine_version      = var.db_engine_version
-  sku_name            = var.db_instance_class
-  allocated_storage   = var.db_allocated_storage
-  zone                = null
-  db_subnet_id        = module.networking.database_subnet_ids[0]
-  username            = var.db_username
+  source                  = "../../modules/database"
+  name_prefix             = local.name_prefix
+  resource_group_name     = azurerm_resource_group.main.name
+  location                = var.azure_region
+  allowed_cidr            = var.vnet_cidr
+  engine                  = var.db_engine
+  engine_version          = var.db_engine_version
+  sku_name                = var.db_instance_class
+  allocated_storage       = var.db_allocated_storage
+  zone                    = null
+  db_subnet_id            = module.networking.database_subnet_ids[0]
+  username                = var.db_username
   backup_retention_period = var.db_backup_retention_period
-  high_availability   = "ZoneRedundant"
-  tags                = local.common_tags
-  depends_on = [module.networking, module.compute]
+  high_availability       = "ZoneRedundant"
+  tags                    = local.common_tags
+  depends_on              = [module.networking, module.compute]
 }

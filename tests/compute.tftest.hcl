@@ -9,25 +9,25 @@ run "compute_plan_test" {
   variables {
     name_prefix         = "test-compute"
     resource_group_name = "test-rg"
-    location           = "East US"
-    vnet_cidr          = "10.0.0.0/16"
-    web_subnet_id      = "/subscriptions/sub/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/public-1"
-    app_subnet_id      = "/subscriptions/sub/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/private-1"
-    web_public_ip_id   = "/subscriptions/sub/resourceGroups/test-rg/providers/Microsoft.Network/publicIPAddresses/test-pip"
-    
+    location            = "East US"
+    vnet_cidr           = "10.0.0.0/16"
+    web_subnet_id       = "/subscriptions/sub/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/public-1"
+    app_subnet_id       = "/subscriptions/sub/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/private-1"
+    web_public_ip_id    = "/subscriptions/sub/resourceGroups/test-rg/providers/Microsoft.Network/publicIPAddresses/test-pip"
+
     public_instance_config = {
       instance_type = "Standard_B1s"
       desired_size  = 1
     }
-    
+
     private_instance_config = {
       instance_type = "Standard_B1s"
       desired_size  = 1
     }
-    
+
     admin_username = "azureuser"
     admin_password = "TestPassword123!"
-    
+
     tags = {
       Environment = "test"
       Project     = "terraform-lab"
@@ -81,25 +81,25 @@ run "compute_validate_outputs" {
   variables {
     name_prefix         = "test-compute"
     resource_group_name = "test-rg"
-    location           = "East US"
-    vnet_cidr          = "10.0.0.0/16"
-    web_subnet_id      = "/subscriptions/sub/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/public-1"
-    app_subnet_id      = "/subscriptions/sub/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/private-1"
-    web_public_ip_id   = "/subscriptions/sub/resourceGroups/test-rg/providers/Microsoft.Network/publicIPAddresses/test-pip"
-    
+    location            = "East US"
+    vnet_cidr           = "10.0.0.0/16"
+    web_subnet_id       = "/subscriptions/sub/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/public-1"
+    app_subnet_id       = "/subscriptions/sub/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/private-1"
+    web_public_ip_id    = "/subscriptions/sub/resourceGroups/test-rg/providers/Microsoft.Network/publicIPAddresses/test-pip"
+
     public_instance_config = {
       instance_type = "Standard_B1s"
       desired_size  = 1
     }
-    
+
     private_instance_config = {
       instance_type = "Standard_B1s"
       desired_size  = 1
     }
-    
+
     admin_username = "azureuser"
     admin_password = "TestPassword123!"
-    tags = {}
+    tags           = {}
   }
 
   assert {

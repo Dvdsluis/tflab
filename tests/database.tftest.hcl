@@ -13,20 +13,20 @@ run "database_plan_test" {
   }
 
   variables {
-    name_prefix         = "test-db"
-    resource_group_name = "test-rg"
-    location           = "East US"
-    allowed_cidr       = "10.0.0.0/16"
-    engine             = "postgres"
-    engine_version     = "13"
-    sku_name           = "Standard_D2ds_v4"
-    allocated_storage  = 20
-    zone               = null
-    db_subnet_id       = "/subscriptions/sub/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/database-1"
-    username           = "dbadmin"
+    name_prefix             = "test-db"
+    resource_group_name     = "test-rg"
+    location                = "East US"
+    allowed_cidr            = "10.0.0.0/16"
+    engine                  = "postgres"
+    engine_version          = "13"
+    sku_name                = "Standard_D2ds_v4"
+    allocated_storage       = 20
+    zone                    = null
+    db_subnet_id            = "/subscriptions/sub/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/database-1"
+    username                = "dbadmin"
     backup_retention_period = 7
-    high_availability  = "Disabled"
-    
+    high_availability       = "Disabled"
+
     tags = {
       Environment = "test"
       Project     = "terraform-lab"
@@ -85,20 +85,20 @@ run "database_mysql_test" {
   }
 
   variables {
-    name_prefix         = "test-mysql"
-    resource_group_name = "test-rg"
-    location           = "East US"
-    allowed_cidr       = "10.0.0.0/16"
-    engine             = "mysql"
-    engine_version     = "8.0"
-    sku_name           = "Standard_D2ds_v4"
-    allocated_storage  = 20
-    zone               = null
-    db_subnet_id       = "/subscriptions/sub/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/database-1"
-    username           = "dbadmin"
+    name_prefix             = "test-mysql"
+    resource_group_name     = "test-rg"
+    location                = "East US"
+    allowed_cidr            = "10.0.0.0/16"
+    engine                  = "mysql"
+    engine_version          = "8.0"
+    sku_name                = "Standard_D2ds_v4"
+    allocated_storage       = 20
+    zone                    = null
+    db_subnet_id            = "/subscriptions/sub/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/database-1"
+    username                = "dbadmin"
     backup_retention_period = 7
-    high_availability  = "Disabled"
-    tags = {}
+    high_availability       = "Disabled"
+    tags                    = {}
   }
 
   assert {
@@ -128,20 +128,20 @@ run "database_validate_outputs" {
   }
 
   variables {
-    name_prefix         = "test-db"
-    resource_group_name = "test-rg"
-    location           = "East US"
-    allowed_cidr       = "10.0.0.0/16"
-    engine             = "postgres"
-    engine_version     = "13"
-    sku_name           = "Standard_D2ds_v4"
-    allocated_storage  = 20
-    zone               = null
-    db_subnet_id       = "/subscriptions/sub/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/database-1"
-    username           = "dbadmin"
+    name_prefix             = "test-db"
+    resource_group_name     = "test-rg"
+    location                = "East US"
+    allowed_cidr            = "10.0.0.0/16"
+    engine                  = "postgres"
+    engine_version          = "13"
+    sku_name                = "Standard_D2ds_v4"
+    allocated_storage       = 20
+    zone                    = null
+    db_subnet_id            = "/subscriptions/sub/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/database-1"
+    username                = "dbadmin"
     backup_retention_period = 7
-    high_availability  = "Disabled"
-    tags = {}
+    high_availability       = "Disabled"
+    tags                    = {}
   }
 
   assert {
