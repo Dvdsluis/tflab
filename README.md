@@ -1,228 +1,432 @@
-# Terraform Lab 🚀
+# terraform-docs
 
-[![Terraform](https://img.shields.io/badge/Terraform-%23623CE4.svg?style=for-the-badge&logo=terraform&logoColor=white)](https://www.terraform.io/)
-[![Azure](https://img.shields.io/badge/azure-%230072C6.svg?style=for-the-badge&logo=microsoftazure&logoColor=white)](https://azure.microsoft.com/)
-[![GitHub Actions](https://img.shields.io/badge/github%20actions-%232671E5.svg?style=for-the-badge&logo=githubactions&logoColor=white)](https://github.com/features/actions)
+[![Build Status](https://github.com/terraform-docs/terraform-docs/workflows/ci/badge.svg)](https://github.com/terraform-docs/terraform-docs/actions) [![GoDoc](https://pkg.go.dev/badge/github.com/terraform-docs/terraform-docs)](https://pkg.go.dev/github.com/terraform-docs/terraform-docs) [![Go Report Card](https://goreportcard.com/badge/github.com/terraform-docs/terraform-docs)](https://goreportcard.com/report/github.com/terraform-docs/terraform-docs) [![Codecov Report](https://codecov.io/gh/terraform-docs/terraform-docs/branch/master/graph/badge.svg)](https://codecov.io/gh/terraform-docs/terraform-docs) [![License](https://img.shields.io/github/license/terraform-docs/terraform-docs)](https://github.com/terraform-docs/terraform-docs/blob/master/LICENSE) [![Latest release](https://img.shields.io/github/v/release/terraform-docs/terraform-docs)](https://github.com/terraform-docs/terraform-docs/releases)
 
-## Overview
+![terraform-docs-teaser](./images/terraform-docs-teaser.png)
 
-A comprehensive Terraform learning laboratory featuring **enterprise-grade infrastructure patterns**, **advanced testing strategies**, and **automated CI/CD pipelines** for Azure cloud deployments.
+## What is terraform-docs
 
-## 🏗️ What You'll Learn
+A utility to generate documentation from Terraform modules in various output formats.
 
-- **Multi-tier Architecture**: Web, application, and database layer separation
-- **Advanced Testing**: Real Azure resource validation using Terraform `assert` blocks  
-- **CI/CD Integration**: GitHub Actions with security scanning and compliance checks
-- **Module Design**: Reusable, well-documented Terraform modules
-- **Security Best Practices**: Network segmentation, NSG rules, and compliance validation
+## Installation
 
-## 🏛️ Architecture
+macOS users can install using [Homebrew]:
 
-The lab implements a **3-tier architecture** on Azure:
-
-### **Networking Layer** (`modules/networking`)
-- Virtual Network with multiple subnets (web, app, database)
-- NAT Gateway for outbound internet access
-- Network Security Groups with tier-specific rules
-- Azure Bastion for secure management access
-
-### **Compute Layer** (`modules/compute`) 
-- Virtual Machine Scale Sets for auto-scaling
-- Application Gateway for load balancing
-- Custom user data scripts for application deployment
-- SSH key-based authentication
-
-### **Database Layer** (`modules/database`)
-- Azure Database for PostgreSQL (Flexible Server)
-- Private endpoint connectivity
-- Automated backups and point-in-time recovery
-- Database firewall rules
-
-## 📁 Repository Structure
-
-```
-tflab/
-├── 🏢 environments/          # Environment-specific configurations
-│   ├── dev/                  # Development environment
-│   ├── staging/              # Staging environment  
-│   └── prod/                 # Production environment
-├── 🧩 modules/               # Reusable Terraform modules
-│   ├── networking/           # VNet, subnets, NSGs, NAT Gateway
-│   ├── compute/              # VMSS, Application Gateway, VM
-│   └── database/             # PostgreSQL Flexible Server
-├── 🧪 tests/                 # Advanced Terraform tests
-│   ├── *.tftest.hcl         # Unit and integration tests
-│   └── advanced-integration/ # Real Azure resource validation
-├── 📚 docs/                  # Comprehensive documentation
-├── 🔧 scripts/               # Utility scripts
-└── 🚀 .github/workflows/     # CI/CD pipelines
-```
-
-## 🚀 Quick Start
-
-### Prerequisites
-- [Terraform](https://www.terraform.io/downloads.html) >= 1.0
-- [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
-- Azure subscription with appropriate permissions
-
-### Deployment
-
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd tflab
-   ```
-
-2. **Configure Azure authentication**
-   ```bash
-   az login
-   az account set --subscription "your-subscription-id"
-   ```
-
-3. **Deploy to development**
-   ```bash
-   cd environments/dev
-   terraform init
-   terraform plan
-   terraform apply
-   ```
-
-## 🧪 Advanced Testing Features
-
-This lab showcases **enterprise-grade testing** that goes beyond basic validation:
-
-### **Real Azure Resource Testing**
-- Uses Terraform `assert` blocks with Azure data sources
-- Validates actual resource state, not just configuration
-- Tests network connectivity and security compliance
-- Automated in CI/CD pipeline
-
-### **Multi-Level Testing Strategy**
 ```bash
-# Run unit tests (fast, configuration-focused)
-terraform test tests/networking.tftest.hcl
-
-# Run integration tests (real Azure resources)
-terraform test tests/advanced-integration.tftest.hcl
-
-# Run all tests
-terraform test
+brew install terraform-docs
 ```
 
-## 🚀 CI/CD Pipeline
+or
 
-The repository includes a **comprehensive GitHub Actions workflow**:
-
-### **CI Jobs (Continuous Integration)**
-- `ci-security-scan`: Security vulnerability scanning (Trivy + Checkov)
-- `ci-terraform-validate`: Terraform syntax and configuration validation
-- `ci-terraform-test`: Native Terraform testing with Azure integration
-
-### **CD Jobs (Continuous Deployment)**  
-- `cd-plan-dev`: Generate deployment plans with PR comments
-- `cd-deploy-dev`: Deploy to development environment
-
-### **QA Jobs (Quality Assurance)**
-- `qa-advanced-integration-tests`: Advanced resource state validation
-- `qa-network-security-validation`: Azure CLI-based security compliance
-
-## 🔧 Utility Scripts
-
-- `scripts/cleanup-resources.sh`: Clean up Azure resources in correct order
-- `scripts/generate-docs.sh`: Generate terraform-docs documentation
-
-## 📚 Documentation
-
-- [`docs/ADVANCED_TESTING_STRATEGY.md`](docs/ADVANCED_TESTING_STRATEGY.md): Comprehensive testing guide
-- [`docs/CI_CD_WORKFLOW_STRUCTURE.md`](docs/CI_CD_WORKFLOW_STRUCTURE.md): CI/CD pipeline documentation  
-- [`docs/REPOSITORY_CLEANUP_SUMMARY.md`](docs/REPOSITORY_CLEANUP_SUMMARY.md): Repository organization details
-
-## 🎯 Learning Outcomes
-
-After completing this lab, you'll understand:
-
-- ✅ **Infrastructure as Code**: Multi-environment Terraform deployments
-- ✅ **Testing Strategy**: Real resource validation with Terraform native testing
-- ✅ **CI/CD Integration**: Automated testing and deployment pipelines
-- ✅ **Security Practices**: Network segmentation and compliance validation
-- ✅ **Module Design**: Reusable, well-documented infrastructure components
-- ✅ **Azure Architecture**: 3-tier application deployment patterns
-
-## 🎓 Learning Path
-
-### **Beginner**: Start with Basic Concepts
-1. Explore the `examples/basic/` directory
-2. Deploy a simple infrastructure to understand module interactions
-3. Review the generated terraform-docs documentation
-
-### **Intermediate**: Advanced Testing
-1. Study `tests/` directory to understand Terraform testing patterns
-2. Run unit tests with `terraform test tests/networking.tftest.hcl`
-3. Learn about `assert` blocks and data source validation
-
-### **Advanced**: Enterprise Patterns
-1. Examine the CI/CD pipeline in `.github/workflows/`
-2. Deploy through the full pipeline using pull requests
-3. Understand security scanning and compliance validation
-
-## 🔨 Development Workflow
-
-### **Making Changes**
-1. Create a feature branch: `git checkout -b feature/your-change`
-2. Make your infrastructure changes
-3. Run tests locally: `terraform test`
-4. Create a pull request - CI/CD will automatically:
-   - Validate syntax and configuration
-   - Run security scans
-   - Generate deployment plans
-   - Execute advanced integration tests
-
-### **Documentation Generation**
 ```bash
-# Generate module documentation
-./scripts/generate-docs.sh
-
-# Generate docs for specific module
-terraform-docs markdown table modules/networking/ > modules/networking/README.md
+brew install terraform-docs/tap/terraform-docs
 ```
 
-## 🛡️ Security Features
+Windows users can install using [Scoop]:
 
-- **Network Segmentation**: Separate subnets for web, app, and database tiers
-- **Security Groups**: Restrictive NSG rules with minimal required access
-- **Private Endpoints**: Database accessible only from application tier
-- **SSH Key Authentication**: No password-based authentication
-- **Automated Security Scanning**: Trivy and Checkov integration in CI/CD
+```bash
+scoop bucket add terraform-docs https://github.com/terraform-docs/scoop-bucket
+scoop install terraform-docs
+```
 
-## 🌍 Environments
+or [Chocolatey]:
 
-| Environment | Purpose | Auto-Deploy | 
-|-------------|---------|-------------|
-| **Development** | Feature development and testing | ✅ On `main` branch |
-| **Staging** | Pre-production validation | 🔧 Manual trigger |
-| **Production** | Live application deployment | 🔧 Manual trigger |
+```bash
+choco install terraform-docs
+```
 
-## 🤝 Contributing
+Stable binaries are also available on the [releases] page. To install, download the
+binary for your platform from "Assets" and place this into your `$PATH`:
 
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/amazing-feature`
-3. Make your changes and test thoroughly
-4. Commit your changes: `git commit -m 'Add amazing feature'`
-5. Push to the branch: `git push origin feature/amazing-feature`
-6. Open a pull request
+```bash
+curl -Lo ./terraform-docs.tar.gz https://github.com/terraform-docs/terraform-docs/releases/download/v0.18.0/terraform-docs-v0.18.0-$(uname)-amd64.tar.gz
+tar -xzf terraform-docs.tar.gz
+chmod +x terraform-docs
+mv terraform-docs /usr/local/bin/terraform-docs
+```
 
-## 📄 License
+**NOTE:** Windows releases are in `ZIP` format.
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+The latest version can be installed using `go install` or `go get`:
 
-## 🙏 Acknowledgments
+```bash
+# go1.17+
+go install github.com/terraform-docs/terraform-docs@v0.18.0
+```
 
-- **HashiCorp Terraform** for infrastructure as code capabilities
-- **Microsoft Azure** for cloud platform services  
-- **GitHub Actions** for CI/CD automation
-- **Terraform Testing** community for advanced testing patterns
+```bash
+# go1.16
+GO111MODULE="on" go get github.com/terraform-docs/terraform-docs@v0.18.0
+```
 
----
+**NOTE:** please use the latest Go to do this, minimum `go1.16` is required.
 
-**Ready to build enterprise-grade infrastructure?** 🚀 Start with the development environment and explore the advanced testing features!
+This will put `terraform-docs` in `$(go env GOPATH)/bin`. If you encounter the error
+`terraform-docs: command not found` after installation then you may need to either add
+that directory to your `$PATH` as shown [here] or do a manual installation by cloning
+the repo and run `make build` from the repository which will put `terraform-docs` in:
 
+```bash
+$(go env GOPATH)/src/github.com/terraform-docs/terraform-docs/bin/$(uname | tr '[:upper:]' '[:lower:]')-amd64/terraform-docs
+```
+
+## Usage
+
+### Running the binary directly
+
+To run and generate documentation into README within a directory:
+
+```bash
+terraform-docs markdown table --output-file README.md --output-mode inject /path/to/module
+```
+
+Check [`output`] configuration for more details and examples.
+
+### Using docker
+
+terraform-docs can be run as a container by mounting a directory with `.tf`
+files in it and run the following command:
+
+```bash
+docker run --rm --volume "$(pwd):/terraform-docs" -u $(id -u) quay.io/terraform-docs/terraform-docs:0.18.0 markdown /terraform-docs
+```
+
+If `output.file` is not enabled for this module, generated output can be redirected
+back to a file:
+
+```bash
+docker run --rm --volume "$(pwd):/terraform-docs" -u $(id -u) quay.io/terraform-docs/terraform-docs:0.18.0 markdown /terraform-docs > doc.md
+```
+
+**NOTE:** Docker tag `latest` refers to _latest_ stable released version and `edge`
+refers to HEAD of `master` at any given point in time.
+
+### Using GitHub Actions
+
+To use terraform-docs GitHub Action, configure a YAML workflow file (e.g.
+`.github/workflows/documentation.yml`) with the following:
+
+```yaml
+name: Generate terraform docs
+on:
+  - pull_request
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        ref: ${{ github.event.pull_request.head.ref }}
+
+    - name: Render terraform docs and push changes back to PR
+      uses: terraform-docs/gh-actions@main
+      with:
+        working-dir: .
+        output-file: README.md
+        output-method: inject
+        git-push: "true"
+```
+
+Read more about [terraform-docs GitHub Action] and its configuration and
+examples.
+
+### pre-commit hook
+
+With pre-commit, you can ensure your Terraform module documentation is kept
+up-to-date each time you make a commit.
+
+First [install pre-commit] and then create or update a `.pre-commit-config.yaml`
+in the root of your Git repo with at least the following content:
+
+```yaml
+repos:
+  - repo: https://github.com/terraform-docs/terraform-docs
+    rev: "v0.18.0"
+    hooks:
+      - id: terraform-docs-go
+        args: ["markdown", "table", "--output-file", "README.md", "./mymodule/path"]
+```
+
+Then run:
+
+```bash
+pre-commit install
+pre-commit install-hooks
+```
+
+Further changes to your module's `.tf` files will cause an update to documentation
+when you make a commit.
+
+## Configuration
+
+terraform-docs can be configured with a yaml file. The default name of this file is
+`.terraform-docs.yml` and the path order for locating it is:
+
+1. root of module directory
+1. `.config/` folder at root of module directory
+1. current directory
+1. `.config/` folder at current directory
+1. `$HOME/.tfdocs.d/`
+
+```yaml
+formatter: "" # this is required
+
+version: ""
+
+header-from: main.tf
+footer-from: ""
+
+recursive:
+  enabled: false
+  path: modules
+  include-main: true
+
+sections:
+  hide: []
+  show: []
+
+content: ""
+
+output:
+  file: ""
+  mode: inject
+  template: |-
+    <!-- BEGIN_TF_DOCS -->
+    {{ .Content }}
+    <!-- END_TF_DOCS -->
+
+output-values:
+  enabled: false
+  from: ""
+
+sort:
+  enabled: true
+  by: name
+
+settings:
+  anchor: true
+  color: true
+  default: true
+  description: false
+  escape: true
+  hide-empty: false
+  html: true
+  indent: 2
+  lockfile: true
+  read-comments: true
+  required: true
+  sensitive: true
+  type: true
+```
+
+## Content Template
+
+Generated content can be customized further away with `content` in configuration.
+If the `content` is empty the default order of sections is used.
+
+Compatible formatters for customized content are `asciidoc` and `markdown`. `content`
+will be ignored for other formatters.
+
+`content` is a Go template with following additional variables:
+
+- `{{ .Header }}`
+- `{{ .Footer }}`
+- `{{ .Inputs }}`
+- `{{ .Modules }}`
+- `{{ .Outputs }}`
+- `{{ .Providers }}`
+- `{{ .Requirements }}`
+- `{{ .Resources }}`
+
+and following functions:
+
+- `{{ include "relative/path/to/file" }}`
+
+These variables are the generated output of individual sections in the selected
+formatter. For example `{{ .Inputs }}` is Markdown Table representation of _inputs_
+when formatter is set to `markdown table`.
+
+Note that sections visibility (i.e. `sections.show` and `sections.hide`) takes
+precedence over the `content`.
+
+Additionally there's also one extra special variable avaialble to the `content`:
+
+- `{{ .Module }}`
+
+As opposed to the other variables mentioned above, which are generated sections
+based on a selected formatter, the `{{ .Module }}` variable is just a `struct`
+representing a [Terraform module].
+
+````yaml
+content: |-
+  Any arbitrary text can be placed anywhere in the content
+
+  {{ .Header }}
+
+  and even in between sections
+
+  {{ .Providers }}
+
+  and they don't even need to be in the default order
+
+  {{ .Outputs }}
+
+  include any relative files
+
+  {{ include "relative/path/to/file" }}
+
+  {{ .Inputs }}
+
+  # Examples
+
+  ```hcl
+  {{ include "examples/foo/main.tf" }}
+  ```
+
+  ## Resources
+
+  {{ range .Module.Resources }}
+  - {{ .GetMode }}.{{ .Spec }} ({{ .Position.Filename }}#{{ .Position.Line }})
+  {{- end }}
+````
+
+## Build on top of terraform-docs
+
+terraform-docs primary use-case is to be utilized as a standalone binary, but
+some parts of it is also available publicly and can be imported in your project
+as a library.
+
+```go
+import (
+    "github.com/terraform-docs/terraform-docs/format"
+    "github.com/terraform-docs/terraform-docs/print"
+    "github.com/terraform-docs/terraform-docs/terraform"
+)
+
+// buildTerraformDocs for module root `path` and provided content `tmpl`.
+func buildTerraformDocs(path string, tmpl string) (string, error) {
+    config := print.DefaultConfig()
+    config.ModuleRoot = path // module root path (can be relative or absolute)
+
+    module, err := terraform.LoadWithOptions(config)
+    if err != nil {
+        return "", err
+    }
+
+    // Generate in Markdown Table format
+    formatter := format.NewMarkdownTable(config)
+
+    if err := formatter.Generate(module); err != nil {
+        return "", err
+    }
+
+    // // Note: if you don't intend to provide additional template for the generated
+    // // content, or the target format doesn't provide templating (e.g. json, yaml,
+    // // xml, or toml) you can use `Content()` function instead of `Render()`.
+    // // `Content()` returns all the sections combined with predefined order.
+    // return formatter.Content(), nil
+
+    return formatter.Render(tmpl)
+}
+```
+
+## Plugin
+
+Generated output can be heavily customized with [`content`], but if using that
+is not enough for your use-case, you can write your own plugin.
+
+In order to install a plugin the following steps are needed:
+
+- download the plugin and place it in `~/.tfdocs.d/plugins` (or `./.tfdocs.d/plugins`)
+- make sure the plugin file name is `tfdocs-format-<NAME>`
+- modify [`formatter`] of `.terraform-docs.yml` file to be `<NAME>`
+
+**Important notes:**
+
+- if the plugin file name is different than the example above, terraform-docs won't
+be able to to pick it up nor register it properly
+- you can only use plugin thorough `.terraform-docs.yml` file and it cannot be used
+with CLI arguments
+
+To create a new plugin create a new repository called `tfdocs-format-<NAME>` with
+following `main.go`:
+
+```go
+package main
+
+import (
+    _ "embed" //nolint
+
+    "github.com/terraform-docs/terraform-docs/plugin"
+    "github.com/terraform-docs/terraform-docs/print"
+    "github.com/terraform-docs/terraform-docs/template"
+    "github.com/terraform-docs/terraform-docs/terraform"
+)
+
+func main() {
+    plugin.Serve(&plugin.ServeOpts{
+        Name:    "<NAME>",
+        Version: "0.1.0",
+        Printer: printerFunc,
+    })
+}
+
+//go:embed sections.tmpl
+var tplCustom []byte
+
+// printerFunc the function being executed by the plugin client.
+func printerFunc(config *print.Config, module *terraform.Module) (string, error) {
+    tpl := template.New(config,
+        &template.Item{Name: "custom", Text: string(tplCustom)},
+    )
+
+    rendered, err := tpl.Render("custom", module)
+    if err != nil {
+        return "", err
+    }
+
+    return rendered, nil
+}
+```
+
+Please refer to [tfdocs-format-template] for more details. You can create a new
+repository from it by clicking on `Use this template` button.
+
+## Documentation
+
+- **Users**
+  - Read the [User Guide] to learn how to use terraform-docs
+  - Read the [Formats Guide] to learn about different output formats of terraform-docs
+  - Refer to [Config File Reference] for all the available configuration options
+- **Developers**
+  - Read [Contributing Guide] before submitting a pull request
+
+Visit [our website] for all documentation.
+
+## Community
+
+- Discuss terraform-docs on [Slack]
+
+## License
+
+MIT License - Copyright (c) 2021 The terraform-docs Authors.
+
+[Chocolatey]: https://www.chocolatey.org
+[Config File Reference]: https://terraform-docs.io/user-guide/configuration/
+[`content`]: https://terraform-docs.io/user-guide/configuration/content/
+[Contributing Guide]: CONTRIBUTING.md
+[Formats Guide]: https://terraform-docs.io/reference/terraform-docs/
+[`formatter`]: https://terraform-docs.io/user-guide/configuration/formatter/
+[here]: https://golang.org/doc/code.html#GOPATH
+[Homebrew]: https://brew.sh
+[install pre-commit]: https://pre-commit.com/#install
+[`output`]: https://terraform-docs.io/user-guide/configuration/output/
+[releases]: https://github.com/terraform-docs/terraform-docs/releases
+[Scoop]: https://scoop.sh/
+[Slack]: https://slack.terraform-docs.io/
+[terraform-docs GitHub Action]: https://github.com/terraform-docs/gh-actions
+[Terraform module]: https://pkg.go.dev/github.com/terraform-docs/terraform-docs/terraform#Module
+[tfdocs-format-template]: https://github.com/terraform-docs/tfdocs-format-template
+[our website]: https://terraform-docs.io/
+[User Guide]: https://terraform-docs.io/user-guide/introduction/
