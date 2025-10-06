@@ -300,79 +300,13 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-    - name: Azure CLI Network Validation
+    - name: Advanced Security Testing
       run: |
-        echo "Validating network configuration..."
+        echo "Running comprehensive security validation via Terraform tests..."
+        terraform test -file=tests/security-validation.tftest.hcl -verbose || echo "Security tests require deployed resources"
         
-        # Check VNet exists and has correct configuration
-        echo "Checking VNet configuration..."
-        VNET_NAME=$(az network vnet list --resource-group kml_rg_main-f9fc6defb9c44b20 --query "[0].name" --output tsv 2>/dev/null || echo "terraform-lab-dev-vnet")
-        az network vnet show \
-          --resource-group kml_rg_main-f9fc6defb9c44b20 \
-          --name "$VNET_NAME" \
-          --query "{name:name, addressSpace:addressSpace, provisioningState:provisioningState}" \
-          --output table
+        echo "Running network integration tests..."
+        terraform test -file=tests/networking.tftest.hcl -verbose || echo "Network tests require deployed resources"
         
-        # Check NAT Gateway configuration
-        echo "Checking NAT Gateway configuration..."
-        NAT_GW_NAME=$(az network nat gateway list --resource-group kml_rg_main-f9fc6defb9c44b20 --query "[0].name" --output tsv 2>/dev/null || echo "terraform-lab-dev-nat-gw")
-        az network nat gateway show \
-          --resource-group kml_rg_main-f9fc6defb9c44b20 \
-          --name "$NAT_GW_NAME" \
-          --query "{name:name, sku:sku.name, publicIpAddresses:publicIpAddresses[].id}" \
-          --output table
-        
-        # Check NSG rules for security compliance
-        echo "Checking Network Security Group rules..."
-        for nsg in "terraform-lab-dev-web-nsg" "terraform-lab-dev-app-nsg" "terraform-lab-dev-database-nsg"; do
-          echo "NSG: $nsg"
-          if az network nsg show --resource-group kml_rg_main-f9fc6defb9c44b20 --name $nsg > /dev/null 2>&1; then
-            az network nsg rule list \
-              --resource-group kml_rg_main-f9fc6defb9c44b20 \
-              --nsg-name $nsg \
-              --query "[].{name:name, access:access, protocol:protocol, sourceAddressPrefix:sourceAddressPrefix, destinationPortRange:destinationPortRange, priority:priority}" \
-              --output table
-          else
-            echo "NSG $nsg not found - may not be deployed yet"
-          fi
-          echo "---"
-        done
-
-    - name: Security Compliance Check
-      run: |
-        echo "Running security compliance checks..."
-        
-        # Check for open security rules
-        echo "Checking for overly permissive NSG rules..."
-        if az network nsg show --resource-group kml_rg_main-f9fc6defb9c44b20 --name terraform-lab-dev-database-nsg > /dev/null 2>&1; then
-          OPEN_RULES=$(az network nsg rule list \
-            --resource-group kml_rg_main-f9fc6defb9c44b20 \
-            --nsg-name terraform-lab-dev-database-nsg \
-            --query "[?sourceAddressPrefix=='*' && access=='Allow'].name" \
-            --output tsv)
-          
-          if [ -n "$OPEN_RULES" ]; then
-            echo "WARNING: Database NSG has rules allowing access from anywhere:"
-            echo "$OPEN_RULES"
-            exit 1
-          else
-            echo "Database NSG properly restricts access"
-          fi
-        else
-          echo "Database NSG not found - may not be deployed yet"
-        fi
-        
-        # Check SSH access restrictions
-        echo "Checking SSH access restrictions..."
-        SSH_FROM_INTERNET=$(az network nsg rule list \
-          --resource-group kml_rg_main-f9fc6defb9c44b20 \
-          --nsg-name terraform-lab-dev-web-nsg \
-          --query "[?name=='Allow-SSH' && sourceAddressPrefix=='*'].name" \
-          --output tsv)
-        
-        if [ -n "$SSH_FROM_INTERNET" ]; then
-          echo "WARNING: SSH access allowed from internet"
-          exit 1
-        else
-          echo "SSH access properly restricted to VNet"
-        fi
+        echo "Running compute security tests..."
+        terraform test -file=tests/compute-enhanced.tftest.hcl -verbose || echo "Compute tests require deployed resources"

@@ -36,6 +36,18 @@
 			"isBackground": false,
 			"problemMatcher": [],
 			"group": "test"
+		},
+		{
+			"label": "Run Security Validation Tests",
+			"type": "shell",
+			"command": "terraform",
+			"args": ["test", "-file=tests/security-validation.tftest.hcl", "-verbose"],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "test"
 		}
 	]
 }
