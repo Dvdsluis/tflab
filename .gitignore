@@ -125,4 +125,4 @@ vendor/
 .config/gcloud/
 
 # Kubernetes configuration - may contain cluster credentials
-.kube/config
+.kube/configREADME.md

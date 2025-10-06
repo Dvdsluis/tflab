@@ -114,10 +114,10 @@ jobs:
             \`\`\`
             
             ### Validation Status
-            - ✅ Terraform format check passed
-            - ✅ TFLint validation passed  
-            - ✅ Terraform validation passed
-            - ✅ Security scan completed
+            - Terraform format check passed
+            - TFLint validation passed  
+            - Terraform validation passed
+            - Security scan completed
             
             *This comment will be updated if validation fails.*`;
             

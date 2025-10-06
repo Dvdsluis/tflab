@@ -206,6 +206,7 @@ jobs:
           terraform plan -out=tfplan -no-color
         env:
           TF_VAR_environment: dev
+          TF_VAR_ssh_public_key: ${{ secrets.TF_VAR_SSH_PUBLIC_KEY }}
 
       - name: Save plan artifact
         uses: actions/upload-artifact@v4
@@ -262,6 +263,7 @@ jobs:
           terraform apply -auto-approve
         env:
           TF_VAR_environment: dev
+          TF_VAR_ssh_public_key: ${{ secrets.TF_VAR_SSH_PUBLIC_KEY }}
 
   plan-staging:
     name: Plan Staging Environment
@@ -294,6 +296,7 @@ jobs:
           terraform plan -out=tfplan
         env:
           TF_VAR_environment: staging
+          TF_VAR_ssh_public_key: ${{ secrets.TF_VAR_SSH_PUBLIC_KEY }}
 
       - name: Save plan artifact
         uses: actions/upload-artifact@v4
@@ -331,6 +334,7 @@ jobs:
           terraform apply -auto-approve
         env:
           TF_VAR_environment: staging
+          TF_VAR_ssh_public_key: ${{ secrets.TF_VAR_SSH_PUBLIC_KEY }}
 
   plan-prod:
     name: Plan Production Environment
@@ -362,6 +366,7 @@ jobs:
           terraform plan -out=tfplan
         env:
           TF_VAR_environment: prod
+          TF_VAR_ssh_public_key: ${{ secrets.TF_VAR_SSH_PUBLIC_KEY }}
 
       - name: Save plan artifact
         uses: actions/upload-artifact@v4
@@ -399,6 +404,7 @@ jobs:
           terraform apply -auto-approve
         env:
           TF_VAR_environment: prod
+          TF_VAR_ssh_public_key: ${{ secrets.TF_VAR_SSH_PUBLIC_KEY }}
 
   documentation:
     name: Update Documentation
