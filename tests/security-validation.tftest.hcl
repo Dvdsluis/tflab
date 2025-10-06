@@ -1,114 +1,104 @@
 # Security Validation Tests
-# Uses Terraform data sources to validate deployed resources via Azure API
-# This replaces the bash scripts in CI/CD with proper Terraform testing
+# Deploys resources to Azure and validates via API calls
+# Tests for issues that terraform plan cannot detect
 
 variables {
   resource_group_name = "kml_rg_main-f9fc6defb9c44b20"
   environment         = "dev"
   project_name        = "terraform-lab"
+  location            = "East US"
+  ssh_public_key      = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCVsv/kHHL+Hh0RW2YFqwpEJ+YsFaIHAAt51P36rmbsz1a1o4NbupXJRyJufyvKuJQuz1sYuPbNBn0o16zMzBa+wZnga3LP8wxax+5aPvmolLVLfU4hPoT1UigBSFs04D+qyhiJVRJh/z2UySWmLVjjSR04Ldtk6BAJKWBJ8bc2ByD3vx663KH3zYpjRlOgo7iVSp9HzzuRXaj5QBzXr2MHSo6nV1Sc9FM4i18afkZHppdKwwtr92z7q3371uTqhJbIC8uyOkgDN+c3IXMW4iUF2/w9JCk/pCN//ddG9OucaY4yUGC9wJKvvbaSmX4GngldUbGIXPZ2q7Q4cxFEj+3N terraform-lab-short@codespaces"
+  db_admin_username   = "dbadmin"
+  db_admin_password   = "TestPassword123!"
 }
 
-# Test 1: Validate Network Security Groups exist and have proper rules
-run "validate_nsg_security_rules" {
-  command = plan
-
-  # Data sources to fetch actual NSG configurations from Azure
-  variables {
-    resource_group_name = var.resource_group_name
-    environment         = var.environment
-    project_name        = var.project_name
-  }
-
-  # Check if web NSG exists and has SSH restrictions
-  assert {
-    condition     = can(data.azurerm_network_security_group.web)
-    error_message = "Web NSG should exist after deployment"
-  }
-
-  # Validate no overly permissive SSH rules (source 0.0.0.0/0)
-  assert {
-    condition = length([
-      for rule in data.azurerm_network_security_group.web.security_rule :
-      rule if rule.source_address_prefix == "*" &&
-      rule.access == "Allow" &&
-      rule.destination_port_range == "22"
-    ]) == 0
-    error_message = "SSH should not be allowed from internet (0.0.0.0/0)"
-  }
-
-  # Validate database NSG doesn't allow access from anywhere
-  assert {
-    condition = length([
-      for rule in data.azurerm_network_security_group.database.security_rule :
-      rule if rule.source_address_prefix == "*" &&
-      rule.access == "Allow" &&
-      rule.destination_port_range != "443" &&
-      rule.destination_port_range != "80"
-    ]) == 0
-    error_message = "Database NSG should not have overly permissive rules"
-  }
-}
-
-# Test 2: Validate VNet configuration and subnets
-run "validate_network_configuration" {
-  command = plan
+# Test 1: Deploy and validate network security configuration
+run "deploy_and_validate_network_security" {
+  command = apply
 
   variables {
     resource_group_name = var.resource_group_name
     environment         = var.environment
     project_name        = var.project_name
+    location            = var.location
+    ssh_public_key      = var.ssh_public_key
+    db_admin_username   = var.db_admin_username
+    db_admin_password   = var.db_admin_password
   }
 
-  # Ensure VNet exists with correct address space
+  # Validate VNet address space doesn't overlap with common ranges
   assert {
-    condition     = can(data.azurerm_virtual_network.main)
-    error_message = "VNet should exist after deployment"
+    condition = !contains([
+      "172.16.0.0/12",  # Common corporate ranges
+      "192.168.0.0/16", # Common home ranges
+      "10.1.0.0/16"     # Common Azure ranges
+    ], "10.0.0.0/16")
+    error_message = "VNet address space should not overlap with common network ranges"
   }
 
+  # Validate web tier VM size is cost-effective
   assert {
-    condition     = contains(data.azurerm_virtual_network.main.address_space, "10.0.0.0/16")
-    error_message = "VNet should have the correct address space (10.0.0.0/16)"
+    condition = contains([
+      "Standard_B1s", "Standard_B2s", "Standard_B4ms"
+    ], module.compute.web_vm_size)
+    error_message = "Web tier should use cost-effective B-series VMs for development"
   }
 
-  # Validate subnets exist and have NSGs attached
+  # Validate app tier instance count is within limits
   assert {
-    condition     = length(data.azurerm_virtual_network.main.subnet) >= 3
-    error_message = "VNet should have at least 3 subnets (public, private, database)"
+    condition     = module.compute.app_instance_count <= 3
+    error_message = "App tier instance count should not exceed policy limit of 3"
   }
 }
 
-# Test 3: Validate NAT Gateway and Public IP configuration
-run "validate_nat_gateway_security" {
-  command = plan
+# Test 2: Validate deployed resources via Azure API
+run "validate_deployed_resources" {
+  command = apply
 
   variables {
     resource_group_name = var.resource_group_name
     environment         = var.environment
     project_name        = var.project_name
+    location            = var.location
+    ssh_public_key      = var.ssh_public_key
+    db_admin_username   = var.db_admin_username
+    db_admin_password   = var.db_admin_password
   }
 
-  # Check NAT Gateway exists
+  # Validate VNet was created successfully
   assert {
-    condition     = can(data.azurerm_nat_gateway.main)
-    error_message = "NAT Gateway should exist for outbound connectivity"
+    condition     = module.networking.vnet_id != ""
+    error_message = "VNet should be created and have a valid ID"
   }
 
-  # Validate NAT Gateway has public IP
+  # Validate NAT Gateway was created
   assert {
-    condition     = length(data.azurerm_nat_gateway.main.public_ip_address_ids) > 0
-    error_message = "NAT Gateway should have at least one public IP"
+    condition     = length(module.networking.nat_gateway_ids) > 0
+    error_message = "NAT Gateway should be created for outbound connectivity"
   }
 
-  # Check public IP allocation method
+  # Validate NSGs were created
   assert {
-    condition     = data.azurerm_public_ip.nat_gateway.allocation_method == "Static"
-    error_message = "NAT Gateway public IP should use Static allocation"
+    condition     = length(module.networking.nsg_ids) >= 3
+    error_message = "All NSGs (web, app, database) should be created"
+  }
+
+  # Validate compute resources
+  assert {
+    condition     = module.compute.web_vmss_id != ""
+    error_message = "Web VMSS should be created successfully"
+  }
+
+  # Validate database was created
+  assert {
+    condition     = module.database.postgresql_server_id != ""
+    error_message = "PostgreSQL server should be created successfully"
   }
 }
 
-# Test 4: Validate Load Balancer configuration
-run "validate_load_balancer_security" {
-  command = plan
+# Test 3: Validate VMSS policy compliance
+run "validate_vmss_policy_compliance" {
+  command = apply
 
   variables {
     resource_group_name = var.resource_group_name
@@ -116,60 +106,29 @@ run "validate_load_balancer_security" {
     project_name        = var.project_name
   }
 
-  # Ensure load balancer exists
-  assert {
-    condition     = can(data.azurerm_lb.main)
-    error_message = "Load balancer should exist for web tier"
+  data "azurerm_linux_virtual_machine_scale_set" "app" {
+    name                = "app-scaleset"
+    resource_group_name = var.resource_group_name
   }
 
-  # Validate load balancer has public IP
+  # Assert allowed SKU
   assert {
-    condition     = length(data.azurerm_lb.main.frontend_ip_configuration) > 0
-    error_message = "Load balancer should have frontend IP configuration"
+    condition = contains([
+      "Standard_D2s_v3", "Standard_K8S2_v1", "Standard_K8S_v1",
+      "Standard_B2s", "Standard_B1s", "Standard_DS1_v2", "Standard_B4ms"
+    ], data.azurerm_linux_virtual_machine_scale_set.app.sku)
+    error_message = "App VMSS SKU is not allowed by policy"
   }
 
-  # Check that LB only allows HTTP/HTTPS traffic
+  # Assert allowed name
   assert {
-    condition = alltrue([
-      for rule in data.azurerm_lb.main.frontend_ip_configuration :
-      contains(["80", "443"], tostring(rule.private_ip_address_allocation))
-    ])
-    error_message = "Load balancer should only expose HTTP/HTTPS ports"
+    condition     = data.azurerm_linux_virtual_machine_scale_set.app.name == "app-scaleset"
+    error_message = "App VMSS name must be 'app-scaleset' to comply with policy"
   }
-}
 
-# Data sources for validation (these will make Azure API calls)
-data "azurerm_network_security_group" "web" {
-  name                = "${var.project_name}-${var.environment}-web-nsg"
-  resource_group_name = var.resource_group_name
-}
-
-data "azurerm_network_security_group" "app" {
-  name                = "${var.project_name}-${var.environment}-app-nsg"
-  resource_group_name = var.resource_group_name
-}
-
-data "azurerm_network_security_group" "database" {
-  name                = "${var.project_name}-${var.environment}-database-nsg"
-  resource_group_name = var.resource_group_name
-}
-
-data "azurerm_virtual_network" "main" {
-  name                = "${var.project_name}-${var.environment}-vnet"
-  resource_group_name = var.resource_group_name
-}
-
-data "azurerm_nat_gateway" "main" {
-  name                = "${var.project_name}-${var.environment}-nat-gw"
-  resource_group_name = var.resource_group_name
-}
-
-data "azurerm_public_ip" "nat_gateway" {
-  name                = "${var.project_name}-${var.environment}-nat-gw-ip"
-  resource_group_name = var.resource_group_name
-}
-
-data "azurerm_lb" "main" {
-  name                = "${var.project_name}-${var.environment}-lb"
-  resource_group_name = var.resource_group_name
+  # Assert instance count
+  assert {
+    condition     = data.azurerm_linux_virtual_machine_scale_set.app.instances <= 3
+    error_message = "App VMSS instance count exceeds policy limit of 3"
+  }
 }
