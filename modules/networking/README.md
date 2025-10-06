@@ -25,6 +25,7 @@ No modules.
 | [azurerm_network_security_group.database](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_security_group) | resource |
 | [azurerm_network_security_group.private](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_security_group) | resource |
 | [azurerm_network_security_group.public](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_security_group) | resource |
+| [azurerm_public_ip.load_balancer](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/public_ip) | resource |
 | [azurerm_public_ip.nat_gateway](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/public_ip) | resource |
 | [azurerm_route_table.private](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/route_table) | resource |
 | [azurerm_subnet.database](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/subnet) | resource |
@@ -57,6 +58,7 @@ No modules.
 | <a name="output_database_nsg_id"></a> [database\_nsg\_id](#output\_database\_nsg\_id) | ID of the database network security group |
 | <a name="output_database_subnet_ids"></a> [database\_subnet\_ids](#output\_database\_subnet\_ids) | IDs of the database subnets |
 | <a name="output_database_subnet_names"></a> [database\_subnet\_names](#output\_database\_subnet\_names) | Names of the database subnets |
+| <a name="output_load_balancer_public_ip_id"></a> [load\_balancer\_public\_ip\_id](#output\_load\_balancer\_public\_ip\_id) | Resource ID of the Load Balancer Public IP |
 | <a name="output_nat_gateway_id"></a> [nat\_gateway\_id](#output\_nat\_gateway\_id) | ID of the NAT Gateway |
 | <a name="output_nat_gateway_public_ip"></a> [nat\_gateway\_public\_ip](#output\_nat\_gateway\_public\_ip) | Public IP address of the NAT Gateway |
 | <a name="output_nat_gateway_public_ip_id"></a> [nat\_gateway\_public\_ip\_id](#output\_nat\_gateway\_public\_ip\_id) | Resource ID of the NAT Gateway Public IP |
