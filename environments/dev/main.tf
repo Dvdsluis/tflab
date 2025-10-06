@@ -32,7 +32,7 @@ locals {
 
 # Data source to reference existing resource group (lab environment)
 data "azurerm_resource_group" "main" {
-  name = "kml_rg_main-b61755695aad4019"
+  name = "kml_rg_main-5ae9e84837c64352"
 }
 
 # Networking Module

@@ -15,7 +15,7 @@ run "networking_plan_test" {
 
   variables {
     name_prefix         = "test-net"
-    resource_group_name = "kml_rg_main-b61755695aad4019"
+    resource_group_name = "kml_rg_main-5ae9e84837c64352"
     location            = "East US"
     vnet_cidr           = "10.0.0.0/16"
     public_subnets      = ["10.0.1.0/24", "10.0.2.0/24"]
@@ -68,7 +68,7 @@ run "networking_validate_outputs" {
 
   variables {
     name_prefix         = "test-net"
-    resource_group_name = "kml_rg_main-b61755695aad4019"
+    resource_group_name = "kml_rg_main-5ae9e84837c64352"
     location            = "East US"
     vnet_cidr           = "10.0.0.0/16"
     public_subnets      = ["10.0.1.0/24", "10.0.2.0/24"]
