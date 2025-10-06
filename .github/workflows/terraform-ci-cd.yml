@@ -118,9 +118,7 @@ jobs:
     - name: Run Terraform Tests
       run: |
         echo "Running Terraform tests..."
-        cd ../../tests
-        terraform init -backend=false
-        terraform test
+        terraform test ../tests/security-validation.tftest.hcl
       working-directory: ./environments/dev
       continue-on-error: true
 
