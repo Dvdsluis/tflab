@@ -117,30 +117,43 @@ run "deploy_and_validate_azure_resources" {
   }
 }
 
-# Test 3: Azure API validation for resource status and configuration
-run "validate_azure_resource_status" {
+# Test 3: Azure API validation for deeper resource status checks
+run "validate_azure_api_status" {
   command = apply
 
-  # Use data sources to check actual Azure resource state via API
-  providers = {
-    azurerm = azurerm
+  # Validate VMSS was created successfully (ID exists and is valid)
+  assert {
+    condition     = output.app_vmss_id != null && output.app_vmss_id != ""
+    error_message = "App VMSS should be created with valid ID: ${output.app_vmss_id}"
   }
 
-  # These would require custom data source queries, but demonstrate the concept
-  # In practice, you'd use az CLI commands or custom scripts for deeper validation
-}
-
-# Test 3: Azure API validation for resource status and configuration
-run "validate_azure_resource_status" {
-  command = apply
-
-  # Use data sources to check actual Azure resource state via API
-  providers = {
-    azurerm = azurerm
+  # Validate both web and app VMSS exist
+  assert {
+    condition     = output.web_vmss_id != null && output.web_vmss_id != ""
+    error_message = "Web VMSS should be created with valid ID: ${output.web_vmss_id}"
   }
 
-  # These would require custom data source queries, but demonstrate the concept
-  # In practice, you'd use az CLI commands or custom scripts for deeper validation
-}
+  # Validate load balancer has public IP assigned
+  assert {
+    condition     = output.web_load_balancer_ip != null && output.web_load_balancer_ip != ""
+    error_message = "Web load balancer should have public IP assigned: ${output.web_load_balancer_ip}"
+  }
 
-# Clean up unused runs from original file
+  # Validate PostgreSQL server was created successfully
+  assert {
+    condition     = output.postgres_server_id != null
+    error_message = "PostgreSQL server should be created successfully with valid ID"
+  }
+
+  # Validate Key Vault exists and is accessible
+  assert {
+    condition     = output.key_vault_id != null && output.key_vault_id != ""
+    error_message = "Key Vault should be created with valid ID: ${output.key_vault_id}"
+  }
+
+  # Validate VNet has proper address space configuration
+  assert {
+    condition     = contains(output.vnet_address_space, var.vnet_cidr)
+    error_message = "VNet should contain configured CIDR: expected ${var.vnet_cidr} in ${output.vnet_address_space}"
+  }
+}
