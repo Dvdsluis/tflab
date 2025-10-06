@@ -32,3 +32,18 @@ output "web_lb_public_ip" {
   description = "Public IP of the web load balancer"
   value       = var.web_public_ip_id
 }
+
+output "app_vmss_sku" {
+  description = "SKU of the app VM scale set"
+  value       = azurerm_linux_virtual_machine_scale_set.app.sku
+}
+
+output "app_vmss_name" {
+  description = "Name of the app VM scale set"
+  value       = azurerm_linux_virtual_machine_scale_set.app.name
+}
+
+output "app_vmss_instance_count" {
+  description = "Instance count of the app VM scale set"
+  value       = azurerm_linux_virtual_machine_scale_set.app.instances
+}

@@ -106,29 +106,24 @@ run "validate_vmss_policy_compliance" {
     project_name        = var.project_name
   }
 
-  data "azurerm_linux_virtual_machine_scale_set" "app" {
-    name                = "app-scaleset"
-    resource_group_name = var.resource_group_name
-  }
-
   # Assert allowed SKU
   assert {
     condition = contains([
       "Standard_D2s_v3", "Standard_K8S2_v1", "Standard_K8S_v1",
       "Standard_B2s", "Standard_B1s", "Standard_DS1_v2", "Standard_B4ms"
-    ], data.azurerm_linux_virtual_machine_scale_set.app.sku)
+    ], module.compute.app_vmss_sku)
     error_message = "App VMSS SKU is not allowed by policy"
   }
 
   # Assert allowed name
   assert {
-    condition     = data.azurerm_linux_virtual_machine_scale_set.app.name == "app-scaleset"
+    condition     = module.compute.app_vmss_name == "app-scaleset"
     error_message = "App VMSS name must be 'app-scaleset' to comply with policy"
   }
 
   # Assert instance count
   assert {
-    condition     = data.azurerm_linux_virtual_machine_scale_set.app.instances <= 3
+    condition     = module.compute.app_vmss_instance_count <= 3
     error_message = "App VMSS instance count exceeds policy limit of 3"
   }
 }
