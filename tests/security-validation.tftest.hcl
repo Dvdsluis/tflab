@@ -36,14 +36,6 @@ run "deploy_and_validate_network_security" {
     error_message = "VNet address space should not overlap with common network ranges"
   }
 
-  # Validate web tier VM size is cost-effective
-  assert {
-    condition = !contains([
-      "172.16.0.0/12",  # Common corporate ranges
-      "192.168.0.0/16", # Common home ranges
-      "10.1.0.0/16"     # Common Azure ranges
-    ], module.networking.vnet_address_space)
-
   # Validate app tier instance count is within limits
   assert {
     condition     = module.compute.app_instance_count <= 3
