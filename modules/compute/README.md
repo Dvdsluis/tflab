@@ -38,6 +38,7 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_admin_username"></a> [admin\_username](#input\_admin\_username) | Admin username for VMs | `string` | n/a | yes |
+| <a name="input_allowed_vm_skus"></a> [allowed\_vm\_skus](#input\_allowed\_vm\_skus) | List of allowed VM SKUs for policy compliance | `list(string)` | <pre>[<br>  "Standard_D2s_v3",<br>  "Standard_K8S2_v1",<br>  "Standard_K8S_v1",<br>  "Standard_B2s",<br>  "Standard_B1s",<br>  "Standard_DS1_v2",<br>  "Standard_B4ms"<br>]</pre> | no |
 | <a name="input_app_subnet_id"></a> [app\_subnet\_id](#input\_app\_subnet\_id) | ID of the app subnet | `string` | n/a | yes |
 | <a name="input_location"></a> [location](#input\_location) | Azure region for resources | `string` | n/a | yes |
 | <a name="input_name_prefix"></a> [name\_prefix](#input\_name\_prefix) | Prefix for resource names | `string` | n/a | yes |
