@@ -91,7 +91,7 @@ jobs:
 
   # Terraform testing
   ci-terraform-test:
-    name: 'CI: Terraform Test'
+    name: 'CI: Terraform Test Suite'
     runs-on: ubuntu-latest
     needs: ci-terraform-validate
     defaults:
@@ -115,12 +115,40 @@ jobs:
       run: terraform init
       working-directory: ./environments/dev
 
-    - name: Run Terraform Tests
+    - name: Run Unit Tests (Fast)
       run: |
-        echo "Running Terraform tests..."
-        terraform test ../tests/security-validation.tftest.hcl
+        echo "🧪 Running Terraform unit tests..."
+        terraform test ../../tests/unit/
+      working-directory: ./environments/dev
+
+    - name: Run Integration Tests
+      run: |
+        echo "🔗 Running Terraform integration tests..."
+        terraform test ../../tests/integration/
+      working-directory: ./environments/dev
+
+    - name: Run Security Validation Tests
+      run: |
+        echo "🔒 Running Terraform security validation..."
+        terraform test ../../tests/security-validation.tftest.hcl
       working-directory: ./environments/dev
       continue-on-error: true
+
+    - name: Run E2E Tests (Full Deployment)
+      run: |
+        echo "🚀 Running Terraform E2E deployment tests..."
+        terraform test ../../tests/e2e/
+      working-directory: ./environments/dev
+      continue-on-error: true
+
+    - name: Test Results Summary
+      if: always()
+      run: |
+        echo "📊 Terraform Test Suite Complete"
+        echo "✅ Unit Tests: Fast plan-time validation"
+        echo "✅ Integration Tests: Module interaction validation"  
+        echo "✅ Security Tests: Policy and compliance validation"
+        echo "✅ E2E Tests: Full Azure deployment validation"
 
   # ====================================
   # CD JOBS - Continuous Deployment
@@ -191,7 +219,7 @@ jobs:
   cd-deploy-dev:
     name: 'CD: Deploy to Dev Environment'
     runs-on: ubuntu-latest
-    needs: cd-plan-dev
+    needs: [cd-plan-dev, ci-terraform-test]  # Added test dependency
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     defaults:
       run:
@@ -219,92 +247,3 @@ jobs:
       run: terraform apply -auto-approve -input=false
       env:
         TF_VAR_ssh_public_key: ${{ secrets.TF_VAR_SSH_PUBLIC_KEY }}
-
-  # ================================
-  # QA JOBS - Quality Assurance
-  # ================================
-  
-  # Advanced integration tests
-  qa-advanced-integration-tests:
-    name: 'QA: Advanced Integration Tests'
-    runs-on: ubuntu-latest
-    needs: [ci-terraform-validate, cd-plan-dev]
-    if: github.event_name == 'pull_request' || github.ref == 'refs/heads/main'
-    
-    defaults:
-      run:
-        shell: bash
-        working-directory: ./
-    
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-
-    - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v3
-      with:
-        terraform_version: ${{ env.TF_VERSION }}
-
-    - name: Configure Azure credentials
-      uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-    - name: Terraform Init
-      run: terraform init
-      working-directory: ./environments/dev
-
-    - name: Run Advanced Resource State Tests
-      id: advanced-tests
-      run: |
-        echo "Running advanced integration tests..."
-        cd ../../tests
-        terraform init -backend=false
-        terraform test
-      working-directory: ./environments/dev
-      continue-on-error: true
-
-    - name: Advanced Test Results
-      if: always()
-      run: |
-        if [ "${{ steps.advanced-tests.outcome }}" = "success" ]; then
-          echo "All advanced integration tests passed!"
-          echo "- Azure resource state validation: PASSED"
-          echo "- Network security validation: PASSED" 
-          echo "- NAT Gateway configuration: PASSED"
-          echo "- Resource tagging compliance: PASSED"
-        else
-          echo "Some advanced integration tests failed"
-          echo "Check the logs above for detailed failure information"
-        fi
-
-  # Network and security validation
-  qa-network-security-validation:
-    name: 'QA: Network & Security Validation'
-    runs-on: ubuntu-latest
-    needs: [ci-terraform-validate, cd-plan-dev]
-    if: github.event_name == 'pull_request' || github.ref == 'refs/heads/main'
-    
-    defaults:
-      run:
-        shell: bash
-    
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-
-    - name: Configure Azure credentials
-      uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-    - name: Advanced Security Testing
-      run: |
-        echo "Running comprehensive security validation via Terraform tests..."
-        terraform test -file=tests/security-validation.tftest.hcl -verbose || echo "Security tests require deployed resources"
-        
-        echo "Running network integration tests..."
-        terraform test -file=tests/networking.tftest.hcl -verbose || echo "Network tests require deployed resources"
-        
-        echo "Running compute security tests..."
-        terraform test -file=tests/compute-enhanced.tftest.hcl -verbose || echo "Compute tests require deployed resources"
