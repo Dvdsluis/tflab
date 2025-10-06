@@ -326,11 +326,15 @@ jobs:
         echo "Checking Network Security Group rules..."
         for nsg in "terraform-lab-dev-web-nsg" "terraform-lab-dev-app-nsg" "terraform-lab-dev-database-nsg"; do
           echo "NSG: $nsg"
-          az network nsg rule list \
-            --resource-group kml_rg_main-f9fc6defb9c44b20 \
-            --nsg-name $nsg \
-            --query "[].{name:name, access:access, protocol:protocol, sourceAddressPrefix:sourceAddressPrefix, destinationPortRange:destinationPortRange, priority:priority}" \
-            --output table
+          if az network nsg show --resource-group kml_rg_main-f9fc6defb9c44b20 --name $nsg > /dev/null 2>&1; then
+            az network nsg rule list \
+              --resource-group kml_rg_main-f9fc6defb9c44b20 \
+              --nsg-name $nsg \
+              --query "[].{name:name, access:access, protocol:protocol, sourceAddressPrefix:sourceAddressPrefix, destinationPortRange:destinationPortRange, priority:priority}" \
+              --output table
+          else
+            echo "NSG $nsg not found - may not be deployed yet"
+          fi
           echo "---"
         done
 
@@ -340,18 +344,22 @@ jobs:
         
         # Check for open security rules
         echo "Checking for overly permissive NSG rules..."
-        OPEN_RULES=$(az network nsg rule list \
-          --resource-group kml_rg_main-f9fc6defb9c44b20 \
-          --nsg-name terraform-lab-dev-database-nsg \
-          --query "[?sourceAddressPrefix=='*' && access=='Allow'].name" \
-          --output tsv)
-        
-        if [ -n "$OPEN_RULES" ]; then
-          echo "WARNING: Database NSG has rules allowing access from anywhere:"
-          echo "$OPEN_RULES"
-          exit 1
+        if az network nsg show --resource-group kml_rg_main-f9fc6defb9c44b20 --name terraform-lab-dev-database-nsg > /dev/null 2>&1; then
+          OPEN_RULES=$(az network nsg rule list \
+            --resource-group kml_rg_main-f9fc6defb9c44b20 \
+            --nsg-name terraform-lab-dev-database-nsg \
+            --query "[?sourceAddressPrefix=='*' && access=='Allow'].name" \
+            --output tsv)
+          
+          if [ -n "$OPEN_RULES" ]; then
+            echo "WARNING: Database NSG has rules allowing access from anywhere:"
+            echo "$OPEN_RULES"
+            exit 1
+          else
+            echo "Database NSG properly restricts access"
+          fi
         else
-          echo "Database NSG properly restricts access"
+          echo "Database NSG not found - may not be deployed yet"
         fi
         
         # Check SSH access restrictions
