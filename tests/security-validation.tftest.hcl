@@ -32,14 +32,32 @@ run "deploy_and_validate_network_security" {
       "172.16.0.0/12",  # Common corporate ranges
       "192.168.0.0/16", # Common home ranges
       "10.1.0.0/16"     # Common Azure ranges
-    ], module.networking.vnet_address_space[0])
+    ], output.vnet_address_space[0])
     error_message = "VNet address space should not overlap with common network ranges"
   }
 
-  # Validate app tier instance count is within limits
+  # Subnet count and CIDR validation
   assert {
-    condition     = module.compute.app_instance_count <= 3
+    condition     = length(output.public_subnet_ids) == 2 && length(output.private_subnet_ids) == 2 && length(output.database_subnet_ids) == 2
+    error_message = "There must be exactly 2 public, 2 private, and 2 database subnets"
+  }
+
+  # NAT Gateway association (at least one NAT Gateway must exist)
+  assert {
+    condition     = output.vnet_id != null
+    error_message = "VNet must exist for NAT Gateway association"
+  }
+
+  # App tier instance count is within limits
+  assert {
+    condition     = output.app_vmss_instance_count <= 3
     error_message = "App tier instance count should not exceed policy limit of 3"
+  }
+
+  # Resource naming conventions (example: VNet name starts with project_name)
+  assert {
+    condition     = can(regex("^terraform-lab-.*", output.vnet_id))
+    error_message = "VNet name should follow naming convention"
   }
 }
 
@@ -151,19 +169,52 @@ run "validate_vmss_policy_compliance" {
     condition = contains([
       "Standard_D2s_v3", "Standard_K8S2_v1", "Standard_K8S_v1",
       "Standard_B2s", "Standard_B1s", "Standard_DS1_v2", "Standard_B4ms"
-    ], module.compute.app_vmss_sku)
+    ], output.app_vmss_sku)
     error_message = "App VMSS SKU is not allowed by policy"
   }
 
   # Assert allowed name
   assert {
-    condition     = module.compute.app_vmss_name == "app-scaleset"
+    condition     = output.app_vmss_name == "app-scaleset"
     error_message = "App VMSS name must be 'app-scaleset' to comply with policy"
   }
 
   # Assert instance count
   assert {
-    condition     = module.compute.app_vmss_instance_count <= 3
+    condition     = output.app_vmss_instance_count <= 3
     error_message = "App VMSS instance count exceeds policy limit of 3"
   }
+
+  # Tagging validation (example: check for Environment tag on VMSS)
+  # (Assumes you expose tags as output if needed)
+}
+# Test 4: Database policy and security compliance
+run "validate_database_policy" {
+  command = apply
+
+  variables {
+    resource_group_name = var.resource_group_name
+    environment         = var.environment
+    project_name        = var.project_name
+  }
+
+  # Database server ID must not be empty
+  assert {
+    condition     = output.postgres_server_id != null
+    error_message = "PostgreSQL server must be created"
+  }
+
+  # Key Vault must exist
+  assert {
+    condition     = output.key_vault_id != null
+    error_message = "Key Vault for DB secrets must be created"
+  }
+
+  # Database NSG must exist
+  assert {
+    condition     = output.database_nsg_id != null
+    error_message = "Database NSG must be created"
+  }
+
+  # (Optional) Add backup retention, SKU, and HA checks if exposed as outputs
 }

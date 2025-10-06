@@ -1,3 +1,18 @@
+# VMSS Policy Outputs (for enterprise compliance)
+output "app_vmss_sku" {
+  description = "SKU of the app VM scale set"
+  value       = module.compute.app_vmss_sku
+}
+
+output "app_vmss_name" {
+  description = "Name of the app VM scale set"
+  value       = module.compute.app_vmss_name
+}
+
+output "app_vmss_instance_count" {
+  description = "Instance count of the app VM scale set"
+  value       = module.compute.app_vmss_instance_count
+}
 # VNet Outputs (Azure Virtual Network)
 output "vnet_id" {
   description = "ID of the Virtual Network"
