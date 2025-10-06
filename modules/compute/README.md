@@ -58,6 +58,9 @@ No modules.
 | <a name="output_app_lb_id"></a> [app\_lb\_id](#output\_app\_lb\_id) | ID of the app load balancer |
 | <a name="output_app_nsg_id"></a> [app\_nsg\_id](#output\_app\_nsg\_id) | ID of the app network security group |
 | <a name="output_app_vmss_id"></a> [app\_vmss\_id](#output\_app\_vmss\_id) | ID of the app VM scale set |
+| <a name="output_app_vmss_instance_count"></a> [app\_vmss\_instance\_count](#output\_app\_vmss\_instance\_count) | Instance count of the app VM scale set |
+| <a name="output_app_vmss_name"></a> [app\_vmss\_name](#output\_app\_vmss\_name) | Name of the app VM scale set |
+| <a name="output_app_vmss_sku"></a> [app\_vmss\_sku](#output\_app\_vmss\_sku) | SKU of the app VM scale set |
 | <a name="output_web_lb_id"></a> [web\_lb\_id](#output\_web\_lb\_id) | ID of the web load balancer |
 | <a name="output_web_lb_public_ip"></a> [web\_lb\_public\_ip](#output\_web\_lb\_public\_ip) | Public IP of the web load balancer |
 | <a name="output_web_nsg_id"></a> [web\_nsg\_id](#output\_web\_nsg\_id) | ID of the web network security group |
