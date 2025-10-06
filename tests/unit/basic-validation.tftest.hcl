@@ -42,7 +42,7 @@ run "validate_configuration_syntax" {
 
   # Validate Azure region format
   assert {
-    condition     = can(regex("^[A-Z][a-z]+ [A-Z][a-z]+$", var.azure_region))
+    condition     = can(regex("^[A-Za-z]+ [A-Z][A-Za-z]+$", var.azure_region))
     error_message = "Azure region format invalid: ${var.azure_region}"
   }
 

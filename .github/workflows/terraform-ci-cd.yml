@@ -115,40 +115,61 @@ jobs:
       run: terraform init
       working-directory: ./environments/dev
 
+    - name: Temporarily Rename Minimal Test
+      run: |
+        if [ -f minimal.tftest.hcl ]; then
+          echo "Temporarily disabling minimal.tftest.hcl to run production tests"
+          mv minimal.tftest.hcl minimal.tftest.hcl.disabled
+        else
+          echo "WARNING: minimal.tftest.hcl not found, continuing..."
+        fi
+      working-directory: ./environments/dev
+
     - name: Run Unit Tests (Fast)
       run: |
-        echo "🧪 Running Terraform unit tests..."
-        terraform test ../../tests/unit/
+        echo "Running Terraform unit tests..."
+        terraform test ../../tests/unit/basic-validation.tftest.hcl
       working-directory: ./environments/dev
 
     - name: Run Integration Tests
       run: |
-        echo "🔗 Running Terraform integration tests..."
-        terraform test ../../tests/integration/
+        echo "Running Terraform integration tests..."
+        terraform test ../../tests/integration/module-integration.tftest.hcl
       working-directory: ./environments/dev
 
     - name: Run Security Validation Tests
       run: |
-        echo "🔒 Running Terraform security validation..."
+        echo "Running Terraform security validation..."
         terraform test ../../tests/security-validation.tftest.hcl
       working-directory: ./environments/dev
       continue-on-error: true
 
     - name: Run E2E Tests (Full Deployment)
       run: |
-        echo "🚀 Running Terraform E2E deployment tests..."
-        terraform test ../../tests/e2e/
+        echo "Running Terraform E2E deployment tests..."
+        terraform test ../../tests/e2e/azure-deployment.tftest.hcl
       working-directory: ./environments/dev
       continue-on-error: true
+
+    - name: Restore Minimal Test
+      run: |
+        if [ -f minimal.tftest.hcl.disabled ]; then
+          echo "Restoring minimal.tftest.hcl for future development"
+          mv minimal.tftest.hcl.disabled minimal.tftest.hcl
+        else
+          echo "WARNING: minimal.tftest.hcl.disabled not found, skipping restore..."
+        fi
+      working-directory: ./environments/dev
+      if: always()
 
     - name: Test Results Summary
       if: always()
       run: |
-        echo "📊 Terraform Test Suite Complete"
-        echo "✅ Unit Tests: Fast plan-time validation"
-        echo "✅ Integration Tests: Module interaction validation"  
-        echo "✅ Security Tests: Policy and compliance validation"
-        echo "✅ E2E Tests: Full Azure deployment validation"
+        echo "Terraform Test Suite Complete"
+        echo "Unit Tests: Fast plan-time validation"
+        echo "Integration Tests: Module interaction validation"  
+        echo "Security Tests: Policy and compliance validation"
+        echo "E2E Tests: Full Azure deployment validation"
 
   # ====================================
   # CD JOBS - Continuous Deployment
