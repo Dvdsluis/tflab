@@ -125,34 +125,45 @@ jobs:
         fi
       working-directory: ./environments/dev
 
+    - name: Copy Production Tests to Dev Environment
+      run: |
+        echo "Copying production test files to dev environment..."
+        cp ../../tests/unit/basic-validation.tftest.hcl ./unit-tests.tftest.hcl
+        cp ../../tests/integration/module-integration.tftest.hcl ./integration-tests.tftest.hcl
+        cp ../../tests/security-validation.tftest.hcl ./security-tests.tftest.hcl
+        cp ../../tests/e2e/azure-deployment.tftest.hcl ./e2e-tests.tftest.hcl
+      working-directory: ./environments/dev
+
     - name: Run Unit Tests (Fast)
       run: |
         echo "Running Terraform unit tests..."
-        terraform test ../../tests/unit/basic-validation.tftest.hcl
+        terraform test unit-tests.tftest.hcl
       working-directory: ./environments/dev
 
     - name: Run Integration Tests
       run: |
         echo "Running Terraform integration tests..."
-        terraform test ../../tests/integration/module-integration.tftest.hcl
+        terraform test integration-tests.tftest.hcl
       working-directory: ./environments/dev
 
     - name: Run Security Validation Tests
       run: |
         echo "Running Terraform security validation..."
-        terraform test ../../tests/security-validation.tftest.hcl
+        terraform test security-tests.tftest.hcl
       working-directory: ./environments/dev
       continue-on-error: true
 
     - name: Run E2E Tests (Full Deployment)
       run: |
         echo "Running Terraform E2E deployment tests..."
-        terraform test ../../tests/e2e/azure-deployment.tftest.hcl
+        terraform test e2e-tests.tftest.hcl
       working-directory: ./environments/dev
       continue-on-error: true
 
-    - name: Restore Minimal Test
+    - name: Cleanup Test Files and Restore Minimal Test
       run: |
+        echo "Cleaning up copied test files..."
+        rm -f unit-tests.tftest.hcl integration-tests.tftest.hcl security-tests.tftest.hcl e2e-tests.tftest.hcl
         if [ -f minimal.tftest.hcl.disabled ]; then
           echo "Restoring minimal.tftest.hcl for future development"
           mv minimal.tftest.hcl.disabled minimal.tftest.hcl
