@@ -39,7 +39,7 @@ detect_lab_environment() {
     fi
     
     # Fallback to current hardcoded RG for backwards compatibility
-    export LAB_RESOURCE_GROUP="kml_rg_main-5ae9e84837c64352"
+    export LAB_RESOURCE_GROUP="kml_rg_main-f9fc6defb9c44b20"
     export LAB_ENVIRONMENT="$env"
     
     echo "Warning: Using fallback resource group: $LAB_RESOURCE_GROUP"

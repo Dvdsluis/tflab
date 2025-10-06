@@ -15,7 +15,7 @@ run "database_plan_test" {
 
   variables {
     name_prefix             = "test-db"
-    resource_group_name     = "kml_rg_main-5ae9e84837c64352"
+    resource_group_name     = "kml_rg_main-f9fc6defb9c44b20"
     location                = "East US"
     allowed_cidr            = "10.0.0.0/16"
     engine                  = "postgres"
@@ -100,7 +100,7 @@ run "database_mysql_test" {
 
   variables {
     name_prefix             = "test-mysql"
-    resource_group_name     = "kml_rg_main-5ae9e84837c64352"
+    resource_group_name     = "kml_rg_main-f9fc6defb9c44b20"
     location                = "East US"
     allowed_cidr            = "10.0.0.0/16"
     engine                  = "mysql"
@@ -144,7 +144,7 @@ run "database_validate_outputs" {
 
   variables {
     name_prefix             = "test-db"
-    resource_group_name     = "kml_rg_main-5ae9e84837c64352"
+    resource_group_name     = "kml_rg_main-f9fc6defb9c44b20"
     location                = "East US"
     allowed_cidr            = "10.0.0.0/16"
     engine                  = "postgres"

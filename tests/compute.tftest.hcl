@@ -13,7 +13,7 @@ run "compute_plan_test" {
 
   variables {
     name_prefix         = "test-compute"
-    resource_group_name = "kml_rg_main-5ae9e84837c64352"
+    resource_group_name = "kml_rg_main-f9fc6defb9c44b20"
     location            = "East US"
     vnet_cidr           = "10.0.0.0/16"
     web_subnet_id       = "/subscriptions/sub/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/public-1"
@@ -85,7 +85,7 @@ run "compute_validate_outputs" {
 
   variables {
     name_prefix         = "test-compute"
-    resource_group_name = "kml_rg_main-5ae9e84837c64352"
+    resource_group_name = "kml_rg_main-f9fc6defb9c44b20"
     location            = "East US"
     vnet_cidr           = "10.0.0.0/16"
     web_subnet_id       = "/subscriptions/sub/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/public-1"

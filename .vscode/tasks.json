@@ -4,10 +4,38 @@
 		{
 			"label": "Validate Terraform Configuration",
 			"type": "shell",
-			"command": "./scripts/validate-terraform.sh",
+			"command": "terraform",
+			"args": ["validate"],
+			"options": {
+				"cwd": "${workspaceFolder}/environments/dev"
+			},
 			"isBackground": false,
 			"problemMatcher": [],
 			"group": "build"
+		},
+		{
+			"label": "Format Terraform Code",
+			"type": "shell",
+			"command": "terraform",
+			"args": ["fmt", "-recursive"],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Run Terraform Tests",
+			"type": "shell",
+			"command": "terraform",
+			"args": ["test"],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "test"
 		}
 	]
 }
