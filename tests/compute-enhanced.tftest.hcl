@@ -24,12 +24,12 @@ run "compute_config_validation" {
     web_public_ip_id    = "/subscriptions/sub/resourceGroups/test-rg/providers/Microsoft.Network/publicIPAddresses/test-pip"
 
     public_instance_config = {
-      instance_type = "Standard_B2s"  # Policy compliant
+      instance_type = "Standard_B2s" # Policy compliant
       desired_size  = 2
     }
 
     private_instance_config = {
-      instance_type = "Standard_B2s"  # Policy compliant
+      instance_type = "Standard_B2s" # Policy compliant
       desired_size  = 3              # Max allowed by policy
     }
 
@@ -54,12 +54,12 @@ run "compute_config_validation" {
   }
 
   assert {
-    condition = contains(["Standard_B1s", "Standard_B2s", "Standard_B1ms"], azurerm_linux_virtual_machine_scale_set.web.sku)
+    condition     = contains(["Standard_B1s", "Standard_B2s", "Standard_B1ms"], azurerm_linux_virtual_machine_scale_set.web.sku)
     error_message = "Web VMSS must use policy-compliant VM size"
   }
 
   assert {
-    condition = contains(["Standard_B1s", "Standard_B2s", "Standard_B1ms"], azurerm_linux_virtual_machine_scale_set.app.sku)
+    condition     = contains(["Standard_B1s", "Standard_B2s", "Standard_B1ms"], azurerm_linux_virtual_machine_scale_set.app.sku)
     error_message = "App VMSS must use policy-compliant VM size"
   }
 
@@ -82,7 +82,7 @@ run "compute_config_validation" {
 
   # Resource naming conventions
   assert {
-    condition = can(regex("^test-compute-.*-lb$", azurerm_lb.web.name))
+    condition     = can(regex("^test-compute-.*-lb$", azurerm_lb.web.name))
     error_message = "Load balancer names should follow naming convention"
   }
 
@@ -114,7 +114,7 @@ run "compute_invalid_vm_size" {
     web_public_ip_id    = "/subscriptions/sub/resourceGroups/test-rg/providers/Microsoft.Network/publicIPAddresses/test-pip"
 
     public_instance_config = {
-      instance_type = "Standard_D4s_v3"  # NOT policy compliant - should trigger validation
+      instance_type = "Standard_D4s_v3" # NOT policy compliant - should trigger validation
       desired_size  = 1
     }
 

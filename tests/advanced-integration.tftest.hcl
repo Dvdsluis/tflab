@@ -66,9 +66,15 @@ data "azurerm_public_ip" "test_lb_public_ip" {
   resource_group_name = "kml_rg_main-5ae9e84837c64352"
 }
 
+# Data source for Key Vault (for security testing)
+data "azurerm_key_vault" "test_key_vault" {
+  name                = "terraform-lab-dev-db-kv"
+  resource_group_name = "kml_rg_main-5ae9e84837c64352"
+}
+
 # Test 1: Real Azure Resource State Validation (using Terraform data sources)
 run "azure_resource_state_validation" {
-  command = plan  # Use plan to test against existing resources
+  command = plan # Use plan to test against existing resources
 
   variables {
     # Test variables - not deploying, just validating existing resources
@@ -279,5 +285,51 @@ run "resource_tagging_validation" {
   assert {
     condition     = data.azurerm_network_security_group.test_database_nsg.tags["Environment"] != null
     error_message = "Database NSG should have Environment tag"
+  }
+}
+
+# Test 5: Key Vault Security and Compliance Validation
+run "key_vault_security_validation" {
+  command = plan
+
+  variables {
+    # Test variables
+  }
+
+  # Key Vault should exist and be configured properly
+  assert {
+    condition     = data.azurerm_key_vault.test_key_vault.name == "terraform-lab-dev-db-kv"
+    error_message = "Key Vault should exist with correct name"
+  }
+
+  assert {
+    condition     = data.azurerm_key_vault.test_key_vault.sku_name == "standard"
+    error_message = "Key Vault should use Standard SKU"
+  }
+
+  assert {
+    condition     = data.azurerm_key_vault.test_key_vault.soft_delete_retention_days == 7
+    error_message = "Key Vault should have 7-day soft delete retention"
+  }
+
+  assert {
+    condition     = data.azurerm_key_vault.test_key_vault.purge_protection_enabled == true
+    error_message = "Key Vault should have purge protection enabled for compliance"
+  }
+
+  # Security compliance tagging
+  assert {
+    condition     = contains(keys(data.azurerm_key_vault.test_key_vault.tags), "Environment")
+    error_message = "Key Vault should have Environment tag"
+  }
+
+  assert {
+    condition     = contains(keys(data.azurerm_key_vault.test_key_vault.tags), "ManagedBy")
+    error_message = "Key Vault should have ManagedBy tag"
+  }
+
+  assert {
+    condition     = data.azurerm_key_vault.test_key_vault.tags["ManagedBy"] == "terraform"
+    error_message = "Key Vault ManagedBy tag should be 'terraform'"
   }
 }

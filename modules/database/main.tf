@@ -55,9 +55,12 @@ resource "random_password" "db_password" {
 
 # Store password in Azure Key Vault
 resource "azurerm_key_vault_secret" "db_password" {
-  name         = "${var.name_prefix}-db-password"
-  value        = random_password.db_password.result
-  key_vault_id = azurerm_key_vault.database.id
+  name            = "${var.name_prefix}-db-password"
+  value           = random_password.db_password.result
+  key_vault_id    = azurerm_key_vault.database.id
+  expiration_date = timeadd(timestamp(), "${var.secret_expiration_hours}h")
+
+  tags = var.tags
 }
 
 # Network Security Group for DB

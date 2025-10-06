@@ -79,3 +79,14 @@ variable "tags" {
   type        = map(string)
   default     = {}
 }
+
+variable "secret_expiration_hours" {
+  description = "Number of hours until Key Vault secret expires (default: 8760 = 1 year)"
+  type        = number
+  default     = 8760 # 1 year
+
+  validation {
+    condition     = var.secret_expiration_hours > 0 && var.secret_expiration_hours <= 17520 # Max 2 years
+    error_message = "Secret expiration must be between 1 hour and 17520 hours (2 years)."
+  }
+}

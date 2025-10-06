@@ -70,6 +70,18 @@ run "database_plan_test" {
     error_message = "Database password should be 16 characters long"
   }
 
+  # Security compliance: Key Vault secret should have expiration date
+  assert {
+    condition     = azurerm_key_vault_secret.db_password.expiration_date != null
+    error_message = "Key Vault secret should have an expiration date for security compliance"
+  }
+
+  # Validate expiration is in the future
+  assert {
+    condition     = can(timeadd(timestamp(), "1h")) && timeadd(timestamp(), "1h") < azurerm_key_vault_secret.db_password.expiration_date
+    error_message = "Key Vault secret expiration should be in the future"
+  }
+
   assert {
     condition = length([
       for rule in azurerm_network_security_rule.database_inbound :
