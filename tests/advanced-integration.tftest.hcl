@@ -9,12 +9,12 @@ run "syntax_validation" {
   # Test with minimal variables to validate syntax
   variables {
     resource_group_name = "test-rg"
-    location           = "East US"
-    environment        = "dev"
-    project_name       = "terraform-lab"
-    ssh_public_key     = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC test-key"
-    db_admin_username  = "testadmin"
-    db_admin_password  = "TestPassword123!"
+    location            = "East US"
+    environment         = "dev"
+    project_name        = "terraform-lab"
+    ssh_public_key      = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC test-key"
+    db_admin_username   = "testadmin"
+    db_admin_password   = "TestPassword123!"
   }
 
   assert {
@@ -39,12 +39,12 @@ run "environment_configuration_test" {
 
   variables {
     resource_group_name = "test-rg"
-    location           = "East US"
-    environment        = "staging"
-    project_name       = "terraform-lab"
-    ssh_public_key     = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC test-key"
-    db_admin_username  = "testadmin"
-    db_admin_password  = "TestPassword123!"
+    location            = "East US"
+    environment         = "staging"
+    project_name        = "terraform-lab"
+    ssh_public_key      = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC test-key"
+    db_admin_username   = "testadmin"
+    db_admin_password   = "TestPassword123!"
   }
 
   assert {
@@ -67,12 +67,12 @@ run "output_validation_test" {
 
   variables {
     resource_group_name = "test-rg"
-    location           = "East US"
-    environment        = "prod"
-    project_name       = "terraform-lab"
-    ssh_public_key     = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC test-key"
-    db_admin_username  = "testadmin"
-    db_admin_password  = "TestPassword123!"
+    location            = "East US"
+    environment         = "prod"
+    project_name        = "terraform-lab"
+    ssh_public_key      = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC test-key"
+    db_admin_username   = "testadmin"
+    db_admin_password   = "TestPassword123!"
   }
 
   assert {
