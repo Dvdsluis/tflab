@@ -57,6 +57,9 @@
 |------|-------------|
 | <a name="output_app_nsg_id"></a> [app\_nsg\_id](#output\_app\_nsg\_id) | ID of the app network security group |
 | <a name="output_app_vmss_id"></a> [app\_vmss\_id](#output\_app\_vmss\_id) | ID of the app VM scale set |
+| <a name="output_app_vmss_instance_count"></a> [app\_vmss\_instance\_count](#output\_app\_vmss\_instance\_count) | Instance count of the app VM scale set |
+| <a name="output_app_vmss_name"></a> [app\_vmss\_name](#output\_app\_vmss\_name) | Name of the app VM scale set |
+| <a name="output_app_vmss_sku"></a> [app\_vmss\_sku](#output\_app\_vmss\_sku) | SKU of the app VM scale set |
 | <a name="output_database_nsg_id"></a> [database\_nsg\_id](#output\_database\_nsg\_id) | ID of the database network security group |
 | <a name="output_database_subnet_ids"></a> [database\_subnet\_ids](#output\_database\_subnet\_ids) | IDs of the database subnets |
 | <a name="output_key_vault_id"></a> [key\_vault\_id](#output\_key\_vault\_id) | ID of the Key Vault for database secrets |
