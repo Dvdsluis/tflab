@@ -82,6 +82,20 @@ resource "azurerm_public_ip" "nat_gateway" {
   })
 }
 
+# Public IP for Load Balancer
+resource "azurerm_public_ip" "load_balancer" {
+  name                = "${var.name_prefix}-lb-ip"
+  location            = var.location
+  resource_group_name = var.resource_group_name
+  allocation_method   = "Static"
+  sku                 = "Standard"
+
+  tags = merge(var.tags, {
+    Name = "${var.name_prefix}-lb-ip"
+    Type = "PublicIP"
+  })
+}
+
 # NAT Gateway
 resource "azurerm_nat_gateway" "main" {
   count = var.enable_nat_gateway ? 1 : 0

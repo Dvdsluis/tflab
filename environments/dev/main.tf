@@ -62,7 +62,7 @@ module "compute" {
   vnet_cidr           = var.vnet_cidr
   web_subnet_id       = module.networking.public_subnet_ids[0]
   app_subnet_id       = module.networking.private_subnet_ids[0]
-  web_public_ip_id    = module.networking.nat_gateway_public_ip_id
+  web_public_ip_id    = module.networking.load_balancer_public_ip_id
 
   public_instance_config = {
     instance_type = var.web_vm_size

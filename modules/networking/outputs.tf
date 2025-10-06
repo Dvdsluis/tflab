@@ -58,6 +58,11 @@ output "nat_gateway_public_ip_id" {
   value       = var.enable_nat_gateway ? azurerm_public_ip.nat_gateway[0].id : null
 }
 
+output "load_balancer_public_ip_id" {
+  description = "Resource ID of the Load Balancer Public IP"
+  value       = azurerm_public_ip.load_balancer.id
+}
+
 output "public_nsg_id" {
   description = "ID of the public network security group"
   value       = azurerm_network_security_group.public.id

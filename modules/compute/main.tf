@@ -141,13 +141,13 @@ resource "azurerm_linux_virtual_machine_scale_set" "web" {
   tags        = var.tags
 }
 
-# App VMSS
+# App VMSS (Policy compliant name)
 resource "azurerm_linux_virtual_machine_scale_set" "app" {
-  name                            = "${var.name_prefix}-app-vmss"
+  name                            = "app-scaleset"
   location                        = var.location
   resource_group_name             = var.resource_group_name
   sku                             = var.private_instance_config.instance_type
-  instances                       = var.private_instance_config.desired_size
+  instances                       = min(var.private_instance_config.desired_size, 3)
   admin_username                  = var.admin_username
   disable_password_authentication = true
   admin_ssh_key {
