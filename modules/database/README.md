@@ -44,6 +44,7 @@ No modules.
 | <a name="input_location"></a> [location](#input\_location) | Azure region for resources | `string` | n/a | yes |
 | <a name="input_name_prefix"></a> [name\_prefix](#input\_name\_prefix) | Prefix for resource names | `string` | n/a | yes |
 | <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | Name of the resource group | `string` | n/a | yes |
+| <a name="input_secret_expiration_hours"></a> [secret\_expiration\_hours](#input\_secret\_expiration\_hours) | Number of hours until Key Vault secret expires (default: 8760 = 1 year) | `number` | `8760` | no |
 | <a name="input_sku_name"></a> [sku\_name](#input\_sku\_name) | Azure DB SKU name (e.g., Standard\_D2ds\_v4) | `string` | `"Standard_D2ds_v4"` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | A map of tags to assign to the resource | `map(string)` | `{}` | no |
 | <a name="input_username"></a> [username](#input\_username) | Admin username for the database | `string` | n/a | yes |
