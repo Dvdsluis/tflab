@@ -74,11 +74,11 @@ variable "allowed_vm_skus" {
   type        = list(string)
   default = [
     "Standard_D2s_v3",
-    "Standard_K8S2_v1", 
+    "Standard_K8S2_v1",
     "Standard_K8S_v1",
     "Standard_B2s",
     "Standard_B1s",
-    "Standard_B1ms",     # Added B1ms for flexibility
+    "Standard_B1ms", # Added B1ms for flexibility
     "Standard_DS1_v2",
     "Standard_B4ms"
   ]
