@@ -32,7 +32,7 @@ run "deploy_and_validate_network_security" {
       "172.16.0.0/12",  # Common corporate ranges
       "192.168.0.0/16", # Common home ranges
       "10.1.0.0/16"     # Common Azure ranges
-    ], "10.0.0.0/16")
+    ], module.networking.vnet_address_space[0])
     error_message = "VNet address space should not overlap with common network ranges"
   }
 
@@ -93,6 +93,54 @@ run "validate_deployed_resources" {
   assert {
     condition     = module.database.postgresql_server_id != ""
     error_message = "PostgreSQL server should be created successfully"
+  }
+
+  # Validate public NSG exists and has correct name
+  assert {
+    condition     = module.networking.public_nsg_id != null
+    error_message = "Public NSG should be created"
+  }
+
+  # Validate private NSG exists and has correct name
+  assert {
+    condition     = module.networking.private_nsg_id != null
+    error_message = "Private NSG should be created"
+  }
+
+  # Validate database NSG exists and has correct name
+  assert {
+    condition     = module.networking.database_nsg_id != null
+    error_message = "Database NSG should be created"
+  }
+
+  # Validate app VMSS ID is not empty
+  assert {
+    condition     = module.compute.app_vmss_id != ""
+    error_message = "App VMSS should be created successfully"
+  }
+
+  # Validate app NSG ID is not empty
+  assert {
+    condition     = module.compute.app_nsg_id != ""
+    error_message = "App NSG should be created successfully"
+  }
+
+  # Validate web NSG ID is not empty
+  assert {
+    condition     = module.compute.web_nsg_id != ""
+    error_message = "Web NSG should be created successfully"
+  }
+
+  # Validate database NSG ID is not empty
+  assert {
+    condition     = module.database.database_nsg_id != ""
+    error_message = "Database NSG should be created successfully"
+  }
+
+  # Validate database server ID is not empty
+  assert {
+    condition     = module.database.postgres_server_id != null || module.database.mysql_server_id != null
+    error_message = "Database server should be created successfully (Postgres or MySQL)"
   }
 }
 
