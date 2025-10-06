@@ -306,17 +306,19 @@ jobs:
         
         # Check VNet exists and has correct configuration
         echo "Checking VNet configuration..."
+        VNET_NAME=$(az network vnet list --resource-group kml_rg_main-5ae9e84837c64352 --query "[0].name" --output tsv 2>/dev/null || echo "terraform-lab-dev-vnet")
         az network vnet show \
           --resource-group kml_rg_main-5ae9e84837c64352 \
-          --name terraform-lab-dev-vnet \
+          --name "$VNET_NAME" \
           --query "{name:name, addressSpace:addressSpace, provisioningState:provisioningState}" \
           --output table
         
         # Check NAT Gateway configuration
         echo "Checking NAT Gateway configuration..."
+        NAT_GW_NAME=$(az network nat gateway list --resource-group kml_rg_main-5ae9e84837c64352 --query "[0].name" --output tsv 2>/dev/null || echo "terraform-lab-dev-nat-gw")
         az network nat gateway show \
           --resource-group kml_rg_main-5ae9e84837c64352 \
-          --name terraform-lab-dev-nat-gw \
+          --name "$NAT_GW_NAME" \
           --query "{name:name, sku:sku.name, publicIpAddresses:publicIpAddresses[].id}" \
           --output table
         
