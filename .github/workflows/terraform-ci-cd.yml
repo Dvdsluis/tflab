@@ -117,8 +117,10 @@ jobs:
 
     - name: Run Terraform Tests
       run: |
-        echo "🧪 Running Terraform tests..."
-        terraform test -test-directory=../tests
+        echo "Running Terraform tests..."
+        cd ../../tests
+        terraform init -backend=false
+        terraform test
       working-directory: ./environments/dev
       continue-on-error: true
 
@@ -257,8 +259,10 @@ jobs:
     - name: Run Advanced Resource State Tests
       id: advanced-tests
       run: |
-        echo "🔍 Running advanced integration tests..."
-        terraform test -test-directory=../tests -filter="advanced-integration.tftest.hcl"
+        echo "Running advanced integration tests..."
+        cd ../../tests
+        terraform init -backend=false
+        terraform test -filter="advanced-integration.tftest.hcl"
       working-directory: ./environments/dev
       continue-on-error: true
 
@@ -266,13 +270,13 @@ jobs:
       if: always()
       run: |
         if [ "${{ steps.advanced-tests.outcome }}" = "success" ]; then
-          echo "✅ All advanced integration tests passed!"
+          echo "All advanced integration tests passed!"
           echo "- Azure resource state validation: PASSED"
           echo "- Network security validation: PASSED" 
           echo "- NAT Gateway configuration: PASSED"
           echo "- Resource tagging compliance: PASSED"
         else
-          echo "❌ Some advanced integration tests failed"
+          echo "Some advanced integration tests failed"
           echo "Check the logs above for detailed failure information"
         fi
 
@@ -298,7 +302,7 @@ jobs:
 
     - name: Azure CLI Network Validation
       run: |
-        echo "🔍 Validating network configuration..."
+        echo "Validating network configuration..."
         
         # Check VNet exists and has correct configuration
         echo "Checking VNet configuration..."
@@ -330,7 +334,7 @@ jobs:
 
     - name: Security Compliance Check
       run: |
-        echo "🔒 Running security compliance checks..."
+        echo "Running security compliance checks..."
         
         # Check for open security rules
         echo "Checking for overly permissive NSG rules..."
@@ -341,11 +345,11 @@ jobs:
           --output tsv)
         
         if [ -n "$OPEN_RULES" ]; then
-          echo "❌ WARNING: Database NSG has rules allowing access from anywhere:"
+          echo "WARNING: Database NSG has rules allowing access from anywhere:"
           echo "$OPEN_RULES"
           exit 1
         else
-          echo "✅ Database NSG properly restricts access"
+          echo "Database NSG properly restricts access"
         fi
         
         # Check SSH access restrictions
@@ -357,8 +361,8 @@ jobs:
           --output tsv)
         
         if [ -n "$SSH_FROM_INTERNET" ]; then
-          echo "❌ WARNING: SSH access allowed from internet"
+          echo "WARNING: SSH access allowed from internet"
           exit 1
         else
-          echo "✅ SSH access properly restricted to VNet"
+          echo "SSH access properly restricted to VNet"
         fi
