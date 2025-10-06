@@ -72,7 +72,7 @@ variable "tags" {
 variable "allowed_vm_skus" {
   description = "List of allowed VM SKUs for policy compliance"
   type        = list(string)
-  default     = [
+  default = [
     "Standard_D2s_v3",
     "Standard_K8S2_v1",
     "Standard_K8S_v1",
