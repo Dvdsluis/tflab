@@ -72,7 +72,7 @@ variable "web_vm_size" {
 variable "app_vm_size" {
   description = "VM size for app servers"
   type        = string
-  default     = "Standard_B1ms"
+  default     = "Standard_B1s"
 }
 
 variable "web_instance_count" {

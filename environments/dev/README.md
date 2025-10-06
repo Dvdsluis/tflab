@@ -33,7 +33,7 @@
 | <a name="input_additional_tags"></a> [additional\_tags](#input\_additional\_tags) | Additional tags to apply to all resources | `map(string)` | `{}` | no |
 | <a name="input_admin_username"></a> [admin\_username](#input\_admin\_username) | Admin username for VMs | `string` | `"azureuser"` | no |
 | <a name="input_app_instance_count"></a> [app\_instance\_count](#input\_app\_instance\_count) | Number of app server instances | `number` | `2` | no |
-| <a name="input_app_vm_size"></a> [app\_vm\_size](#input\_app\_vm\_size) | VM size for app servers | `string` | `"Standard_B1ms"` | no |
+| <a name="input_app_vm_size"></a> [app\_vm\_size](#input\_app\_vm\_size) | VM size for app servers | `string` | `"Standard_B1s"` | no |
 | <a name="input_azure_region"></a> [azure\_region](#input\_azure\_region) | Azure region | `string` | `"East US"` | no |
 | <a name="input_database_subnets"></a> [database\_subnets](#input\_database\_subnets) | List of database subnet CIDR blocks | `list(string)` | <pre>[<br>  "10.0.21.0/24",<br>  "10.0.22.0/24",<br>  "10.0.23.0/24"<br>]</pre> | no |
 | <a name="input_db_admin_username"></a> [db\_admin\_username](#input\_db\_admin\_username) | Database administrator username | `string` | `"sqladmin"` | no |
