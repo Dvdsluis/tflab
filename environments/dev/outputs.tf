@@ -94,6 +94,12 @@ output "postgres_server_id" {
   sensitive   = true
 }
 
+output "mysql_server_id" {
+  description = "ID of the MySQL Flexible Server"
+  value       = module.database.mysql_server_id
+  sensitive   = true
+}
+
 # Security Group Outputs (Azure NSGs)
 output "web_nsg_id" {
   description = "ID of the web network security group"
