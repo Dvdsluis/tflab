@@ -101,3 +101,22 @@ module "database" {
 
   depends_on = [module.networking, module.compute]
 }
+
+# Azure Health Checks - Continuous validation using external Azure APIs
+check "validate_resource_group_health" {
+  data "azurerm_resource_group" "health_check" {
+    name = data.azurerm_resource_group.main.name
+  }
+
+  assert {
+    condition     = data.azurerm_resource_group.health_check.location != null
+    error_message = "Resource group is not accessible or does not exist"
+  }
+}
+
+check "validate_azure_region_health" {
+  assert {
+    condition     = contains(["East US", "West US 2", "Central US", "North Europe", "West Europe"], var.azure_region)
+    error_message = "Selected Azure region may not be available or supported"
+  }
+}
