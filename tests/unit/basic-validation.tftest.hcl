@@ -1,6 +1,21 @@
 # Basic Unit Tests for Infrastructure Validation
 # Fast plan-time validation of configuration policies
 
+# Reference the dev environment configuration
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "~> 3.0"
+    }
+  }
+}
+
+provider "azurerm" {
+  features {}
+  skip_provider_registration = true
+}
+
 variables {
   project_name             = "terraform-lab"
   environment              = "dev"
