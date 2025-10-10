@@ -63,6 +63,7 @@
 | <a name="output_database_nsg_id"></a> [database\_nsg\_id](#output\_database\_nsg\_id) | ID of the database network security group |
 | <a name="output_database_subnet_ids"></a> [database\_subnet\_ids](#output\_database\_subnet\_ids) | IDs of the database subnets |
 | <a name="output_key_vault_id"></a> [key\_vault\_id](#output\_key\_vault\_id) | ID of the Key Vault for database secrets |
+| <a name="output_mysql_server_id"></a> [mysql\_server\_id](#output\_mysql\_server\_id) | ID of the MySQL Flexible Server |
 | <a name="output_postgres_server_id"></a> [postgres\_server\_id](#output\_postgres\_server\_id) | ID of the PostgreSQL Flexible Server |
 | <a name="output_private_subnet_ids"></a> [private\_subnet\_ids](#output\_private\_subnet\_ids) | IDs of the private subnets |
 | <a name="output_public_subnet_ids"></a> [public\_subnet\_ids](#output\_public\_subnet\_ids) | IDs of the public subnets |
