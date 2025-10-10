@@ -20,7 +20,7 @@ data "azurerm_client_config" "current" {}
 
 # Key Vault for secure password storage (compliant with Azure policies)
 resource "azurerm_key_vault" "database" {
-  name                       = "${var.name_prefix}-db-kv"
+  name                       = "${substr(replace(var.name_prefix, "-", ""), 0, 15)}-kv"
   location                   = var.location
   resource_group_name        = var.resource_group_name
   tenant_id                  = data.azurerm_client_config.current.tenant_id
