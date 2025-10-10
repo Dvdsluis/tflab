@@ -17,10 +17,11 @@ variables {
   admin_username           = "azureuser"
   ssh_public_key           = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCVsv/kHHL+Hh0RW2YFqwpEJ+YsFaIHAAt51P36rmbsz1a1o4NbupXJRyJufyvKuJQuz1sYuPbNBn0o16zMzBa+wZnga3LP8wxax+5aPvmolLVLfU4hPoT1UigBSFs04D+qyhiJVRJh/z2UySWmLVjjSR04Ldtk6BAJKWBJ8bc2ByD3vx663KH3zYpjRlOgo7iVSp9HzzuRXaj5QBzXr2MHSo6nV1Sc9FM4i18afkZHppdKwwtr92z7q3371uTqhJbIC8uyOkgDN+c3IXMW4iUF2/w9JCk/pCN//ddG9OucaY4yUGC9wJKvvbaSmX4GngldUbGIXPZ2q7Q4cxFEj+3N terraform-lab@codespaces"
   enable_nat_gateway       = true
-  db_server_version        = "13"
+  db_server_version        = "8.0"
   db_sku_name              = "B_Standard_B1ms"
   db_storage_mb            = 32768
-  db_admin_username        = "dbadmin"
+  db_admin_username        = "mysqladmin"
+  engine                   = "mysql"
   db_backup_retention_days = 7
   additional_tags          = {}
 }
