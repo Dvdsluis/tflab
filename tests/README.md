@@ -6,13 +6,11 @@ This directory contains organized Terraform tests for the infrastructure lab.
 
 ```
 tests/
-├── unit/                           # Fast unit tests (plan-time validation)
-│   └── basic-validation.tftest.hcl    # Configuration and policy validation
-├── integration/                    # Module integration tests
-│   └── module-integration.tftest.hcl  # Cross-module dependency validation
-├── e2e/                           # End-to-end tests (full deployment)
-│   └── azure-deployment.tftest.hcl    # Full Azure deployment validation
-└── security-validation.tftest.hcl # Comprehensive security tests
+├── integration/
+│   └── module-integration.tftest.hcl    # Cross-module integration tests
+├── e2e/
+│   └── azure-deployment.tftest.hcl      # End-to-end deployment tests
+└── security-validation.tftest.hcl       # Security compliance tests
 ```
 
 ## Test Categories
@@ -84,8 +82,8 @@ terraform test ../../tests/security-validation.tftest.hcl
 
 ### Run Individual Test Files
 ```bash
-# Basic validation
-terraform test ../../tests/unit/basic-validation.tftest.hcl
+# Unit tests (run from environments/dev)
+terraform test unit-tests.tftest.hcl
 
 # Module integration
 terraform test ../../tests/integration/module-integration.tftest.hcl

@@ -128,7 +128,6 @@ jobs:
     - name: Copy Production Tests to Dev Environment
       run: |
         echo "Copying production test files to dev environment..."
-        cp ../../tests/unit/basic-validation.tftest.hcl ./unit-tests.tftest.hcl
         cp ../../tests/integration/module-integration.tftest.hcl ./integration-tests.tftest.hcl
         cp ../../tests/security-validation.tftest.hcl ./security-tests.tftest.hcl
         cp ../../tests/e2e/azure-deployment.tftest.hcl ./e2e-tests.tftest.hcl
