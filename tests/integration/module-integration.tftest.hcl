@@ -39,14 +39,16 @@ run "validate_plan_time_integration" {
     error_message = "Compute module configuration must be valid"
   }
 
-  assert {
-    condition     = can(module.database.key_vault_id)
-    error_message = "Database module configuration must be valid"
-  }
+  # Removed can(module.database.key_vault_id) from plan-time validation. This value is only known after apply.
 }
 
 # Test 2: Apply-time validation (actual resource creation and outputs)
 run "validate_module_integration" {
+  # Validate database module key vault output (moved from plan-time)
+  assert {
+    condition     = output.key_vault_id != null
+    error_message = "Database module must output key_vault_id"
+  }
   command = apply
 
   # Validate networking module produces required outputs
