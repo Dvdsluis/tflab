@@ -127,7 +127,7 @@ resource "azurerm_mysql_flexible_server" "main" {
 
 # Azure Database for PostgreSQL Flexible Server
 resource "azurerm_postgresql_flexible_server" "main" {
-  count                  = var.engine == "postgres" ? 1 : 0
+  count                  = 0
   name                   = "${var.name_prefix}-postgres"
   resource_group_name    = var.resource_group_name
   location               = var.location
