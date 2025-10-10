@@ -2,21 +2,42 @@
 output "app_vmss_sku" {
   description = "SKU of the app VM scale set"
   value       = module.compute.app_vmss_sku
+  
+  precondition {
+    condition     = contains(["Standard_B1s", "Standard_B1ms", "Standard_B2s"], module.compute.app_vmss_sku)
+    error_message = "App VMSS SKU must be an approved size for cost control"
+  }
 }
 
 output "app_vmss_name" {
   description = "Name of the app VM scale set"
   value       = module.compute.app_vmss_name
+  
+  precondition {
+    condition     = can(regex("^[a-zA-Z0-9-]+$", module.compute.app_vmss_name))
+    error_message = "App VMSS name must follow naming conventions (alphanumeric and hyphens only)"
+  }
 }
 
 output "app_vmss_instance_count" {
   description = "Instance count of the app VM scale set"
   value       = module.compute.app_vmss_instance_count
+  
+  precondition {
+    condition     = module.compute.app_vmss_instance_count >= 2 && module.compute.app_vmss_instance_count <= 10
+    error_message = "App VMSS instance count must be between 2-10 for operational requirements"
+  }
 }
+
 # VNet Outputs (Azure Virtual Network)
 output "vnet_id" {
   description = "ID of the Virtual Network"
   value       = module.networking.vnet_id
+  
+  precondition {
+    condition     = can(regex("^/subscriptions/.*/resourceGroups/.*/providers/Microsoft.Network/virtualNetworks/.*", module.networking.vnet_id))
+    error_message = "VNet ID must be a valid Azure resource identifier"
+  }
 }
 
 output "vnet_address_space" {
