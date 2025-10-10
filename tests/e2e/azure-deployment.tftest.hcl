@@ -70,7 +70,7 @@ run "deploy_and_validate_infrastructure" {
 
   assert {
     condition     = contains(output.vnet_address_space, var.vnet_cidr)
-    error_message = "VNet CIDR mismatch: expected ${var.vnet_cidr} in ${output.vnet_address_space}"
+    error_message = "VNet CIDR mismatch: expected ${var.vnet_cidr} in ${join(", ", output.vnet_address_space)}"
   }
 
   # Subnet deployment validation
@@ -101,10 +101,10 @@ run "deploy_and_validate_infrastructure" {
     error_message = "Load balancer public IP not assigned"
   }
 
-  # Database deployment validation
+  # Database deployment validation (MySQL instead of PostgreSQL)
   assert {
-    condition     = output.postgres_server_id != null
-    error_message = "PostgreSQL server deployment failed"
+    condition     = output.mysql_server_id != null
+    error_message = "MySQL server deployment failed"
   }
 
   # Security validation

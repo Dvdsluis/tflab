@@ -30,17 +30,17 @@ run "validate_plan_time_integration" {
 
   # Validate that modules can be planned without errors
   assert {
-    condition     = can(module.networking.vnet_cidr)
+    condition     = can(module.networking.vnet_address_space)
     error_message = "Networking module configuration must be valid"
   }
 
   assert {
-    condition     = can(module.compute.web_vm_size)
+    condition     = can(module.compute.app_vmss_sku)
     error_message = "Compute module configuration must be valid"
   }
 
   assert {
-    condition     = can(module.database.db_sku_name)
+    condition     = can(module.database.key_vault_id)
     error_message = "Database module configuration must be valid"
   }
 }
