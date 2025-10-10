@@ -151,3 +151,13 @@ run "validate_azure_resource_status" {
     error_message = "Load balancer output is not a valid Azure resource ID: ${output.web_load_balancer_ip}"
   }
 }
+
+# Commenting out Key Vault resource due to availability issues
+# resource "azurerm_key_vault" "database" {
+#   name                = "${var.key_vault_name}"
+#   location            = azurerm_resource_group.database.location
+#   resource_group_name = azurerm_resource_group.database.name
+#   sku_name           = "standard"
+#   tenant_id          = data.azurerm_client_config.current.tenant_id
+#   # other configurations...
+# }
