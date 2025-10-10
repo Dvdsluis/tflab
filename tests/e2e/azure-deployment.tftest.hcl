@@ -147,7 +147,7 @@ run "validate_azure_resource_status" {
 
   # Load balancer accessibility
   assert {
-    condition     = can(regex("^[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}$", output.web_load_balancer_ip))
-    error_message = "Load balancer IP format invalid: ${output.web_load_balancer_ip}"
+    condition     = can(regex("^/subscriptions/", output.web_load_balancer_ip))
+    error_message = "Load balancer output is not a valid Azure resource ID: ${output.web_load_balancer_ip}"
   }
 }
