@@ -49,7 +49,7 @@ resource "azurerm_key_vault" "database" {
       condition     = length("${substr(replace(var.name_prefix, "-", ""), 0, 15)}-kv") <= 24
       error_message = "Key Vault name must be 24 characters or less: ${substr(replace(var.name_prefix, "-", ""), 0, 15)}-kv"
     }
-    
+
     postcondition {
       condition     = self.purge_protection_enabled == true
       error_message = "Key Vault must have purge protection enabled for security compliance"
