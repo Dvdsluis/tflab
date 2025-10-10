@@ -26,7 +26,7 @@ resource "azurerm_key_vault" "database" {
   tenant_id                  = data.azurerm_client_config.current.tenant_id
   sku_name                   = "standard" # Policy requirement: Standard tier
   soft_delete_retention_days = 7          # Policy requirement: 7 days retention
-  purge_protection_enabled   = true       # Policy requirement: Enable purge protection
+  purge_protection_enabled   = false      # Policy requirement: Purge protection must be disabled
 
   # Access policy for Terraform service principal
   access_policy {
@@ -47,12 +47,12 @@ resource "azurerm_key_vault" "database" {
   lifecycle {
     precondition {
       condition     = length("${substr(replace(var.name_prefix, "-", ""), 0, 15)}-kv") <= 24
-      error_message = "Key Vault name must be 24 characters or less: ${substr(replace(var.name_prefix, "-", ""), 0, 15)}-kv"
+      error_message = "Key Vault name must be 24 characters of less: ${substr(replace(var.name_prefix, "-", ""), 0, 15)}-kv"
     }
 
     postcondition {
-      condition     = self.purge_protection_enabled == true
-      error_message = "Key Vault must have purge protection enabled for security compliance"
+      condition     = self.purge_protection_enabled == false
+      error_message = "Key Vault purge protection moet uitgeschakeld zijn volgens policy."
     }
   }
 
