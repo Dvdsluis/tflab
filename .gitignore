@@ -1,6 +1,7 @@
 # Terraform state files - contain sensitive data and provider-specific state
 *.tfstate
 *.tfstate.*
+*.tfstate.backup
 
 # Terraform crash log files - contain debugging information
 crash.log
@@ -23,12 +24,10 @@ terraform.rc
 
 # Terraform directories
 .terraform/
+.terraform.lock.hcl
 
 # Terraform plan output files - may contain sensitive information
 *.tfplan
-
-# Terraform lock files - should be committed for version consistency
-# .terraform.lock.hcl
 
 # IDE and editor files
 .vscode/settings.json
