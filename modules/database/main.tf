@@ -45,6 +45,7 @@ resource "azurerm_key_vault" "database" {
   }
 
   lifecycle {
+    prevent_destroy = true
     precondition {
       condition     = length("${substr(replace(var.name_prefix, "-", ""), 0, 15)}-kv") <= 24
       error_message = "Key Vault name must be 24 characters of less: ${substr(replace(var.name_prefix, "-", ""), 0, 15)}-kv"
