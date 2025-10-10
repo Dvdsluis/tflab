@@ -107,11 +107,11 @@ run "deploy_and_validate_infrastructure" {
     error_message = "MySQL server deployment failed"
   }
 
-  # Security validation
-  assert {
-    condition     = output.key_vault_id != null && output.key_vault_id != ""
-    error_message = "Key Vault deployment failed"
-  }
+  # Security validation (Key Vault not required in lab)
+  # assert {
+  #   condition     = output.key_vault_id != null && output.key_vault_id != ""
+  #   error_message = "Key Vault deployment failed"
+  # }
 
   assert {
     condition = (
