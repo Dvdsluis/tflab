@@ -103,7 +103,7 @@ run "deploy_and_validate_infrastructure" {
 
   # Database deployment validation (MySQL instead of PostgreSQL)
   assert {
-    condition     = output.mysql_server_id != null
+    condition     = can(output.mysql_server_id)
     error_message = "MySQL server deployment failed"
   }
 
